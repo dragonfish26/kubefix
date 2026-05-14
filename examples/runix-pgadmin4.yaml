@@ -1,0 +1,208 @@
+---
+# Source: pgadmin4/templates/networkpolicy.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pgadmin4
+  namespace: "default"
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: pgadmin4
+    app.kubernetes.io/name: pgadmin4
+    app.kubernetes.io/version: "9.5"
+    helm.sh/chart: pgadmin4-1.47.0
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: pgadmin4
+      app.kubernetes.io/instance: pgadmin4
+  ingress:
+  - ports:
+    - port: 80
+---
+# Source: pgadmin4/templates/auth-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pgadmin4
+  namespace: "default"
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: pgadmin4
+    app.kubernetes.io/name: pgadmin4
+    app.kubernetes.io/version: "9.5"
+    helm.sh/chart: pgadmin4-1.47.0
+type: Opaque
+data:
+  password: "U3VwZXJTZWNyZXQ="
+---
+# Source: pgadmin4/templates/pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pgadmin4
+  namespace: "default"
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: pgadmin4
+    app.kubernetes.io/name: pgadmin4
+    app.kubernetes.io/version: "9.5"
+    helm.sh/chart: pgadmin4-1.47.0
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+# Source: pgadmin4/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin4
+  namespace: "default"
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: pgadmin4
+    app.kubernetes.io/name: pgadmin4
+    app.kubernetes.io/version: "9.5"
+    helm.sh/chart: pgadmin4-1.47.0
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: pgadmin4
+    app.kubernetes.io/instance: pgadmin4
+---
+# Source: pgadmin4/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin4
+  namespace: "default"
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: pgadmin4
+    app.kubernetes.io/name: pgadmin4
+    app.kubernetes.io/version: "9.5"
+    helm.sh/chart: pgadmin4-1.47.0
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pgadmin4
+      app.kubernetes.io/instance: pgadmin4
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pgadmin4
+        app.kubernetes.io/instance: pgadmin4
+      annotations:
+        checksum/secret: 34e61161754555275b95f1f989867f5028984c81ddf8a866aad1590f0800f5b5
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: pgadmin4
+          image: "docker.io/dpage/pgadmin4:9.5"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              port: http
+              path: /misc/ping
+              scheme: HTTP
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+          startupProbe:
+            httpGet:
+              port: http
+              path: /misc/ping
+              scheme: HTTP
+            failureThreshold: 30
+            periodSeconds: 2
+          readinessProbe:
+            httpGet:
+              port: http
+              path: /misc/ping
+              scheme: HTTP
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+          env:
+            - name: PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION
+              value: "False"
+            - name: PGADMIN_DEFAULT_EMAIL
+              value: chart@domain.com
+            - name: PGADMIN_DEFAULT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgadmin4
+                  key: password
+          volumeMounts:
+            - name: pgadmin-data
+              mountPath: /var/lib/pgadmin
+              subPath: ""
+          resources:
+            {}
+      volumes:
+        - name: pgadmin-data
+          persistentVolumeClaim:
+            claimName: pgadmin4
+      securityContext:
+        fsGroup: 5050
+        runAsGroup: 5050
+        runAsUser: 5050
+---
+# Source: pgadmin4/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "pgadmin4-test-connection"
+  namespace: "default"
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: pgadmin4
+    app.kubernetes.io/name: pgadmin4
+    app.kubernetes.io/version: "9.5"
+    helm.sh/chart: pgadmin4-1.47.0
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  securityContext:
+    runAsNonRoot: true
+    fsGroup: 5051
+    runAsGroup: 5051
+    runAsUser: 5051
+  containers:
+    - name: wget
+      image: "docker.io/busybox:latest"
+      env:
+        - name: PGADMIN_HOST
+          value: pgadmin4
+        - name: PGADMIN_PORT
+          value: "80"
+      command:
+        - /bin/sh
+        - -ec
+        - |
+          response=$(wget -qSO - http://${PGADMIN_HOST}:${PGADMIN_PORT} 2>&1)
+          check=$(echo $response | grep -c '200 OK'); echo $check; if [[ $check -gt 0 ]]; then echo "Response OK"; else exit 1; fi
+      resources:
+        {}
+      securityContext:
+        readOnlyRootFilesystem: true
+  restartPolicy: Never

@@ -1,0 +1,255 @@
+---
+# Source: pihole/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pihole-password
+  labels:
+    app: pihole
+    chart: pihole-2.31.0
+    heritage: Helm
+    release: pihole
+type: Opaque
+data:
+  password: "YWRtaW4="
+---
+# Source: pihole/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pihole-custom-dnsmasq
+  labels:
+    app: pihole
+    chart: pihole-2.31.0
+    release: pihole
+    heritage: Helm
+data:
+  02-custom.conf: |
+    addn-hosts=/etc/addn-hosts
+  addn-hosts: |
+  05-pihole-custom-cname.conf: |
+---
+# Source: pihole/templates/service-dhcp.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-dhcp
+  labels:
+    app: pihole
+    app.kubernetes.io/name: pihole
+    chart: pihole-2.31.0
+    release: pihole
+    heritage: Helm
+spec:
+  type: NodePort
+  externalTrafficPolicy: Local
+  ports:
+    - port: 67
+      targetPort: client-udp
+      protocol: UDP
+      name: client-udp
+  selector:
+    app: pihole
+    release: pihole
+---
+# Source: pihole/templates/service-dns-tcp.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-dns-tcp
+  labels:
+    app: pihole
+    app.kubernetes.io/name: pihole
+    chart: pihole-2.31.0
+    release: pihole
+    heritage: Helm
+spec:
+  type: NodePort
+  externalTrafficPolicy: Local
+  ports:
+    - port: 53
+      targetPort: dns
+      protocol: TCP
+      name: dns
+  selector:
+    app: pihole
+    release: pihole
+---
+# Source: pihole/templates/service-dns-udp.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-dns-udp
+  labels:
+    app: pihole
+    app.kubernetes.io/name: pihole
+    chart: pihole-2.31.0
+    release: pihole
+    heritage: Helm
+spec:
+  type: NodePort
+  externalTrafficPolicy: Local
+  ports:
+    - port: 53
+      targetPort: dns-udp
+      protocol: UDP
+      name: dns-udp
+  selector:
+    app: pihole
+    release: pihole
+---
+# Source: pihole/templates/service-web.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-web
+  labels:
+    app: pihole
+    app.kubernetes.io/name: pihole
+    chart: pihole-2.31.0
+    release: pihole
+    heritage: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: 443
+      targetPort: https
+      protocol: TCP
+      name: https
+  selector:
+    app: pihole
+    release: pihole
+---
+# Source: pihole/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pihole
+  labels:
+    app: pihole
+    app.kubernetes.io/name: pihole
+    chart: pihole-2.31.0
+    release: pihole
+    heritage: Helm
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: pihole
+      release: pihole
+  template:
+    metadata:
+      annotations:
+        checksum.config.adlists: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546
+        checksum.config.blacklist: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546
+        checksum.config.regex: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546
+        checksum.config.whitelist: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546
+        checksum.config.dnsmasqConfig: 5e5e558f8c51c9bdf08d1b1d60827ab6bfd3c3b80591ef0adf80f1b53824566
+        checksum.config.staticDhcpConfig: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546
+      labels:
+        app: pihole
+        app.kubernetes.io/name: pihole
+        release: pihole
+    spec:
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 127.0.0.1
+        - 8.8.8.8
+      hostname: 
+      hostNetwork: false
+      containers:
+        - name: pihole
+          env:
+          - name: 'FTLCONF_webserver_port'
+            value: "80"
+          - name: VIRTUAL_HOST
+            value: pi.hole
+          - name: FTLCONF_misc_etc_dnsmasq_d
+            value: "true"
+          - name: FTLCONF_webserver_api_password
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: pihole-password
+          - name: 'FTLCONF_dns_upstreams'
+            value: 8.8.8.8;8.8.4.4
+          image: "pihole/pihole:2025.04.0"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: false
+          ports:
+          - containerPort: 80
+            name: http
+            protocol: TCP
+          - containerPort: 53
+            name: dns
+            protocol: TCP
+          - containerPort: 53
+            name: dns-udp
+            protocol: UDP
+          - containerPort:  443
+            name: https
+            protocol: TCP
+          - containerPort: 67
+            name: client-udp
+            protocol: UDP
+          livenessProbe:
+            httpGet:
+              path: /admin
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 60
+            failureThreshold: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /admin
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 60
+            failureThreshold: 10
+            timeoutSeconds: 5
+          volumeMounts:
+          - mountPath: /etc/pihole
+            name: config
+          - mountPath: /etc/dnsmasq.d/02-custom.conf
+            name: custom-dnsmasq
+            subPath: 02-custom.conf
+          - mountPath: /etc/addn-hosts
+            name: custom-dnsmasq
+            subPath: addn-hosts
+          resources:
+            {}
+      volumes:
+      - name: config
+        emptyDir: {}
+      - configMap:
+          defaultMode: 420
+          name: pihole-custom-dnsmasq
+        name: custom-dnsmasq
+---
+# Source: pihole/templates/tests/test-pihole-endpoint.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "pihole-smoke-test"
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+  - name: hook1-container
+    image: curlimages/curl
+    imagePullPolicy: IfNotPresent
+    command: ['sh', '-c', 'curl http://pihole-web:80/']
+  restartPolicy: Never
+  terminationGracePeriodSeconds: 0

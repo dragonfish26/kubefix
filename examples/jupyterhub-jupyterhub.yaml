@@ -1,0 +1,2446 @@
+---
+# Source: jupyterhub/templates/hub/netpol.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: hub
+  labels:
+    component: hub
+    app.kubernetes.io/component: hub
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  podSelector:
+    matchLabels:
+      component: hub
+      app: "jupyterhub"
+      release: "jupyterhub"
+  policyTypes:
+    - Ingress
+    - Egress
+
+  # IMPORTANT:
+  # NetworkPolicy's ingress "from" and egress "to" rule specifications require
+  # great attention to detail. A quick summary is:
+  #
+  # 1. You can provide "from"/"to" rules that provide access either ports or a
+  #    subset of ports.
+  # 2. You can for each "from"/"to" rule provide any number of
+  #    "sources"/"destinations" of four different kinds.
+  #    - podSelector                        - targets pods with a certain label in the same namespace as the NetworkPolicy
+  #    - namespaceSelector                  - targets all pods running in namespaces with a certain label
+  #    - namespaceSelector and podSelector  - targets pods with a certain label running in namespaces with a certain label
+  #    - ipBlock                            - targets network traffic from/to a set of IP address ranges
+  #
+  # Read more at: https://kubernetes.io/docs/concepts/services-networking/network-policies/#behavior-of-to-and-from-selectors
+  #
+  ingress:
+
+    # allowed pods (hub.jupyter.org/network-access-hub) --> hub
+    - ports:
+        - port: http
+      from:
+        # source 1 - labeled pods
+        - podSelector:
+            matchLabels:
+              hub.jupyter.org/network-access-hub: "true"
+
+  egress:
+    # hub --> proxy
+    - to:
+        - podSelector:
+            matchLabels:
+              component: proxy
+              app: "jupyterhub"
+              release: "jupyterhub"
+      ports:
+        - port: 8001
+
+    # hub --> singleuser-server
+    - to:
+        - podSelector:
+            matchLabels:
+              component: singleuser-server
+              app: "jupyterhub"
+              release: "jupyterhub"
+      ports:
+        - port: 8888
+    
+    - ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+      to:
+        # Allow outbound connections to DNS ports on the cloud metadata server
+        - ipBlock:
+            cidr: 169.254.169.254/32
+        # Allow outbound connections to DNS ports on pods in the kube-system
+        # namespace
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+        # Allow outbound connections to DNS ports on destinations in the private IP
+        # ranges
+        - ipBlock:
+            cidr: 10.0.0.0/8
+        - ipBlock:
+            cidr: 172.16.0.0/12
+        - ipBlock:
+            cidr: 192.168.0.0/16
+    # Allow outbound connections to non-private IP ranges
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              # As part of this rule:
+              # - don't allow outbound connections to private IPs
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              # - don't allow outbound connections to the cloud metadata server
+              - 169.254.169.254/32
+    # Allow outbound connections to private IP ranges
+    - to:
+        - ipBlock:
+            cidr: 10.0.0.0/8
+        - ipBlock:
+            cidr: 172.16.0.0/12
+        - ipBlock:
+            cidr: 192.168.0.0/16
+    # Allow outbound connections to the cloud metadata server
+    - to:
+        - ipBlock:
+            cidr: 169.254.169.254/32
+---
+# Source: jupyterhub/templates/proxy/netpol.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: proxy
+  labels:
+    component: proxy
+    app.kubernetes.io/component: proxy
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  podSelector:
+    matchLabels:
+      component: proxy
+      app: "jupyterhub"
+      release: "jupyterhub"
+  policyTypes:
+    - Ingress
+    - Egress
+
+  # IMPORTANT:
+  # NetworkPolicy's ingress "from" and egress "to" rule specifications require
+  # great attention to detail. A quick summary is:
+  #
+  # 1. You can provide "from"/"to" rules that provide access either ports or a
+  #    subset of ports.
+  # 2. You can for each "from"/"to" rule provide any number of
+  #    "sources"/"destinations" of four different kinds.
+  #    - podSelector                        - targets pods with a certain label in the same namespace as the NetworkPolicy
+  #    - namespaceSelector                  - targets all pods running in namespaces with a certain label
+  #    - namespaceSelector and podSelector  - targets pods with a certain label running in namespaces with a certain label
+  #    - ipBlock                            - targets network traffic from/to a set of IP address ranges
+  #
+  # Read more at: https://kubernetes.io/docs/concepts/services-networking/network-policies/#behavior-of-to-and-from-selectors
+  #
+  ingress:
+    # allow incoming traffic to these ports independent of source
+    - ports:
+      - port: http
+      - port: https
+
+    # allowed pods (hub.jupyter.org/network-access-proxy-http) --> proxy (http/https port)
+    - ports:
+        - port: http
+      from:
+        # source 1 - labeled pods
+        - podSelector:
+            matchLabels:
+              hub.jupyter.org/network-access-proxy-http: "true"
+
+    # allowed pods (hub.jupyter.org/network-access-proxy-api) --> proxy (api port)
+    - ports:
+        - port: api
+      from:
+        # source 1 - labeled pods
+        - podSelector:
+            matchLabels:
+              hub.jupyter.org/network-access-proxy-api: "true"
+
+  egress:
+    # proxy --> hub
+    - to:
+        - podSelector:
+            matchLabels:
+              component: hub
+              app: "jupyterhub"
+              release: "jupyterhub"
+      ports:
+        - port: 8081
+
+    # proxy --> singleuser-server
+    - to:
+        - podSelector:
+            matchLabels:
+              component: singleuser-server
+              app: "jupyterhub"
+              release: "jupyterhub"
+      ports:
+        - port: 8888
+    
+    - ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+      to:
+        # Allow outbound connections to DNS ports on the cloud metadata server
+        - ipBlock:
+            cidr: 169.254.169.254/32
+        # Allow outbound connections to DNS ports on pods in the kube-system
+        # namespace
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+        # Allow outbound connections to DNS ports on destinations in the private IP
+        # ranges
+        - ipBlock:
+            cidr: 10.0.0.0/8
+        - ipBlock:
+            cidr: 172.16.0.0/12
+        - ipBlock:
+            cidr: 192.168.0.0/16
+    # Allow outbound connections to non-private IP ranges
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              # As part of this rule:
+              # - don't allow outbound connections to private IPs
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              # - don't allow outbound connections to the cloud metadata server
+              - 169.254.169.254/32
+    # Allow outbound connections to private IP ranges
+    - to:
+        - ipBlock:
+            cidr: 10.0.0.0/8
+        - ipBlock:
+            cidr: 172.16.0.0/12
+        - ipBlock:
+            cidr: 192.168.0.0/16
+    # Allow outbound connections to the cloud metadata server
+    - to:
+        - ipBlock:
+            cidr: 169.254.169.254/32
+---
+# Source: jupyterhub/templates/singleuser/netpol.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: singleuser
+  labels:
+    component: singleuser
+    app.kubernetes.io/component: singleuser
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  podSelector:
+    matchLabels:
+      component: singleuser-server
+      app: "jupyterhub"
+      release: "jupyterhub"
+  policyTypes:
+    - Ingress
+    - Egress
+
+  # IMPORTANT:
+  # NetworkPolicy's ingress "from" and egress "to" rule specifications require
+  # great attention to detail. A quick summary is:
+  #
+  # 1. You can provide "from"/"to" rules that provide access either ports or a
+  #    subset of ports.
+  # 2. You can for each "from"/"to" rule provide any number of
+  #    "sources"/"destinations" of four different kinds.
+  #    - podSelector                        - targets pods with a certain label in the same namespace as the NetworkPolicy
+  #    - namespaceSelector                  - targets all pods running in namespaces with a certain label
+  #    - namespaceSelector and podSelector  - targets pods with a certain label running in namespaces with a certain label
+  #    - ipBlock                            - targets network traffic from/to a set of IP address ranges
+  #
+  # Read more at: https://kubernetes.io/docs/concepts/services-networking/network-policies/#behavior-of-to-and-from-selectors
+  #
+  ingress:
+
+    # allowed pods (hub.jupyter.org/network-access-singleuser) --> singleuser-server
+    - ports:
+        - port: notebook-port
+      from:
+        # source 1 - labeled pods
+        - podSelector:
+            matchLabels:
+              hub.jupyter.org/network-access-singleuser: "true"
+
+  egress:
+    # singleuser-server --> hub
+    - to:
+        - podSelector:
+            matchLabels:
+              component: hub
+              app: "jupyterhub"
+              release: "jupyterhub"
+      ports:
+        - port: 8081
+
+    # singleuser-server --> proxy
+    # singleuser-server --> autohttps
+    #
+    # While not critical for core functionality, a user or library code may rely
+    # on communicating with the proxy or autohttps pods via a k8s Service it can
+    # detected from well known environment variables.
+    #
+    - to:
+        - podSelector:
+            matchLabels:
+              component: proxy
+              app: "jupyterhub"
+              release: "jupyterhub"
+      ports:
+        - port: 8000
+    - to:
+        - podSelector:
+            matchLabels:
+              component: autohttps
+              app: "jupyterhub"
+              release: "jupyterhub"
+      ports:
+        - port: 8080
+        - port: 8443
+    
+    - ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+      to:
+        # Allow outbound connections to DNS ports on the cloud metadata server
+        - ipBlock:
+            cidr: 169.254.169.254/32
+        # Allow outbound connections to DNS ports on pods in the kube-system
+        # namespace
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+        # Allow outbound connections to DNS ports on destinations in the private IP
+        # ranges
+        - ipBlock:
+            cidr: 10.0.0.0/8
+        - ipBlock:
+            cidr: 172.16.0.0/12
+        - ipBlock:
+            cidr: 192.168.0.0/16
+    # Allow outbound connections to non-private IP ranges
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              # As part of this rule:
+              # - don't allow outbound connections to private IPs
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              # - don't allow outbound connections to the cloud metadata server
+              - 169.254.169.254/32
+---
+# Source: jupyterhub/templates/scheduling/user-placeholder/pdb.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: user-placeholder
+  labels:
+    component: user-placeholder
+    app.kubernetes.io/component: user-placeholder
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  minAvailable: 0
+  selector:
+    matchLabels:
+      component: user-placeholder
+      app: "jupyterhub"
+      release: "jupyterhub"
+---
+# Source: jupyterhub/templates/scheduling/user-scheduler/pdb.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: user-scheduler
+  labels:
+    component: user-scheduler
+    app.kubernetes.io/component: user-scheduler
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      component: user-scheduler
+      app: "jupyterhub"
+      release: "jupyterhub"
+---
+# Source: jupyterhub/templates/hub/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hub
+  labels:
+    component: hub
+    app.kubernetes.io/component: hub
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: jupyterhub/templates/image-puller/serviceaccount-continuous.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: continuous-image-puller
+  labels:
+    component: image-puller
+    app.kubernetes.io/component: image-puller
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+---
+# Source: jupyterhub/templates/scheduling/user-scheduler/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: user-scheduler
+  labels:
+    component: user-scheduler
+    app.kubernetes.io/component: user-scheduler
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: jupyterhub/templates/hub/secret.yaml
+kind: Secret
+apiVersion: v1
+metadata:
+  name: hub
+  labels:
+    component: hub
+    app.kubernetes.io/component: hub
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+type: Opaque
+data:
+  values.yaml: "Q2hhcnQ6CiAgQXBwVmVyc2lvbjogNS4zLjAKICBOYW1lOiBqdXB5dGVyaHViCiAgVmVyc2lvbjogNC4yLjAKUmVsZWFzZToKICBOYW1lOiBqdXB5dGVyaHViCiAgTmFtZXNwYWNlOiBkZWZhdWx0CiAgU2VydmljZTogSGVsbQpjdWxsOgogIGFkbWluVXNlcnM6IHRydWUKICBjb25jdXJyZW5jeTogMTAKICBlbmFibGVkOiB0cnVlCiAgZXZlcnk6IDYwMAogIG1heEFnZTogMAogIHJlbW92ZU5hbWVkU2VydmVyczogZmFsc2UKICB0aW1lb3V0OiAzNjAwCiAgdXNlcnM6IGZhbHNlCmN1c3RvbToge30KZGVidWc6CiAgZW5hYmxlZDogZmFsc2UKZnVsbG5hbWVPdmVycmlkZTogIiIKZ2xvYmFsOgogIHNhZmVUb1Nob3dWYWx1ZXM6IGZhbHNlCmh1YjoKICBhY3RpdmVTZXJ2ZXJMaW1pdDogbnVsbAogIGFsbG93TmFtZWRTZXJ2ZXJzOiBmYWxzZQogIGFubm90YXRpb25zOiB7fQogIGFyZ3M6IFtdCiAgYXV0aGVudGljYXRlUHJvbWV0aGV1czogbnVsbAogIGJhc2VVcmw6IC8KICBjb21tYW5kOiBbXQogIGNvbmN1cnJlbnRTcGF3bkxpbWl0OiA2NAogIGNvbmZpZzoKICAgIEp1cHl0ZXJIdWI6CiAgICAgIGFkbWluX2FjY2VzczogdHJ1ZQogICAgICBhdXRoZW50aWNhdG9yX2NsYXNzOiBkdW1teQogIGNvbnNlY3V0aXZlRmFpbHVyZUxpbWl0OiA1CiAgY29udGFpbmVyU2VjdXJpdHlDb250ZXh0OgogICAgYWxsb3dQcml2aWxlZ2VFc2NhbGF0aW9uOiBmYWxzZQogICAgY2FwYWJpbGl0aWVzOgogICAgICBkcm9wOgogICAgICAtIEFMTAogICAgcnVuQXNHcm91cDogMTAwMAogICAgcnVuQXNVc2VyOiAxMDAwCiAgY29va2llU2VjcmV0OiBudWxsCiAgZGI6CiAgICBwYXNzd29yZDogbnVsbAogICAgcHZjOgogICAgICBhY2Nlc3NNb2RlczoKICAgICAgLSBSZWFkV3JpdGVPbmNlCiAgICAgIGFubm90YXRpb25zOiB7fQogICAgICBzZWxlY3Rvcjoge30KICAgICAgc3RvcmFnZTogMUdpCiAgICAgIHN0b3JhZ2VDbGFzc05hbWU6IG51bGwKICAgICAgc3ViUGF0aDogbnVsbAogICAgdHlwZTogc3FsaXRlLXB2YwogICAgdXBncmFkZTogbnVsbAogICAgdXJsOiBudWxsCiAgZGVwbG95bWVudFN0cmF0ZWd5OgogICAgdHlwZTogUmVjcmVhdGUKICBleGlzdGluZ1NlY3JldDogbnVsbAogIGV4dHJhQ29uZmlnOiB7fQogIGV4dHJhQ29udGFpbmVyczogW10KICBleHRyYUVudjoge30KICBleHRyYUZpbGVzOiB7fQogIGV4dHJhUG9kU3BlYzoge30KICBleHRyYVZvbHVtZU1vdW50czogW10KICBleHRyYVZvbHVtZXM6IFtdCiAgaW1hZ2U6CiAgICBuYW1lOiBxdWF5LmlvL2p1cHl0ZXJodWIvazhzLWh1YgogICAgcHVsbFBvbGljeTogbnVsbAogICAgcHVsbFNlY3JldHM6IFtdCiAgICB0YWc6IDQuMi4wCiAgaW5pdENvbnRhaW5lcnM6IFtdCiAgbGFiZWxzOiB7fQogIGxpZmVjeWNsZToge30KICBsaXZlbmVzc1Byb2JlOgogICAgZW5hYmxlZDogdHJ1ZQogICAgZmFpbHVyZVRocmVzaG9sZDogMzAKICAgIGluaXRpYWxEZWxheVNlY29uZHM6IDMwMAogICAgcGVyaW9kU2Vjb25kczogMTAKICAgIHRpbWVvdXRTZWNvbmRzOiAzCiAgbG9hZFJvbGVzOiB7fQogIG5hbWVkU2VydmVyTGltaXRQZXJVc2VyOiBudWxsCiAgbmV0d29ya1BvbGljeToKICAgIGFsbG93ZWRJbmdyZXNzUG9ydHM6IFtdCiAgICBlZ3Jlc3M6IFtdCiAgICBlZ3Jlc3NBbGxvd1J1bGVzOgogICAgICBjbG91ZE1ldGFkYXRhU2VydmVyOiB0cnVlCiAgICAgIGRuc1BvcnRzQ2xvdWRNZXRhZGF0YVNlcnZlcjogdHJ1ZQogICAgICBkbnNQb3J0c0t1YmVTeXN0ZW1OYW1lc3BhY2U6IHRydWUKICAgICAgZG5zUG9ydHNQcml2YXRlSVBzOiB0cnVlCiAgICAgIG5vblByaXZhdGVJUHM6IHRydWUKICAgICAgcHJpdmF0ZUlQczogdHJ1ZQogICAgZW5hYmxlZDogdHJ1ZQogICAgaW5ncmVzczogW10KICAgIGludGVyTmFtZXNwYWNlQWNjZXNzTGFiZWxzOiBpZ25vcmUKICBub2RlU2VsZWN0b3I6IHt9CiAgcGRiOgogICAgZW5hYmxlZDogZmFsc2UKICAgIG1heFVuYXZhaWxhYmxlOiBudWxsCiAgICBtaW5BdmFpbGFibGU6IDEKICBwb2RTZWN1cml0eUNvbnRleHQ6CiAgICBmc0dyb3VwOiAxMDAwCiAgICBydW5Bc05vblJvb3Q6IHRydWUKICAgIHNlY2NvbXBQcm9maWxlOgogICAgICB0eXBlOiBSdW50aW1lRGVmYXVsdAogIHJlYWRpbmVzc1Byb2JlOgogICAgZW5hYmxlZDogdHJ1ZQogICAgZmFpbHVyZVRocmVzaG9sZDogMTAwMAogICAgaW5pdGlhbERlbGF5U2Vjb25kczogMAogICAgcGVyaW9kU2Vjb25kczogMgogICAgdGltZW91dFNlY29uZHM6IDEKICByZWRpcmVjdFRvU2VydmVyOiBudWxsCiAgcmVzb3VyY2VzOiB7fQogIHJldmlzaW9uSGlzdG9yeUxpbWl0OiBudWxsCiAgc2VydmljZToKICAgIGFubm90YXRpb25zOiB7fQogICAgZXh0cmFQb3J0czogW10KICAgIGxvYWRCYWxhbmNlcklQOiBudWxsCiAgICBwb3J0czoKICAgICAgYXBwUHJvdG9jb2w6IG51bGwKICAgICAgbm9kZVBvcnQ6IG51bGwKICAgIHR5cGU6IENsdXN0ZXJJUAogIHNlcnZpY2VBY2NvdW50OgogICAgYW5ub3RhdGlvbnM6IHt9CiAgICBjcmVhdGU6IHRydWUKICAgIG5hbWU6IG51bGwKICBzZXJ2aWNlczoge30KICBzaHV0ZG93bk9uTG9nb3V0OiBudWxsCiAgdGVtcGxhdGVQYXRoczogW10KICB0ZW1wbGF0ZVZhcnM6IHt9CiAgdG9sZXJhdGlvbnM6IFtdCmltYWdlUHVsbFNlY3JldDoKICBhdXRvbWF0aWNSZWZlcmVuY2VJbmplY3Rpb246IHRydWUKICBjcmVhdGU6IGZhbHNlCiAgZW1haWw6IG51bGwKICBwYXNzd29yZDogbnVsbAogIHJlZ2lzdHJ5OiBudWxsCiAgdXNlcm5hbWU6IG51bGwKaW1hZ2VQdWxsU2VjcmV0czogW10KaW5ncmVzczoKICBhbm5vdGF0aW9uczoge30KICBlbmFibGVkOiBmYWxzZQogIGV4dHJhUGF0aHM6IFtdCiAgaG9zdHM6IFtdCiAgaW5ncmVzc0NsYXNzTmFtZTogbnVsbAogIHBhdGhTdWZmaXg6IG51bGwKICBwYXRoVHlwZTogUHJlZml4CiAgdGxzOiBbXQpwcmVQdWxsZXI6CiAgYW5ub3RhdGlvbnM6IHt9CiAgY29udGFpbmVyU2VjdXJpdHlDb250ZXh0OgogICAgYWxsb3dQcml2aWxlZ2VFc2NhbGF0aW9uOiBmYWxzZQogICAgY2FwYWJpbGl0aWVzOgogICAgICBkcm9wOgogICAgICAtIEFMTAogICAgcnVuQXNHcm91cDogNjU1MzQKICAgIHJ1bkFzTm9uUm9vdDogdHJ1ZQogICAgcnVuQXNVc2VyOiA2NTUzNAogICAgc2VjY29tcFByb2ZpbGU6CiAgICAgIHR5cGU6IFJ1bnRpbWVEZWZhdWx0CiAgY29udGludW91czoKICAgIGVuYWJsZWQ6IHRydWUKICAgIHNlcnZpY2VBY2NvdW50OgogICAgICBhbm5vdGF0aW9uczoge30KICAgICAgY3JlYXRlOiB0cnVlCiAgICAgIG5hbWU6IG51bGwKICBleHRyYUltYWdlczoge30KICBleHRyYVRvbGVyYXRpb25zOiBbXQogIGhvb2s6CiAgICBjb250YWluZXJTZWN1cml0eUNvbnRleHQ6CiAgICAgIGFsbG93UHJpdmlsZWdlRXNjYWxhdGlvbjogZmFsc2UKICAgICAgY2FwYWJpbGl0aWVzOgogICAgICAgIGRyb3A6CiAgICAgICAgLSBBTEwKICAgICAgcnVuQXNHcm91cDogNjU1MzQKICAgICAgcnVuQXNOb25Sb290OiB0cnVlCiAgICAgIHJ1bkFzVXNlcjogNjU1MzQKICAgICAgc2VjY29tcFByb2ZpbGU6CiAgICAgICAgdHlwZTogUnVudGltZURlZmF1bHQKICAgIGVuYWJsZWQ6IHRydWUKICAgIGltYWdlOgogICAgICBuYW1lOiBxdWF5LmlvL2p1cHl0ZXJodWIvazhzLWltYWdlLWF3YWl0ZXIKICAgICAgcHVsbFBvbGljeTogbnVsbAogICAgICBwdWxsU2VjcmV0czogW10KICAgICAgdGFnOiA0LjIuMAogICAgbm9kZVNlbGVjdG9yOiB7fQogICAgcG9kU2NoZWR1bGluZ1dhaXREdXJhdGlvbjogMTAKICAgIHB1bGxPbmx5T25DaGFuZ2VzOiB0cnVlCiAgICByZXNvdXJjZXM6IHt9CiAgICBzZXJ2aWNlQWNjb3VudDoKICAgICAgYW5ub3RhdGlvbnM6IHt9CiAgICAgIGNyZWF0ZTogdHJ1ZQogICAgICBuYW1lOiBudWxsCiAgICBzZXJ2aWNlQWNjb3VudEltYWdlUHVsbGVyOgogICAgICBhbm5vdGF0aW9uczoge30KICAgICAgY3JlYXRlOiB0cnVlCiAgICAgIG5hbWU6IG51bGwKICAgIHRvbGVyYXRpb25zOiBbXQogIGxhYmVsczoge30KICBwYXVzZToKICAgIGNvbnRhaW5lclNlY3VyaXR5Q29udGV4dDoKICAgICAgYWxsb3dQcml2aWxlZ2VFc2NhbGF0aW9uOiBmYWxzZQogICAgICBjYXBhYmlsaXRpZXM6CiAgICAgICAgZHJvcDoKICAgICAgICAtIEFMTAogICAgICBydW5Bc0dyb3VwOiA2NTUzNAogICAgICBydW5Bc05vblJvb3Q6IHRydWUKICAgICAgcnVuQXNVc2VyOiA2NTUzNAogICAgICBzZWNjb21wUHJvZmlsZToKICAgICAgICB0eXBlOiBSdW50aW1lRGVmYXVsdAogICAgaW1hZ2U6CiAgICAgIG5hbWU6IHJlZ2lzdHJ5Lms4cy5pby9wYXVzZQogICAgICBwdWxsUG9saWN5OiBudWxsCiAgICAgIHB1bGxTZWNyZXRzOiBbXQogICAgICB0YWc6ICIzLjEwIgogIHB1bGxQcm9maWxlTGlzdEltYWdlczogdHJ1ZQogIHJlc291cmNlczoge30KICByZXZpc2lvbkhpc3RvcnlMaW1pdDogbnVsbApwcm94eToKICBhbm5vdGF0aW9uczoge30KICBjaHA6CiAgICBjb250YWluZXJTZWN1cml0eUNvbnRleHQ6CiAgICAgIGFsbG93UHJpdmlsZWdlRXNjYWxhdGlvbjogZmFsc2UKICAgICAgY2FwYWJpbGl0aWVzOgogICAgICAgIGRyb3A6CiAgICAgICAgLSBBTEwKICAgICAgcnVuQXNHcm91cDogNjU1MzQKICAgICAgcnVuQXNOb25Sb290OiB0cnVlCiAgICAgIHJ1bkFzVXNlcjogNjU1MzQKICAgICAgc2VjY29tcFByb2ZpbGU6CiAgICAgICAgdHlwZTogUnVudGltZURlZmF1bHQKICAgIGRlZmF1bHRUYXJnZXQ6IG51bGwKICAgIGVycm9yVGFyZ2V0OiBudWxsCiAgICBleHRyYUNvbW1hbmRMaW5lRmxhZ3M6IFtdCiAgICBleHRyYUVudjoge30KICAgIGV4dHJhUG9kU3BlYzoge30KICAgIGltYWdlOgogICAgICBuYW1lOiBxdWF5LmlvL2p1cHl0ZXJodWIvY29uZmlndXJhYmxlLWh0dHAtcHJveHkKICAgICAgcHVsbFBvbGljeTogbnVsbAogICAgICBwdWxsU2VjcmV0czogW10KICAgICAgdGFnOiA0LjYuMwogICAgbGl2ZW5lc3NQcm9iZToKICAgICAgZW5hYmxlZDogdHJ1ZQogICAgICBmYWlsdXJlVGhyZXNob2xkOiAzMAogICAgICBpbml0aWFsRGVsYXlTZWNvbmRzOiA2MAogICAgICBwZXJpb2RTZWNvbmRzOiAxMAogICAgICB0aW1lb3V0U2Vjb25kczogMwogICAgbmV0d29ya1BvbGljeToKICAgICAgYWxsb3dlZEluZ3Jlc3NQb3J0czoKICAgICAgLSBodHRwCiAgICAgIC0gaHR0cHMKICAgICAgZWdyZXNzOiBbXQogICAgICBlZ3Jlc3NBbGxvd1J1bGVzOgogICAgICAgIGNsb3VkTWV0YWRhdGFTZXJ2ZXI6IHRydWUKICAgICAgICBkbnNQb3J0c0Nsb3VkTWV0YWRhdGFTZXJ2ZXI6IHRydWUKICAgICAgICBkbnNQb3J0c0t1YmVTeXN0ZW1OYW1lc3BhY2U6IHRydWUKICAgICAgICBkbnNQb3J0c1ByaXZhdGVJUHM6IHRydWUKICAgICAgICBub25Qcml2YXRlSVBzOiB0cnVlCiAgICAgICAgcHJpdmF0ZUlQczogdHJ1ZQogICAgICBlbmFibGVkOiB0cnVlCiAgICAgIGluZ3Jlc3M6IFtdCiAgICAgIGludGVyTmFtZXNwYWNlQWNjZXNzTGFiZWxzOiBpZ25vcmUKICAgIG5vZGVTZWxlY3Rvcjoge30KICAgIHBkYjoKICAgICAgZW5hYmxlZDogZmFsc2UKICAgICAgbWF4VW5hdmFpbGFibGU6IG51bGwKICAgICAgbWluQXZhaWxhYmxlOiAxCiAgICByZWFkaW5lc3NQcm9iZToKICAgICAgZW5hYmxlZDogdHJ1ZQogICAgICBmYWlsdXJlVGhyZXNob2xkOiAxMDAwCiAgICAgIGluaXRpYWxEZWxheVNlY29uZHM6IDAKICAgICAgcGVyaW9kU2Vjb25kczogMgogICAgICB0aW1lb3V0U2Vjb25kczogMQogICAgcmVzb3VyY2VzOiB7fQogICAgcmV2aXNpb25IaXN0b3J5TGltaXQ6IG51bGwKICAgIHRvbGVyYXRpb25zOiBbXQogIGRlcGxveW1lbnRTdHJhdGVneToKICAgIHJvbGxpbmdVcGRhdGU6IG51bGwKICAgIHR5cGU6IFJlY3JlYXRlCiAgaHR0cHM6CiAgICBlbmFibGVkOiBmYWxzZQogICAgaG9zdHM6IFtdCiAgICBsZXRzZW5jcnlwdDoKICAgICAgYWNtZVNlcnZlcjogaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2RpcmVjdG9yeQogICAgICBjb250YWN0RW1haWw6IG51bGwKICAgIG1hbnVhbDoKICAgICAgY2VydDogbnVsbAogICAgICBrZXk6IG51bGwKICAgIHNlY3JldDoKICAgICAgY3J0OiB0bHMuY3J0CiAgICAgIGtleTogdGxzLmtleQogICAgICBuYW1lOiBudWxsCiAgICB0eXBlOiBsZXRzZW5jcnlwdAogIGxhYmVsczoge30KICBzZWNyZXRTeW5jOgogICAgY29udGFpbmVyU2VjdXJpdHlDb250ZXh0OgogICAgICBhbGxvd1ByaXZpbGVnZUVzY2FsYXRpb246IGZhbHNlCiAgICAgIGNhcGFiaWxpdGllczoKICAgICAgICBkcm9wOgogICAgICAgIC0gQUxMCiAgICAgIHJ1bkFzR3JvdXA6IDY1NTM0CiAgICAgIHJ1bkFzTm9uUm9vdDogdHJ1ZQogICAgICBydW5Bc1VzZXI6IDY1NTM0CiAgICAgIHNlY2NvbXBQcm9maWxlOgogICAgICAgIHR5cGU6IFJ1bnRpbWVEZWZhdWx0CiAgICBpbWFnZToKICAgICAgbmFtZTogcXVheS5pby9qdXB5dGVyaHViL2s4cy1zZWNyZXQtc3luYwogICAgICBwdWxsUG9saWN5OiBudWxsCiAgICAgIHB1bGxTZWNyZXRzOiBbXQogICAgICB0YWc6IDQuMi4wCiAgICByZXNvdXJjZXM6IHt9CiAgc2VjcmV0VG9rZW46IG51bGwKICBzZXJ2aWNlOgogICAgYW5ub3RhdGlvbnM6IHt9CiAgICBkaXNhYmxlSHR0cFBvcnQ6IGZhbHNlCiAgICBleHRyYVBvcnRzOiBbXQogICAgbGFiZWxzOiB7fQogICAgbG9hZEJhbGFuY2VySVA6IG51bGwKICAgIGxvYWRCYWxhbmNlclNvdXJjZVJhbmdlczogW10KICAgIG5vZGVQb3J0czoKICAgICAgaHR0cDogbnVsbAogICAgICBodHRwczogbnVsbAogICAgdHlwZTogTG9hZEJhbGFuY2VyCiAgdHJhZWZpazoKICAgIGNvbnRhaW5lclNlY3VyaXR5Q29udGV4dDoKICAgICAgYWxsb3dQcml2aWxlZ2VFc2NhbGF0aW9uOiBmYWxzZQogICAgICBjYXBhYmlsaXRpZXM6CiAgICAgICAgZHJvcDoKICAgICAgICAtIEFMTAogICAgICBydW5Bc0dyb3VwOiA2NTUzNAogICAgICBydW5Bc05vblJvb3Q6IHRydWUKICAgICAgcnVuQXNVc2VyOiA2NTUzNAogICAgICBzZWNjb21wUHJvZmlsZToKICAgICAgICB0eXBlOiBSdW50aW1lRGVmYXVsdAogICAgZXh0cmFEeW5hbWljQ29uZmlnOiB7fQogICAgZXh0cmFFbnY6IHt9CiAgICBleHRyYUluaXRDb250YWluZXJzOiBbXQogICAgZXh0cmFQb2RTcGVjOiB7fQogICAgZXh0cmFQb3J0czogW10KICAgIGV4dHJhU3RhdGljQ29uZmlnOiB7fQogICAgZXh0cmFWb2x1bWVNb3VudHM6IFtdCiAgICBleHRyYVZvbHVtZXM6IFtdCiAgICBoc3RzOgogICAgICBpbmNsdWRlU3ViZG9tYWluczogZmFsc2UKICAgICAgbWF4QWdlOiAxNTcyNDgwMAogICAgICBwcmVsb2FkOiBmYWxzZQogICAgaW1hZ2U6CiAgICAgIG5hbWU6IHRyYWVmaWsKICAgICAgcHVsbFBvbGljeTogbnVsbAogICAgICBwdWxsU2VjcmV0czogW10KICAgICAgdGFnOiB2My4zLjUKICAgIGxhYmVsczoge30KICAgIG5ldHdvcmtQb2xpY3k6CiAgICAgIGFsbG93ZWRJbmdyZXNzUG9ydHM6CiAgICAgIC0gaHR0cAogICAgICAtIGh0dHBzCiAgICAgIGVncmVzczogW10KICAgICAgZWdyZXNzQWxsb3dSdWxlczoKICAgICAgICBjbG91ZE1ldGFkYXRhU2VydmVyOiB0cnVlCiAgICAgICAgZG5zUG9ydHNDbG91ZE1ldGFkYXRhU2VydmVyOiB0cnVlCiAgICAgICAgZG5zUG9ydHNLdWJlU3lzdGVtTmFtZXNwYWNlOiB0cnVlCiAgICAgICAgZG5zUG9ydHNQcml2YXRlSVBzOiB0cnVlCiAgICAgICAgbm9uUHJpdmF0ZUlQczogdHJ1ZQogICAgICAgIHByaXZhdGVJUHM6IHRydWUKICAgICAgZW5hYmxlZDogdHJ1ZQogICAgICBpbmdyZXNzOiBbXQogICAgICBpbnRlck5hbWVzcGFjZUFjY2Vzc0xhYmVsczogaWdub3JlCiAgICBub2RlU2VsZWN0b3I6IHt9CiAgICBwZGI6CiAgICAgIGVuYWJsZWQ6IGZhbHNlCiAgICAgIG1heFVuYXZhaWxhYmxlOiBudWxsCiAgICAgIG1pbkF2YWlsYWJsZTogMQogICAgcmVzb3VyY2VzOiB7fQogICAgcmV2aXNpb25IaXN0b3J5TGltaXQ6IG51bGwKICAgIHNlcnZpY2VBY2NvdW50OgogICAgICBhbm5vdGF0aW9uczoge30KICAgICAgY3JlYXRlOiB0cnVlCiAgICAgIG5hbWU6IG51bGwKICAgIHRvbGVyYXRpb25zOiBbXQpyYmFjOgogIGNyZWF0ZTogdHJ1ZQpzY2hlZHVsaW5nOgogIGNvcmVQb2RzOgogICAgbm9kZUFmZmluaXR5OgogICAgICBtYXRjaE5vZGVQdXJwb3NlOiBwcmVmZXIKICAgIHRvbGVyYXRpb25zOgogICAgLSBlZmZlY3Q6IE5vU2NoZWR1bGUKICAgICAga2V5OiBodWIuanVweXRlci5vcmcvZGVkaWNhdGVkCiAgICAgIG9wZXJhdG9yOiBFcXVhbAogICAgICB2YWx1ZTogY29yZQogICAgLSBlZmZlY3Q6IE5vU2NoZWR1bGUKICAgICAga2V5OiBodWIuanVweXRlci5vcmdfZGVkaWNhdGVkCiAgICAgIG9wZXJhdG9yOiBFcXVhbAogICAgICB2YWx1ZTogY29yZQogIHBvZFByaW9yaXR5OgogICAgZGVmYXVsdFByaW9yaXR5OiAwCiAgICBlbmFibGVkOiBmYWxzZQogICAgZ2xvYmFsRGVmYXVsdDogZmFsc2UKICAgIGltYWdlUHVsbGVyUHJpb3JpdHk6IC01CiAgICB1c2VyUGxhY2Vob2xkZXJQcmlvcml0eTogLTEwCiAgdXNlclBsYWNlaG9sZGVyOgogICAgYW5ub3RhdGlvbnM6IHt9CiAgICBjb250YWluZXJTZWN1cml0eUNvbnRleHQ6CiAgICAgIGFsbG93UHJpdmlsZWdlRXNjYWxhdGlvbjogZmFsc2UKICAgICAgY2FwYWJpbGl0aWVzOgogICAgICAgIGRyb3A6CiAgICAgICAgLSBBTEwKICAgICAgcnVuQXNHcm91cDogNjU1MzQKICAgICAgcnVuQXNOb25Sb290OiB0cnVlCiAgICAgIHJ1bkFzVXNlcjogNjU1MzQKICAgICAgc2VjY29tcFByb2ZpbGU6CiAgICAgICAgdHlwZTogUnVudGltZURlZmF1bHQKICAgIGVuYWJsZWQ6IHRydWUKICAgIGV4dHJhUG9kU3BlYzoge30KICAgIGltYWdlOgogICAgICBuYW1lOiByZWdpc3RyeS5rOHMuaW8vcGF1c2UKICAgICAgcHVsbFBvbGljeTogbnVsbAogICAgICBwdWxsU2VjcmV0czogW10KICAgICAgdGFnOiAiMy4xMCIKICAgIGxhYmVsczoge30KICAgIHJlcGxpY2FzOiAwCiAgICByZXNvdXJjZXM6IHt9CiAgICByZXZpc2lvbkhpc3RvcnlMaW1pdDogbnVsbAogIHVzZXJQb2RzOgogICAgbm9kZUFmZmluaXR5OgogICAgICBtYXRjaE5vZGVQdXJwb3NlOiBwcmVmZXIKICAgIHRvbGVyYXRpb25zOgogICAgLSBlZmZlY3Q6IE5vU2NoZWR1bGUKICAgICAga2V5OiBodWIuanVweXRlci5vcmcvZGVkaWNhdGVkCiAgICAgIG9wZXJhdG9yOiBFcXVhbAogICAgICB2YWx1ZTogdXNlcgogICAgLSBlZmZlY3Q6IE5vU2NoZWR1bGUKICAgICAga2V5OiBodWIuanVweXRlci5vcmdfZGVkaWNhdGVkCiAgICAgIG9wZXJhdG9yOiBFcXVhbAogICAgICB2YWx1ZTogdXNlcgogIHVzZXJTY2hlZHVsZXI6CiAgICBhbm5vdGF0aW9uczoge30KICAgIGNvbnRhaW5lclNlY3VyaXR5Q29udGV4dDoKICAgICAgYWxsb3dQcml2aWxlZ2VFc2NhbGF0aW9uOiBmYWxzZQogICAgICBjYXBhYmlsaXRpZXM6CiAgICAgICAgZHJvcDoKICAgICAgICAtIEFMTAogICAgICBydW5Bc0dyb3VwOiA2NTUzNAogICAgICBydW5Bc05vblJvb3Q6IHRydWUKICAgICAgcnVuQXNVc2VyOiA2NTUzNAogICAgICBzZWNjb21wUHJvZmlsZToKICAgICAgICB0eXBlOiBSdW50aW1lRGVmYXVsdAogICAgZW5hYmxlZDogdHJ1ZQogICAgZXh0cmFQb2RTcGVjOiB7fQogICAgaW1hZ2U6CiAgICAgIG5hbWU6IHJlZ2lzdHJ5Lms4cy5pby9rdWJlLXNjaGVkdWxlcgogICAgICBwdWxsUG9saWN5OiBudWxsCiAgICAgIHB1bGxTZWNyZXRzOiBbXQogICAgICB0YWc6IHYxLjMwLjExCiAgICBsYWJlbHM6IHt9CiAgICBsb2dMZXZlbDogNAogICAgbm9kZVNlbGVjdG9yOiB7fQogICAgcGRiOgogICAgICBlbmFibGVkOiB0cnVlCiAgICAgIG1heFVuYXZhaWxhYmxlOiAxCiAgICAgIG1pbkF2YWlsYWJsZTogbnVsbAogICAgcGx1Z2luQ29uZmlnOgogICAgLSBhcmdzOgogICAgICAgIHNjb3JpbmdTdHJhdGVneToKICAgICAgICAgIHJlc291cmNlczoKICAgICAgICAgIC0gbmFtZTogY3B1CiAgICAgICAgICAgIHdlaWdodDogMQogICAgICAgICAgLSBuYW1lOiBtZW1vcnkKICAgICAgICAgICAgd2VpZ2h0OiAxCiAgICAgICAgICB0eXBlOiBNb3N0QWxsb2NhdGVkCiAgICAgIG5hbWU6IE5vZGVSZXNvdXJjZXNGaXQKICAgIHBsdWdpbnM6CiAgICAgIHNjb3JlOgogICAgICAgIGRpc2FibGVkOgogICAgICAgIC0gbmFtZTogTm9kZVJlc291cmNlc0JhbGFuY2VkQWxsb2NhdGlvbgogICAgICAgIC0gbmFtZTogTm9kZUFmZmluaXR5CiAgICAgICAgLSBuYW1lOiBJbnRlclBvZEFmZmluaXR5CiAgICAgICAgLSBuYW1lOiBOb2RlUmVzb3VyY2VzRml0CiAgICAgICAgLSBuYW1lOiBJbWFnZUxvY2FsaXR5CiAgICAgICAgZW5hYmxlZDoKICAgICAgICAtIG5hbWU6IE5vZGVBZmZpbml0eQogICAgICAgICAgd2VpZ2h0OiAxNDYzMQogICAgICAgIC0gbmFtZTogSW50ZXJQb2RBZmZpbml0eQogICAgICAgICAgd2VpZ2h0OiAxMzMxCiAgICAgICAgLSBuYW1lOiBOb2RlUmVzb3VyY2VzRml0CiAgICAgICAgICB3ZWlnaHQ6IDEyMQogICAgICAgIC0gbmFtZTogSW1hZ2VMb2NhbGl0eQogICAgICAgICAgd2VpZ2h0OiAxMQogICAgcmVwbGljYXM6IDIKICAgIHJlc291cmNlczoge30KICAgIHJldmlzaW9uSGlzdG9yeUxpbWl0OiBudWxsCiAgICBzZXJ2aWNlQWNjb3VudDoKICAgICAgYW5ub3RhdGlvbnM6IHt9CiAgICAgIGNyZWF0ZTogdHJ1ZQogICAgICBuYW1lOiBudWxsCiAgICB0b2xlcmF0aW9uczogW10Kc2luZ2xldXNlcjoKICBhbGxvd1ByaXZpbGVnZUVzY2FsYXRpb246IGZhbHNlCiAgY2xvdWRNZXRhZGF0YToKICAgIGJsb2NrV2l0aElwdGFibGVzOiB0cnVlCiAgICBpcDogMTY5LjI1NC4xNjkuMjU0CiAgY21kOiBqdXB5dGVyaHViLXNpbmdsZXVzZXIKICBjcHU6CiAgICBndWFyYW50ZWU6IG51bGwKICAgIGxpbWl0OiBudWxsCiAgZGVmYXVsdFVybDogbnVsbAogIGV2ZW50czogdHJ1ZQogIGV4dHJhQW5ub3RhdGlvbnM6IHt9CiAgZXh0cmFDb250YWluZXJzOiBbXQogIGV4dHJhRW52OiB7fQogIGV4dHJhRmlsZXM6IHt9CiAgZXh0cmFMYWJlbHM6CiAgICBodWIuanVweXRlci5vcmcvbmV0d29yay1hY2Nlc3MtaHViOiAidHJ1ZSIKICBleHRyYU5vZGVBZmZpbml0eToKICAgIHByZWZlcnJlZDogW10KICAgIHJlcXVpcmVkOiBbXQogIGV4dHJhUG9kQWZmaW5pdHk6CiAgICBwcmVmZXJyZWQ6IFtdCiAgICByZXF1aXJlZDogW10KICBleHRyYVBvZEFudGlBZmZpbml0eToKICAgIHByZWZlcnJlZDogW10KICAgIHJlcXVpcmVkOiBbXQogIGV4dHJhUG9kQ29uZmlnOiB7fQogIGV4dHJhUmVzb3VyY2U6CiAgICBndWFyYW50ZWVzOiB7fQogICAgbGltaXRzOiB7fQogIGV4dHJhVG9sZXJhdGlvbnM6IFtdCiAgZnNHaWQ6IDEwMAogIGltYWdlOgogICAgbmFtZTogcXVheS5pby9qdXB5dGVyaHViL2s4cy1zaW5nbGV1c2VyLXNhbXBsZQogICAgcHVsbFBvbGljeTogbnVsbAogICAgcHVsbFNlY3JldHM6IFtdCiAgICB0YWc6IDQuMi4wCiAgaW5pdENvbnRhaW5lcnM6IFtdCiAgbGlmZWN5Y2xlSG9va3M6IHt9CiAgbWVtb3J5OgogICAgZ3VhcmFudGVlOiAxRwogICAgbGltaXQ6IG51bGwKICBuZXR3b3JrUG9saWN5OgogICAgYWxsb3dlZEluZ3Jlc3NQb3J0czogW10KICAgIGVncmVzczogW10KICAgIGVncmVzc0FsbG93UnVsZXM6CiAgICAgIGNsb3VkTWV0YWRhdGFTZXJ2ZXI6IGZhbHNlCiAgICAgIGRuc1BvcnRzQ2xvdWRNZXRhZGF0YVNlcnZlcjogdHJ1ZQogICAgICBkbnNQb3J0c0t1YmVTeXN0ZW1OYW1lc3BhY2U6IHRydWUKICAgICAgZG5zUG9ydHNQcml2YXRlSVBzOiB0cnVlCiAgICAgIG5vblByaXZhdGVJUHM6IHRydWUKICAgICAgcHJpdmF0ZUlQczogZmFsc2UKICAgIGVuYWJsZWQ6IHRydWUKICAgIGluZ3Jlc3M6IFtdCiAgICBpbnRlck5hbWVzcGFjZUFjY2Vzc0xhYmVsczogaWdub3JlCiAgbmV0d29ya1Rvb2xzOgogICAgaW1hZ2U6CiAgICAgIG5hbWU6IHF1YXkuaW8vanVweXRlcmh1Yi9rOHMtbmV0d29yay10b29scwogICAgICBwdWxsUG9saWN5OiBudWxsCiAgICAgIHB1bGxTZWNyZXRzOiBbXQogICAgICB0YWc6IDQuMi4wCiAgICByZXNvdXJjZXM6IHt9CiAgbm9kZVNlbGVjdG9yOiB7fQogIHBvZE5hbWVUZW1wbGF0ZTogbnVsbAogIHByb2ZpbGVMaXN0OiBbXQogIHNlcnZpY2VBY2NvdW50TmFtZTogbnVsbAogIHN0YXJ0VGltZW91dDogMzAwCiAgc3RvcmFnZToKICAgIGNhcGFjaXR5OiAxMEdpCiAgICBkeW5hbWljOgogICAgICBwdmNOYW1lVGVtcGxhdGU6IG51bGwKICAgICAgc3RvcmFnZUFjY2Vzc01vZGVzOgogICAgICAtIFJlYWRXcml0ZU9uY2UKICAgICAgc3RvcmFnZUNsYXNzOiBudWxsCiAgICAgIHN1YlBhdGg6IG51bGwKICAgICAgdm9sdW1lTmFtZVRlbXBsYXRlOiB2b2x1bWUte3VzZXJfc2VydmVyfQogICAgZXh0cmFMYWJlbHM6IHt9CiAgICBleHRyYVZvbHVtZU1vdW50czogW10KICAgIGV4dHJhVm9sdW1lczogW10KICAgIGhvbWVNb3VudFBhdGg6IC9ob21lL2pvdnlhbgogICAgc3RhdGljOgogICAgICBwdmNOYW1lOiBudWxsCiAgICAgIHN1YlBhdGg6ICd7dXNlcm5hbWV9JwogICAgdHlwZTogZHluYW1pYwogIHVpZDogMTAwMA=="
+
+  # Any JupyterHub Services api_tokens are exposed in this k8s Secret as a
+  # convinience for external services running in the k8s cluster that could
+  # mount them directly from this k8s Secret.
+
+  # During Helm template rendering, these values that can be autogenerated for
+  # users are set using the following logic:
+  #
+  # 1. Use chart configuration's value
+  # 2. Use k8s Secret's value
+  # 3. Use a new autogenerated value
+  #
+  # hub.config.ConfigurableHTTPProxy.auth_token: for hub to proxy-api authorization (JupyterHub.proxy_auth_token is deprecated)
+  # hub.config.JupyterHub.cookie_secret:         for cookie encryption
+  # hub.config.CryptKeeper.keys:                 for auth state encryption
+  #
+  hub.config.ConfigurableHTTPProxy.auth_token: "aExPNVNqWVFlaTVjbHZEYWxpQml1OWZjNHJaUGhMQ2FqdlZjSVlLaWlXR2xRODVXUmtYVmUwOUlUSWdob2dmWg=="
+  hub.config.JupyterHub.cookie_secret: "YTBjZmFmZDFhNTIxZTY2OTAwMjU4ZWVjNzdlYjNmNjllZmY2M2MxMjRjMGY1ZjdmMTI2NmI4YmM2OGYxOWYyZg=="
+  hub.config.CryptKeeper.keys: "ZjY0MTQxNTUyYWI5Y2M2NjAwNjU3MTQ3ZmE4MGE2ZWFmOWRjNDExYTM2ZmJjMGEwMDU1MmJkYWZiOTIxOTFlMw=="
+---
+# Source: jupyterhub/templates/hub/configmap.yaml
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: hub
+  labels:
+    component: hub
+    app.kubernetes.io/component: hub
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+data:
+  fullname: ""
+  fullname-dash: ""
+  hub: "hub"
+  hub-serviceaccount: "hub"
+  hub-existing-secret: ""
+  hub-existing-secret-or-default: "hub"
+  hub-pvc: "hub-db-dir"
+  proxy: "proxy"
+  proxy-api: "proxy-api"
+  proxy-http: "proxy-http"
+  proxy-public: "proxy-public"
+  proxy-public-tls: "proxy-public-tls-acme"
+  proxy-public-manual-tls: "proxy-public-manual-tls"
+  autohttps: "autohttps"
+  autohttps-serviceaccount: "autohttps"
+  user-scheduler-deploy: "user-scheduler"
+  user-scheduler-serviceaccount: "user-scheduler"
+  user-scheduler-lock: "user-scheduler-lock"
+  user-placeholder: "user-placeholder"
+  image-puller-priority: "jupyterhub-image-puller-priority"
+  hook-image-awaiter: "hook-image-awaiter"
+  hook-image-awaiter-serviceaccount: "hook-image-awaiter"
+  hook-image-puller: "hook-image-puller"
+  hook-image-puller-serviceaccount: "hook-image-puller"
+  continuous-image-puller: "continuous-image-puller"
+  continuous-image-puller-serviceaccount: "continuous-image-puller"
+  singleuser: "singleuser"
+  image-pull-secret: "image-pull-secret"
+  ingress: "jupyterhub"
+  priority: "jupyterhub-default-priority"
+  user-placeholder-priority: "jupyterhub-user-placeholder-priority"
+  user-scheduler: "jupyterhub-user-scheduler"
+  jupyterhub_config.py: |
+    # load the config object (satisfies linters)
+    c = get_config()  # noqa
+  
+    import glob
+    import os
+    import re
+    import sys
+  
+    from jupyterhub.utils import url_path_join
+    from kubernetes_asyncio import client
+    from tornado.httpclient import AsyncHTTPClient
+  
+    # Make sure that modules placed in the same directory as the jupyterhub config are added to the pythonpath
+    configuration_directory = os.path.dirname(os.path.realpath(__file__))
+    sys.path.insert(0, configuration_directory)
+  
+    from z2jh import (
+        get_config,
+        get_name,
+        get_name_env,
+        get_secret_value,
+        set_config_if_not_none,
+    )
+  
+  
+    def camelCaseify(s):
+        """convert snake_case to camelCase
+  
+        For the common case where some_value is set from someValue
+        so we don't have to specify the name twice.
+        """
+        return re.sub(r"_([a-z])", lambda m: m.group(1).upper(), s)
+  
+  
+    # Configure JupyterHub to use the curl backend for making HTTP requests,
+    # rather than the pure-python implementations. The default one starts
+    # being too slow to make a large number of requests to the proxy API
+    # at the rate required.
+    AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient")
+  
+    c.JupyterHub.spawner_class = "kubespawner.KubeSpawner"
+  
+    # Connect to a proxy running in a different pod. Note that *_SERVICE_*
+    # environment variables are set by Kubernetes for Services
+    c.ConfigurableHTTPProxy.api_url = (
+        f'http://{get_name("proxy-api")}:{get_name_env("proxy-api", "_SERVICE_PORT")}'
+    )
+    c.ConfigurableHTTPProxy.should_start = False
+  
+    # Do not shut down user pods when hub is restarted
+    c.JupyterHub.cleanup_servers = False
+  
+    # Check that the proxy has routes appropriately setup
+    c.JupyterHub.last_activity_interval = 60
+  
+    # Don't wait at all before redirecting a spawning user to the progress page
+    c.JupyterHub.tornado_settings = {
+        "slow_spawn_timeout": 0,
+    }
+  
+  
+    # configure the hub db connection
+    db_type = get_config("hub.db.type")
+    if db_type == "sqlite-pvc":
+        c.JupyterHub.db_url = "sqlite:///jupyterhub.sqlite"
+    elif db_type == "sqlite-memory":
+        c.JupyterHub.db_url = "sqlite://"
+    else:
+        set_config_if_not_none(c.JupyterHub, "db_url", "hub.db.url")
+    db_password = get_secret_value("hub.db.password", None)
+    if db_password is not None:
+        if db_type == "mysql":
+            os.environ["MYSQL_PWD"] = db_password
+        elif db_type == "postgres":
+            os.environ["PGPASSWORD"] = db_password
+        else:
+            print(f"Warning: hub.db.password is ignored for hub.db.type={db_type}")
+  
+  
+    # c.JupyterHub configuration from Helm chart's configmap
+    for trait, cfg_key in (
+        ("concurrent_spawn_limit", None),
+        ("active_server_limit", None),
+        ("base_url", None),
+        ("allow_named_servers", None),
+        ("named_server_limit_per_user", None),
+        ("authenticate_prometheus", None),
+        ("redirect_to_server", None),
+        ("shutdown_on_logout", None),
+        ("template_paths", None),
+        ("template_vars", None),
+    ):
+        if cfg_key is None:
+            cfg_key = camelCaseify(trait)
+        set_config_if_not_none(c.JupyterHub, trait, "hub." + cfg_key)
+  
+    # hub_bind_url configures what the JupyterHub process within the hub pod's
+    # container should listen to.
+    hub_container_port = 8081
+    c.JupyterHub.hub_bind_url = f"http://:{hub_container_port}"
+  
+    # hub_connect_url is the URL for connecting to the hub for use by external
+    # JupyterHub services such as the proxy. Note that *_SERVICE_* environment
+    # variables are set by Kubernetes for Services.
+    c.JupyterHub.hub_connect_url = (
+        f'http://{get_name("hub")}:{get_name_env("hub", "_SERVICE_PORT")}'
+    )
+  
+    # implement common labels
+    # This mimics the jupyterhub.commonLabels helper, but declares managed-by to
+    # kubespawner instead of helm.
+    #
+    # The labels app and release are old labels enabled to be deleted in z2jh 5, but
+    # for now retained to avoid a breaking change in z2jh 4 that would force user
+    # server restarts. Restarts would be required because NetworkPolicy resources
+    # must select old/new pods with labels that then needs to be seen on both
+    # old/new pods, and we want these resources to keep functioning for old/new user
+    # server pods during an upgrade.
+    #
+    common_labels = c.KubeSpawner.common_labels = {}
+    common_labels["app.kubernetes.io/name"] = common_labels["app"] = get_config(
+        "nameOverride",
+        default=get_config("Chart.Name", "jupyterhub"),
+    )
+    release = get_config("Release.Name")
+    if release:
+        common_labels["app.kubernetes.io/instance"] = common_labels["release"] = release
+    chart_name = get_config("Chart.Name")
+    chart_version = get_config("Chart.Version")
+    if chart_name and chart_version:
+        common_labels["helm.sh/chart"] = common_labels["chart"] = (
+            f"{chart_name}-{chart_version.replace('+', '_')}"
+        )
+    common_labels["app.kubernetes.io/managed-by"] = "kubespawner"
+  
+    c.KubeSpawner.namespace = os.environ.get("POD_NAMESPACE", "default")
+  
+    # Max number of consecutive failures before the Hub restarts itself
+    set_config_if_not_none(
+        c.Spawner,
+        "consecutive_failure_limit",
+        "hub.consecutiveFailureLimit",
+    )
+  
+    for trait, cfg_key in (
+        ("pod_name_template", None),
+        ("start_timeout", None),
+        ("image_pull_policy", "image.pullPolicy"),
+        # ('image_pull_secrets', 'image.pullSecrets'), # Managed manually below
+        ("events_enabled", "events"),
+        ("extra_labels", None),
+        ("extra_annotations", None),
+        # ("allow_privilege_escalation", None), # Managed manually below
+        ("uid", None),
+        ("fs_gid", None),
+        ("service_account", "serviceAccountName"),
+        ("storage_extra_labels", "storage.extraLabels"),
+        # ("tolerations", "extraTolerations"), # Managed manually below
+        ("node_selector", None),
+        ("node_affinity_required", "extraNodeAffinity.required"),
+        ("node_affinity_preferred", "extraNodeAffinity.preferred"),
+        ("pod_affinity_required", "extraPodAffinity.required"),
+        ("pod_affinity_preferred", "extraPodAffinity.preferred"),
+        ("pod_anti_affinity_required", "extraPodAntiAffinity.required"),
+        ("pod_anti_affinity_preferred", "extraPodAntiAffinity.preferred"),
+        ("lifecycle_hooks", None),
+        ("init_containers", None),
+        ("extra_containers", None),
+        ("mem_limit", "memory.limit"),
+        ("mem_guarantee", "memory.guarantee"),
+        ("cpu_limit", "cpu.limit"),
+        ("cpu_guarantee", "cpu.guarantee"),
+        ("extra_resource_limits", "extraResource.limits"),
+        ("extra_resource_guarantees", "extraResource.guarantees"),
+        ("environment", "extraEnv"),
+        ("profile_list", None),
+        ("extra_pod_config", None),
+    ):
+        if cfg_key is None:
+            cfg_key = camelCaseify(trait)
+        set_config_if_not_none(c.KubeSpawner, trait, "singleuser." + cfg_key)
+  
+    image = get_config("singleuser.image.name")
+    if image:
+        tag = get_config("singleuser.image.tag")
+        if tag:
+            image = f"{image}:{tag}"
+  
+        c.KubeSpawner.image = image
+  
+    # allow_privilege_escalation defaults to False in KubeSpawner 2+. Since its a
+    # property where None, False, and True all are valid values that users of the
+    # Helm chart may want to set, we can't use the set_config_if_not_none helper
+    # function as someone may want to override the default False value to None.
+    #
+    c.KubeSpawner.allow_privilege_escalation = get_config(
+        "singleuser.allowPrivilegeEscalation"
+    )
+  
+    # Combine imagePullSecret.create (single), imagePullSecrets (list), and
+    # singleuser.image.pullSecrets (list).
+    image_pull_secrets = []
+    if get_config("imagePullSecret.automaticReferenceInjection") and get_config(
+        "imagePullSecret.create"
+    ):
+        image_pull_secrets.append(get_name("image-pull-secret"))
+    if get_config("imagePullSecrets"):
+        image_pull_secrets.extend(get_config("imagePullSecrets"))
+    if get_config("singleuser.image.pullSecrets"):
+        image_pull_secrets.extend(get_config("singleuser.image.pullSecrets"))
+    if image_pull_secrets:
+        c.KubeSpawner.image_pull_secrets = image_pull_secrets
+  
+    # scheduling:
+    if get_config("scheduling.userScheduler.enabled"):
+        c.KubeSpawner.scheduler_name = get_name("user-scheduler")
+    if get_config("scheduling.podPriority.enabled"):
+        c.KubeSpawner.priority_class_name = get_name("priority")
+  
+    # add node-purpose affinity
+    match_node_purpose = get_config("scheduling.userPods.nodeAffinity.matchNodePurpose")
+    if match_node_purpose:
+        node_selector = dict(
+            matchExpressions=[
+                dict(
+                    key="hub.jupyter.org/node-purpose",
+                    operator="In",
+                    values=["user"],
+                )
+            ],
+        )
+        if match_node_purpose == "prefer":
+            c.KubeSpawner.node_affinity_preferred.append(
+                dict(
+                    weight=100,
+                    preference=node_selector,
+                ),
+            )
+        elif match_node_purpose == "require":
+            c.KubeSpawner.node_affinity_required.append(node_selector)
+        elif match_node_purpose == "ignore":
+            pass
+        else:
+            raise ValueError(
+                f"Unrecognized value for matchNodePurpose: {match_node_purpose}"
+            )
+  
+    # Combine the common tolerations for user pods with singleuser tolerations
+    scheduling_user_pods_tolerations = get_config("scheduling.userPods.tolerations", [])
+    singleuser_extra_tolerations = get_config("singleuser.extraTolerations", [])
+    tolerations = scheduling_user_pods_tolerations + singleuser_extra_tolerations
+    if tolerations:
+        c.KubeSpawner.tolerations = tolerations
+  
+    # Configure dynamically provisioning pvc
+    storage_type = get_config("singleuser.storage.type")
+    if storage_type == "dynamic":
+        pvc_name_template = get_config("singleuser.storage.dynamic.pvcNameTemplate")
+        if pvc_name_template:
+            c.KubeSpawner.pvc_name_template = pvc_name_template
+        volume_name_template = get_config("singleuser.storage.dynamic.volumeNameTemplate")
+        c.KubeSpawner.storage_pvc_ensure = True
+        set_config_if_not_none(
+            c.KubeSpawner, "storage_class", "singleuser.storage.dynamic.storageClass"
+        )
+        set_config_if_not_none(
+            c.KubeSpawner,
+            "storage_access_modes",
+            "singleuser.storage.dynamic.storageAccessModes",
+        )
+        set_config_if_not_none(
+            c.KubeSpawner, "storage_capacity", "singleuser.storage.capacity"
+        )
+  
+        # Add volumes to singleuser pods
+        c.KubeSpawner.volumes = [
+            {
+                "name": volume_name_template,
+                "persistentVolumeClaim": {"claimName": "{pvc_name}"},
+            }
+        ]
+        c.KubeSpawner.volume_mounts = [
+            {
+                "mountPath": get_config("singleuser.storage.homeMountPath"),
+                "name": volume_name_template,
+                "subPath": get_config("singleuser.storage.dynamic.subPath"),
+            }
+        ]
+    elif storage_type == "static":
+        pvc_claim_name = get_config("singleuser.storage.static.pvcName")
+        c.KubeSpawner.volumes = [
+            {"name": "home", "persistentVolumeClaim": {"claimName": pvc_claim_name}}
+        ]
+  
+        c.KubeSpawner.volume_mounts = [
+            {
+                "mountPath": get_config("singleuser.storage.homeMountPath"),
+                "name": "home",
+                "subPath": get_config("singleuser.storage.static.subPath"),
+            }
+        ]
+  
+    # Inject singleuser.extraFiles as volumes and volumeMounts with data loaded from
+    # the dedicated k8s Secret prepared to hold the extraFiles actual content.
+    extra_files = get_config("singleuser.extraFiles", {})
+    if extra_files:
+        volume = {
+            "name": "files",
+        }
+        items = []
+        for file_key, file_details in extra_files.items():
+            # Each item is a mapping of a key in the k8s Secret to a path in this
+            # abstract volume, the goal is to enable us to set the mode /
+            # permissions only though so we don't change the mapping.
+            item = {
+                "key": file_key,
+                "path": file_key,
+            }
+            if "mode" in file_details:
+                item["mode"] = file_details["mode"]
+            items.append(item)
+        volume["secret"] = {
+            "secretName": get_name("singleuser"),
+            "items": items,
+        }
+        c.KubeSpawner.volumes.append(volume)
+  
+        volume_mounts = []
+        for file_key, file_details in extra_files.items():
+            volume_mounts.append(
+                {
+                    "mountPath": file_details["mountPath"],
+                    "subPath": file_key,
+                    "name": "files",
+                }
+            )
+        c.KubeSpawner.volume_mounts.extend(volume_mounts)
+  
+    # Inject extraVolumes / extraVolumeMounts
+    c.KubeSpawner.volumes.extend(get_config("singleuser.storage.extraVolumes", []))
+    c.KubeSpawner.volume_mounts.extend(
+        get_config("singleuser.storage.extraVolumeMounts", [])
+    )
+  
+    c.JupyterHub.services = []
+    c.JupyterHub.load_roles = []
+  
+    # jupyterhub-idle-culler's permissions are scoped to what it needs only, see
+    # https://github.com/jupyterhub/jupyterhub-idle-culler#permissions.
+    #
+    if get_config("cull.enabled", False):
+        jupyterhub_idle_culler_role = {
+            "name": "jupyterhub-idle-culler",
+            "scopes": [
+                "list:users",
+                "read:users:activity",
+                "read:servers",
+                "delete:servers",
+                # "admin:users", # dynamically added if --cull-users is passed
+            ],
+            # assign the role to a jupyterhub service, so it gains these permissions
+            "services": ["jupyterhub-idle-culler"],
+        }
+  
+        cull_cmd = ["python3", "-m", "jupyterhub_idle_culler"]
+        base_url = c.JupyterHub.get("base_url", "/")
+        cull_cmd.append("--url=http://localhost:8081" + url_path_join(base_url, "hub/api"))
+  
+        cull_timeout = get_config("cull.timeout")
+        if cull_timeout:
+            cull_cmd.append(f"--timeout={cull_timeout}")
+  
+        cull_every = get_config("cull.every")
+        if cull_every:
+            cull_cmd.append(f"--cull-every={cull_every}")
+  
+        cull_concurrency = get_config("cull.concurrency")
+        if cull_concurrency:
+            cull_cmd.append(f"--concurrency={cull_concurrency}")
+  
+        if get_config("cull.users"):
+            cull_cmd.append("--cull-users")
+            jupyterhub_idle_culler_role["scopes"].append("admin:users")
+  
+        if not get_config("cull.adminUsers"):
+            cull_cmd.append("--cull-admin-users=false")
+  
+        if get_config("cull.removeNamedServers"):
+            cull_cmd.append("--remove-named-servers")
+  
+        cull_max_age = get_config("cull.maxAge")
+        if cull_max_age:
+            cull_cmd.append(f"--max-age={cull_max_age}")
+  
+        c.JupyterHub.services.append(
+            {
+                "name": "jupyterhub-idle-culler",
+                "command": cull_cmd,
+            }
+        )
+        c.JupyterHub.load_roles.append(jupyterhub_idle_culler_role)
+  
+    for key, service in get_config("hub.services", {}).items():
+        # c.JupyterHub.services is a list of dicts, but
+        # hub.services is a dict of dicts to make the config mergable
+        service.setdefault("name", key)
+  
+        # As the api_token could be exposed in hub.existingSecret, we need to read
+        # it it from there or fall back to the chart managed k8s Secret's value.
+        service.pop("apiToken", None)
+        service["api_token"] = get_secret_value(f"hub.services.{key}.apiToken")
+  
+        c.JupyterHub.services.append(service)
+  
+    for key, role in get_config("hub.loadRoles", {}).items():
+        # c.JupyterHub.load_roles is a list of dicts, but
+        # hub.loadRoles is a dict of dicts to make the config mergable
+        role.setdefault("name", key)
+  
+        c.JupyterHub.load_roles.append(role)
+  
+    # respect explicit null command (distinct from unspecified)
+    # this avoids relying on KubeSpawner.cmd's default being None
+    _unspecified = object()
+    specified_cmd = get_config("singleuser.cmd", _unspecified)
+    if specified_cmd is not _unspecified:
+        c.Spawner.cmd = specified_cmd
+  
+    set_config_if_not_none(c.Spawner, "default_url", "singleuser.defaultUrl")
+  
+    cloud_metadata = get_config("singleuser.cloudMetadata")
+  
+    if cloud_metadata.get("blockWithIptables") == True:
+        # Use iptables to block access to cloud metadata by default
+        network_tools_image_name = get_config("singleuser.networkTools.image.name")
+        network_tools_image_tag = get_config("singleuser.networkTools.image.tag")
+        network_tools_resources = get_config("singleuser.networkTools.resources")
+        ip = cloud_metadata["ip"]
+        ip_block_container = client.V1Container(
+            name="block-cloud-metadata",
+            image=f"{network_tools_image_name}:{network_tools_image_tag}",
+            command=[
+                "iptables",
+                "--append",
+                "OUTPUT",
+                "--protocol",
+                "tcp",
+                "--destination",
+                ip,
+                "--destination-port",
+                "80",
+                "--jump",
+                "DROP",
+            ],
+            security_context=client.V1SecurityContext(
+                privileged=True,
+                run_as_user=0,
+                capabilities=client.V1Capabilities(add=["NET_ADMIN"]),
+            ),
+            resources=network_tools_resources,
+        )
+  
+        c.KubeSpawner.init_containers.append(ip_block_container)
+  
+  
+    if get_config("debug.enabled", False):
+        c.JupyterHub.log_level = "DEBUG"
+        c.Spawner.debug = True
+  
+    # load potentially seeded secrets
+    #
+    # NOTE: ConfigurableHTTPProxy.auth_token is set through an environment variable
+    #       that is set using the chart managed secret.
+    c.JupyterHub.cookie_secret = get_secret_value("hub.config.JupyterHub.cookie_secret")
+    # NOTE: CryptKeeper.keys should be a list of strings, but we have encoded as a
+    #       single string joined with ; in the k8s Secret.
+    #
+    c.CryptKeeper.keys = get_secret_value("hub.config.CryptKeeper.keys").split(";")
+  
+    # load hub.config values, except potentially seeded secrets already loaded
+    for app, cfg in get_config("hub.config", {}).items():
+        if app == "JupyterHub":
+            cfg.pop("proxy_auth_token", None)
+            cfg.pop("cookie_secret", None)
+            cfg.pop("services", None)
+        elif app == "ConfigurableHTTPProxy":
+            cfg.pop("auth_token", None)
+        elif app == "CryptKeeper":
+            cfg.pop("keys", None)
+        c[app].update(cfg)
+  
+    # load /usr/local/etc/jupyterhub/jupyterhub_config.d config files
+    config_dir = "/usr/local/etc/jupyterhub/jupyterhub_config.d"
+    if os.path.isdir(config_dir):
+        for file_path in sorted(glob.glob(f"{config_dir}/*.py")):
+            file_name = os.path.basename(file_path)
+            print(f"Loading {config_dir} config: {file_name}")
+            with open(file_path) as f:
+                file_content = f.read()
+            # compiling makes debugging easier: https://stackoverflow.com/a/437857
+            exec(compile(source=file_content, filename=file_name, mode="exec"))
+  
+    # execute hub.extraConfig entries
+    for key, config_py in sorted(get_config("hub.extraConfig", {}).items()):
+        print(f"Loading extra config: {key}")
+        exec(config_py)
+  z2jh.py: |
+    """
+    Utility methods for use in jupyterhub_config.py and dynamic subconfigs.
+  
+    Methods here can be imported by extraConfig in values.yaml
+    """
+  
+    import os
+    from collections.abc import Mapping
+    from functools import lru_cache
+  
+    import yaml
+  
+  
+    # memoize so we only load config once
+    @lru_cache
+    def _load_config():
+        """Load the Helm chart configuration used to render the Helm templates of
+        the chart from a mounted k8s Secret, and merge in values from an optionally
+        mounted secret (hub.existingSecret)."""
+  
+        cfg = {}
+        for source in ("secret/values.yaml", "existing-secret/values.yaml"):
+            path = f"/usr/local/etc/jupyterhub/{source}"
+            if os.path.exists(path):
+                print(f"Loading {path}")
+                with open(path) as f:
+                    values = yaml.safe_load(f)
+                cfg = _merge_dictionaries(cfg, values)
+            else:
+                print(f"No config at {path}")
+        return cfg
+  
+  
+    @lru_cache
+    def _get_config_value(key):
+        """Load value from the k8s ConfigMap given a key."""
+  
+        path = f"/usr/local/etc/jupyterhub/config/{key}"
+        if os.path.exists(path):
+            with open(path) as f:
+                return f.read()
+        else:
+            raise Exception(f"{path} not found!")
+  
+  
+    @lru_cache
+    def get_secret_value(key, default="never-explicitly-set"):
+        """Load value from the user managed k8s Secret or the default k8s Secret
+        given a key."""
+  
+        for source in ("existing-secret", "secret"):
+            path = f"/usr/local/etc/jupyterhub/{source}/{key}"
+            if os.path.exists(path):
+                with open(path) as f:
+                    return f.read()
+        if default != "never-explicitly-set":
+            return default
+        raise Exception(f"{key} not found in either k8s Secret!")
+  
+  
+    def get_name(name):
+        """Returns the fullname of a resource given its short name"""
+        return _get_config_value(name)
+  
+  
+    def get_name_env(name, suffix=""):
+        """Returns the fullname of a resource given its short name along with a
+        suffix, converted to uppercase with dashes replaced with underscores. This
+        is useful to reference named services associated environment variables, such
+        as PROXY_PUBLIC_SERVICE_PORT."""
+        env_key = _get_config_value(name) + suffix
+        env_key = env_key.upper().replace("-", "_")
+        return os.environ[env_key]
+  
+  
+    def _merge_dictionaries(a, b):
+        """Merge two dictionaries recursively.
+  
+        Simplified From https://stackoverflow.com/a/7205107
+        """
+        merged = a.copy()
+        for key in b:
+            if key in a:
+                if isinstance(a[key], Mapping) and isinstance(b[key], Mapping):
+                    merged[key] = _merge_dictionaries(a[key], b[key])
+                else:
+                    merged[key] = b[key]
+            else:
+                merged[key] = b[key]
+        return merged
+  
+  
+    def get_config(key, default=None):
+        """
+        Find a config item of a given name & return it
+  
+        Parses everything as YAML, so lists and dicts are available too
+  
+        get_config("a.b.c") returns config['a']['b']['c']
+        """
+        value = _load_config()
+        # resolve path in yaml
+        for level in key.split("."):
+            if not isinstance(value, dict):
+                # a parent is a scalar or null,
+                # can't resolve full path
+                return default
+            if level not in value:
+                return default
+            else:
+                value = value[level]
+        return value
+  
+  
+    def set_config_if_not_none(cparent, name, key):
+        """
+        Find a config item of a given name, set the corresponding Jupyter
+        configuration item if not None
+        """
+        data = get_config(key)
+        if data is not None:
+            setattr(cparent, name, data)
+  checksum_hook-image-puller: "9c35dae03165c76b431f870ddd342a465bf51c25c4b27e20111bed227adb172d"
+---
+# Source: jupyterhub/templates/scheduling/user-scheduler/configmap.yaml
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: user-scheduler
+  labels:
+    component: user-scheduler
+    app.kubernetes.io/component: user-scheduler
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+data:
+  config.yaml: |
+    apiVersion: kubescheduler.config.k8s.io/v1
+    kind: KubeSchedulerConfiguration
+    leaderElection:
+      resourceLock: leases
+      resourceName: user-scheduler-lock
+      resourceNamespace: "default"
+    profiles:
+      - schedulerName: jupyterhub-user-scheduler
+        plugins:
+          score:
+            disabled:
+            - name: NodeResourcesBalancedAllocation
+            - name: NodeAffinity
+            - name: InterPodAffinity
+            - name: NodeResourcesFit
+            - name: ImageLocality
+            enabled:
+            - name: NodeAffinity
+              weight: 14631
+            - name: InterPodAffinity
+              weight: 1331
+            - name: NodeResourcesFit
+              weight: 121
+            - name: ImageLocality
+              weight: 11
+        pluginConfig:
+          - args:
+              scoringStrategy:
+                resources:
+                - name: cpu
+                  weight: 1
+                - name: memory
+                  weight: 1
+                type: MostAllocated
+            name: NodeResourcesFit
+---
+# Source: jupyterhub/templates/hub/pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: hub-db-dir
+  labels:
+    component: hub
+    app.kubernetes.io/component: hub
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "1Gi"
+---
+# Source: jupyterhub/templates/scheduling/user-scheduler/rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: jupyterhub-user-scheduler
+  labels:
+    component: user-scheduler
+    app.kubernetes.io/component: user-scheduler
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+rules:
+  # Copied from the system:kube-scheduler ClusterRole of the k8s version
+  # matching the kube-scheduler binary we use. A modification has been made to
+  # resourceName fields to remain relevant for how we have named our resources
+  # in this Helm chart.
+  #
+  # NOTE: These rules have been:
+  #       - unchanged between 1.12 and 1.15
+  #       - changed in 1.16
+  #       - changed in 1.17
+  #       - unchanged between 1.18 and 1.20
+  #       - changed in 1.21: get/list/watch permission for namespace,
+  #                          csidrivers, csistoragecapacities was added.
+  #       - unchanged between 1.22 and 1.27
+  #       - changed in 1.28: permissions to get/update lock endpoint resource
+  #                          removed
+  #       - unchanged between 1.28 and 1.30
+  #       - (1.31 is known to bring some changes below)
+  #
+  # ref: https://github.com/kubernetes/kubernetes/blob/v1.30.0/plugin/pkg/auth/authorizer/rbac/bootstrappolicy/testdata/cluster-roles.yaml#L721-L862
+  - apiGroups:
+    - ""
+    - events.k8s.io
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+    - update
+  - apiGroups:
+    - coordination.k8s.io
+    resources:
+    - leases
+    verbs:
+    - create
+  - apiGroups:
+    - coordination.k8s.io
+    resourceNames:
+    - user-scheduler-lock
+    resources:
+    - leases
+    verbs:
+    - get
+    - update
+  - apiGroups:
+    - ""
+    resources:
+    - nodes
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - ""
+    resources:
+    - pods
+    verbs:
+    - delete
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - ""
+    resources:
+    - bindings
+    - pods/binding
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resources:
+    - pods/status
+    verbs:
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    resources:
+    - replicationcontrollers
+    - services
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - apps
+    - extensions
+    resources:
+    - replicasets
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - apps
+    resources:
+    - statefulsets
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - policy
+    resources:
+    - poddisruptionbudgets
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - ""
+    resources:
+    - persistentvolumeclaims
+    - persistentvolumes
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - authentication.k8s.io
+    resources:
+    - tokenreviews
+    verbs:
+    - create
+  - apiGroups:
+    - authorization.k8s.io
+    resources:
+    - subjectaccessreviews
+    verbs:
+    - create
+  - apiGroups:
+    - storage.k8s.io
+    resources:
+    - csinodes
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - ""
+    resources:
+    - namespaces
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - storage.k8s.io
+    resources:
+    - csidrivers
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - storage.k8s.io
+    resources:
+    - csistoragecapacities
+    verbs:
+    - get
+    - list
+    - watch
+
+  # Copied from the system:volume-scheduler ClusterRole of the k8s version
+  # matching the kube-scheduler binary we use.
+  #
+  # NOTE: These rules have not changed between 1.12 and 1.29.
+  #
+  # ref: https://github.com/kubernetes/kubernetes/blob/v1.29.0/plugin/pkg/auth/authorizer/rbac/bootstrappolicy/testdata/cluster-roles.yaml#L1283-L1310
+  - apiGroups:
+    - ""
+    resources:
+    - persistentvolumes
+    verbs:
+    - get
+    - list
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - storage.k8s.io
+    resources:
+    - storageclasses
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - ""
+    resources:
+    - persistentvolumeclaims
+    verbs:
+    - get
+    - list
+    - patch
+    - update
+    - watch
+---
+# Source: jupyterhub/templates/scheduling/user-scheduler/rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: jupyterhub-user-scheduler
+  labels:
+    component: user-scheduler
+    app.kubernetes.io/component: user-scheduler
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+subjects:
+  - kind: ServiceAccount
+    name: user-scheduler
+    namespace: "default"
+roleRef:
+  kind: ClusterRole
+  name: jupyterhub-user-scheduler
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: jupyterhub/templates/hub/rbac.yaml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hub
+  labels:
+    component: hub
+    app.kubernetes.io/component: hub
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+rules:
+  - apiGroups: [""]       # "" indicates the core API group
+    resources: ["pods", "persistentvolumeclaims", "secrets", "services"]
+    verbs: ["get", "watch", "list", "create", "delete"]
+  - apiGroups: [""]       # "" indicates the core API group
+    resources: ["events"]
+    verbs: ["get", "watch", "list"]
+---
+# Source: jupyterhub/templates/hub/rbac.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hub
+  labels:
+    component: hub
+    app.kubernetes.io/component: hub
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+subjects:
+  - kind: ServiceAccount
+    name: hub
+    namespace: "default"
+roleRef:
+  kind: Role
+  name: hub
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: jupyterhub/templates/hub/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: hub
+  labels:
+    component: hub
+    app.kubernetes.io/component: hub
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /hub/metrics
+    prometheus.io/port: "8081"
+spec:
+  type: ClusterIP
+  selector:
+    component: hub
+    app: "jupyterhub"
+    release: "jupyterhub"
+  ports:
+    - name: hub
+      port: 8081
+      targetPort: http
+---
+# Source: jupyterhub/templates/proxy/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-api
+  labels:
+    component: proxy-api
+    app.kubernetes.io/component: proxy-api
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    component: proxy
+    app: "jupyterhub"
+    release: "jupyterhub"
+  ports:
+    - port: 8001
+      targetPort: api
+---
+# Source: jupyterhub/templates/proxy/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-public
+  labels:
+    component: proxy-public
+    app.kubernetes.io/component: proxy-public
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    # This service will target the autohttps pod if autohttps is configured, and
+    # the proxy pod if not. When autohttps is configured, the service proxy-http
+    # will be around to target the proxy pod directly.
+    component: proxy
+    app: "jupyterhub"
+    release: "jupyterhub"
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  type: LoadBalancer
+---
+# Source: jupyterhub/templates/image-puller/daemonset-continuous.yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: continuous-image-puller
+  labels:
+    component: continuous-image-puller
+    app.kubernetes.io/component: continuous-image-puller
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    matchLabels:
+      component: continuous-image-puller
+      app: "jupyterhub"
+      release: "jupyterhub"
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 100%
+  template:
+    metadata:
+      labels:
+        component: continuous-image-puller
+        app.kubernetes.io/component: continuous-image-puller
+        app: "jupyterhub"
+        release: "jupyterhub"
+        app.kubernetes.io/name: "jupyterhub"
+        app.kubernetes.io/instance: "jupyterhub"
+    spec:
+      tolerations:
+        - effect: NoSchedule
+          key: hub.jupyter.org/dedicated
+          operator: Equal
+          value: user
+        - effect: NoSchedule
+          key: hub.jupyter.org_dedicated
+          operator: Equal
+          value: user
+      terminationGracePeriodSeconds: 0
+      serviceAccountName: continuous-image-puller
+      automountServiceAccountToken: false
+      initContainers:
+        - name: image-pull-metadata-block
+          image: quay.io/jupyterhub/k8s-network-tools:4.2.0
+          command:
+            - /bin/sh
+            - -c
+            - echo "Pulling complete"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+        - name: image-pull-singleuser
+          image: quay.io/jupyterhub/k8s-singleuser-sample:4.2.0
+          command:
+            - /bin/sh
+            - -c
+            - echo "Pulling complete"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+      containers:
+        - name: pause
+          image: registry.k8s.io/pause:3.10
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+---
+# Source: jupyterhub/templates/hub/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hub
+  labels:
+    component: hub
+    app.kubernetes.io/component: hub
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: hub
+      app: "jupyterhub"
+      release: "jupyterhub"
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        component: hub
+        app.kubernetes.io/component: hub
+        app: "jupyterhub"
+        release: "jupyterhub"
+        app.kubernetes.io/name: "jupyterhub"
+        app.kubernetes.io/instance: "jupyterhub"
+        hub.jupyter.org/network-access-proxy-api: "true"
+        hub.jupyter.org/network-access-proxy-http: "true"
+        hub.jupyter.org/network-access-singleuser: "true"
+      annotations:
+        checksum/config-map: 6e014813187035a5b7ea862a5fbda788af7071448d6fadd5bc32f23e9f03f291
+        checksum/secret: ee5c70e50dff3744524b6c2c1983f155c43c4b00d48d647b725124c52212e793
+    spec:
+      tolerations:
+        - effect: NoSchedule
+          key: hub.jupyter.org/dedicated
+          operator: Equal
+          value: core
+        - effect: NoSchedule
+          key: hub.jupyter.org_dedicated
+          operator: Equal
+          value: core
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: hub.jupyter.org/node-purpose
+                    operator: In
+                    values: [core]
+      volumes:
+        - name: config
+          configMap:
+            name: hub
+        - name: secret
+          secret:
+            secretName: hub
+        - name: pvc
+          persistentVolumeClaim:
+            claimName: hub-db-dir
+      serviceAccountName: hub
+      securityContext:
+        fsGroup: 1000
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: hub
+          image: quay.io/jupyterhub/k8s-hub:4.2.0
+          args:
+            - jupyterhub
+            - --config
+            - /usr/local/etc/jupyterhub/jupyterhub_config.py
+            - --upgrade-db
+          volumeMounts:
+            - mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.py
+              subPath: jupyterhub_config.py
+              name: config
+            - mountPath: /usr/local/etc/jupyterhub/z2jh.py
+              subPath: z2jh.py
+              name: config
+            - mountPath: /usr/local/etc/jupyterhub/config/
+              name: config
+            - mountPath: /usr/local/etc/jupyterhub/secret/
+              name: secret
+            - mountPath: /srv/jupyterhub
+              name: pvc
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 1000
+            runAsUser: 1000
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: HELM_RELEASE_NAME
+              value: "jupyterhub"
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CONFIGPROXY_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hub
+                  key: hub.config.ConfigurableHTTPProxy.auth_token
+          ports:
+            - name: http
+              containerPort: 8081
+          livenessProbe:
+            initialDelaySeconds: 300
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 30
+            httpGet:
+              path: /hub/health
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 0
+            periodSeconds: 2
+            timeoutSeconds: 1
+            failureThreshold: 1000
+            httpGet:
+              path: /hub/health
+              port: http
+---
+# Source: jupyterhub/templates/proxy/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy
+  labels:
+    component: proxy
+    app.kubernetes.io/component: proxy
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: proxy
+      app: "jupyterhub"
+      release: "jupyterhub"
+  strategy:
+    rollingUpdate: null
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        component: proxy
+        app.kubernetes.io/component: proxy
+        app: "jupyterhub"
+        release: "jupyterhub"
+        app.kubernetes.io/name: "jupyterhub"
+        app.kubernetes.io/instance: "jupyterhub"
+        hub.jupyter.org/network-access-hub: "true"
+        hub.jupyter.org/network-access-singleuser: "true"
+      annotations:
+        # We want to restart proxy only if the auth token changes
+        # Other changes to the hub config should not restart.
+        # We truncate to 4 chars to avoid leaking auth token info,
+        # since someone could brute force the hash to obtain the token
+        #
+        # Note that if auth_token has to be generated at random, it will be
+        # generated at random here separately from being generated at random in
+        # the k8s Secret template. This will cause this annotation to change to
+        # match the k8s Secret during the first upgrade following an auth_token
+        # was generated.
+        checksum/auth-token: "3f06"
+        checksum/proxy-secret: "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    spec:
+      terminationGracePeriodSeconds: 60
+      tolerations:
+        - effect: NoSchedule
+          key: hub.jupyter.org/dedicated
+          operator: Equal
+          value: core
+        - effect: NoSchedule
+          key: hub.jupyter.org_dedicated
+          operator: Equal
+          value: core
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: hub.jupyter.org/node-purpose
+                    operator: In
+                    values: [core]
+      containers:
+        - name: chp
+          image: quay.io/jupyterhub/configurable-http-proxy:4.6.3
+          command:
+            - configurable-http-proxy
+            - "--ip="
+            - "--api-ip="
+            - --api-port=8001
+            - --default-target=http://hub:$(HUB_SERVICE_PORT)
+            - --error-target=http://hub:$(HUB_SERVICE_PORT)/hub/error
+            - --port=8000
+          env:
+            - name: CONFIGPROXY_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  # NOTE: References the chart managed k8s Secret even if
+                  #       hub.existingSecret is specified to avoid using the
+                  #       lookup function on the user managed k8s Secret.
+                  name: hub
+                  key: hub.config.ConfigurableHTTPProxy.auth_token
+          ports:
+            - name: http
+              containerPort: 8000
+            - name: api
+              containerPort: 8001
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 30
+            httpGet:
+              path: /_chp_healthz
+              port: http
+              scheme: HTTP
+          readinessProbe:
+            initialDelaySeconds: 0
+            periodSeconds: 2
+            timeoutSeconds: 1
+            failureThreshold: 1000
+            httpGet:
+              path: /_chp_healthz
+              port: http
+              scheme: HTTP
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+---
+# Source: jupyterhub/templates/scheduling/user-scheduler/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-scheduler
+  labels:
+    component: user-scheduler
+    app.kubernetes.io/component: user-scheduler
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: user-scheduler
+      app: "jupyterhub"
+      release: "jupyterhub"
+  template:
+    metadata:
+      labels:
+        component: user-scheduler
+        app.kubernetes.io/component: user-scheduler
+        app: "jupyterhub"
+        release: "jupyterhub"
+        app.kubernetes.io/name: "jupyterhub"
+        app.kubernetes.io/instance: "jupyterhub"
+      annotations:
+        checksum/config-map: 217af6041cbdc73fa8c9c94def209e97d07fe65db65446d6f7110ef18b2ca571
+    spec:
+      
+      serviceAccountName: user-scheduler
+      tolerations:
+        - effect: NoSchedule
+          key: hub.jupyter.org/dedicated
+          operator: Equal
+          value: core
+        - effect: NoSchedule
+          key: hub.jupyter.org_dedicated
+          operator: Equal
+          value: core
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: hub.jupyter.org/node-purpose
+                    operator: In
+                    values: [core]
+      volumes:
+        - name: config
+          configMap:
+            name: user-scheduler
+      containers:
+        - name: kube-scheduler
+          image: registry.k8s.io/kube-scheduler:v1.30.11
+          command:
+            - /usr/local/bin/kube-scheduler
+            # NOTE: --authentication-skip-lookup=true is used to avoid a
+            #       seemingly harmless error, if we need to not skip
+            #       "authentication lookup" in the future, see the linked issue.
+            #
+            # ref: https://github.com/jupyterhub/zero-to-jupyterhub-k8s/issues/1894
+            - --config=/etc/user-scheduler/config.yaml
+            - --authentication-skip-lookup=true
+            - --v=4
+          volumeMounts:
+            - mountPath: /etc/user-scheduler
+              name: config
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              scheme: HTTPS
+              port: 10259
+            initialDelaySeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              scheme: HTTPS
+              port: 10259
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+---
+# Source: jupyterhub/templates/scheduling/user-placeholder/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: user-placeholder
+  labels:
+    component: user-placeholder
+    app.kubernetes.io/component: user-placeholder
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  podManagementPolicy: Parallel
+  replicas: 0
+  selector:
+    matchLabels:
+      component: user-placeholder
+      app: "jupyterhub"
+      release: "jupyterhub"
+  serviceName: user-placeholder
+  template:
+    metadata:
+      labels:
+        component: user-placeholder
+        app.kubernetes.io/component: user-placeholder
+        app: "jupyterhub"
+        release: "jupyterhub"
+        app.kubernetes.io/name: "jupyterhub"
+        app.kubernetes.io/instance: "jupyterhub"
+    spec:
+      schedulerName: jupyterhub-user-scheduler
+      tolerations:
+        - effect: NoSchedule
+          key: hub.jupyter.org/dedicated
+          operator: Equal
+          value: user
+        - effect: NoSchedule
+          key: hub.jupyter.org_dedicated
+          operator: Equal
+          value: user
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: hub.jupyter.org/node-purpose
+                    operator: In
+                    values: [user]
+      terminationGracePeriodSeconds: 0
+      automountServiceAccountToken: false
+      containers:
+        - name: pause
+          image: registry.k8s.io/pause:3.10
+          resources:
+            requests:
+              memory: 1G
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+---
+# Source: jupyterhub/templates/image-puller/serviceaccount-hook.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hook-image-puller
+  labels:
+    component: image-puller
+    app.kubernetes.io/component: image-puller
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+    hub.jupyter.org/deletable: "true"
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "-10"
+---
+# Source: jupyterhub/templates/image-puller/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hook-image-awaiter
+  labels:
+    component: image-puller
+    app.kubernetes.io/component: image-puller
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+    hub.jupyter.org/deletable: "true"
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "0"
+---
+# Source: jupyterhub/templates/image-puller/rbac.yaml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hook-image-awaiter
+  labels:
+    component: image-puller
+    app.kubernetes.io/component: image-puller
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+    hub.jupyter.org/deletable: "true"
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "0"
+rules:
+  - apiGroups: ["apps"]       # "" indicates the core API group
+    resources: ["daemonsets"]
+    verbs: ["get"]
+---
+# Source: jupyterhub/templates/image-puller/rbac.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hook-image-awaiter
+  labels:
+    component: image-puller
+    app.kubernetes.io/component: image-puller
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+    hub.jupyter.org/deletable: "true"
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "0"
+subjects:
+  - kind: ServiceAccount
+    name: hook-image-awaiter
+    namespace: "default"
+roleRef:
+  kind: Role
+  name: hook-image-awaiter
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: jupyterhub/templates/image-puller/daemonset-hook.yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: hook-image-puller
+  labels:
+    component: hook-image-puller
+    app.kubernetes.io/component: hook-image-puller
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+    hub.jupyter.org/deletable: "true"
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "-10"
+spec:
+  selector:
+    matchLabels:
+      component: hook-image-puller
+      app: "jupyterhub"
+      release: "jupyterhub"
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 100%
+  template:
+    metadata:
+      labels:
+        component: hook-image-puller
+        app.kubernetes.io/component: hook-image-puller
+        app: "jupyterhub"
+        release: "jupyterhub"
+        app.kubernetes.io/name: "jupyterhub"
+        app.kubernetes.io/instance: "jupyterhub"
+    spec:
+      tolerations:
+        - effect: NoSchedule
+          key: hub.jupyter.org/dedicated
+          operator: Equal
+          value: user
+        - effect: NoSchedule
+          key: hub.jupyter.org_dedicated
+          operator: Equal
+          value: user
+      terminationGracePeriodSeconds: 0
+      serviceAccountName: hook-image-puller
+      automountServiceAccountToken: false
+      initContainers:
+        - name: image-pull-metadata-block
+          image: quay.io/jupyterhub/k8s-network-tools:4.2.0
+          command:
+            - /bin/sh
+            - -c
+            - echo "Pulling complete"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+        - name: image-pull-singleuser
+          image: quay.io/jupyterhub/k8s-singleuser-sample:4.2.0
+          command:
+            - /bin/sh
+            - -c
+            - echo "Pulling complete"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+      containers:
+        - name: pause
+          image: registry.k8s.io/pause:3.10
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+---
+# Source: jupyterhub/templates/image-puller/job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hook-image-awaiter
+  labels:
+    component: image-puller
+    app.kubernetes.io/component: image-puller
+    app: "jupyterhub"
+    release: "jupyterhub"
+    chart: jupyterhub-4.2.0
+    heritage: Helm
+    app.kubernetes.io/name: "jupyterhub"
+    app.kubernetes.io/instance: "jupyterhub"
+    helm.sh/chart: jupyterhub-4.2.0
+    app.kubernetes.io/managed-by: Helm
+    hub.jupyter.org/deletable: "true"
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "10"
+spec:
+  template:
+    # The hook-image-awaiter Job and hook-image-puller DaemonSet was
+    # conditionally created based on this state:
+    #
+    # prePuller.hook.enabled=true
+    # prePuller.hook.pullOnlyOnChanges=true
+    # post-upgrade checksum != pre-upgrade checksum (of the hook-image-puller DaemonSet)
+    # "9c35dae03165c76b431f870ddd342a465bf51c25c4b27e20111bed227adb172d" != ""
+    #
+    metadata:
+      labels:
+        component: image-puller
+        app.kubernetes.io/component: image-puller
+        app: "jupyterhub"
+        release: "jupyterhub"
+        app.kubernetes.io/name: "jupyterhub"
+        app.kubernetes.io/instance: "jupyterhub"
+    spec:
+      restartPolicy: Never
+      serviceAccountName: hook-image-awaiter
+      tolerations:
+        - effect: NoSchedule
+          key: hub.jupyter.org/dedicated
+          operator: Equal
+          value: core
+        - effect: NoSchedule
+          key: hub.jupyter.org_dedicated
+          operator: Equal
+          value: core
+      containers:
+        - image: quay.io/jupyterhub/k8s-image-awaiter:4.2.0
+          name: hook-image-awaiter
+          command:
+            - /image-awaiter
+            - -ca-path=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+            - -auth-token-path=/var/run/secrets/kubernetes.io/serviceaccount/token
+            - -api-server-address=https://kubernetes.default.svc:$(KUBERNETES_SERVICE_PORT)
+            - -namespace=default
+            - -daemonset=hook-image-puller
+            - -pod-scheduling-wait-duration=10
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault

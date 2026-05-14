@@ -1,0 +1,104 @@
+---
+# Source: metabase/templates/config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metabase-config
+  namespace: default
+  labels:
+    app: metabase
+    chart: metabase-2.21.0
+    release: metabase
+    heritage: Helm
+data:
+---
+# Source: metabase/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: metabase
+  namespace: default
+  labels:
+    app: metabase
+    chart: metabase-2.21.0
+    release: metabase
+    heritage: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+      name: metabase
+  selector:
+    app: metabase
+    release: metabase
+---
+# Source: metabase/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metabase
+  namespace: default
+  labels:
+    app: metabase
+    chart: metabase-2.21.0
+    release: metabase
+    heritage: Helm
+spec:
+  selector:
+    matchLabels:
+      app: metabase
+  
+  replicas: 1
+  
+  template:
+    metadata:
+      annotations:
+        checksum/config: 3f073456e7d12df0edbe14877fbb0e1abe1c5a0923b9a552bf88f99442790b48
+      labels:
+        app: metabase
+        release: metabase
+    spec:
+      containers:
+        - name:  metabase
+          image: "metabase/metabase:v0.54.11.x"
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: MB_JETTY_HOST
+            value: "0.0.0.0"
+          - name: MB_JETTY_PORT
+            value: "3000"
+          - name: MB_DB_TYPE
+            value: h2
+          - name: MB_PASSWORD_COMPLEXITY
+            value: normal
+          - name: MB_PASSWORD_LENGTH
+            value: "6"
+          - name: JAVA_TIMEZONE
+            value: UTC
+          - name: MB_EMOJI_IN_LOGS
+            value: "true"
+          - name: MB_COLORIZE_LOGS
+            value: "true"
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 120
+            timeoutSeconds: 30
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 30
+            timeoutSeconds: 3
+            periodSeconds: 5
+          resources:
+            {}
+      serviceAccountName: default
+      automountServiceAccountToken: true
+      volumes:
