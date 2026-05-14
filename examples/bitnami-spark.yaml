@@ -1,0 +1,472 @@
+---
+# Source: spark/templates/networkpolicy-master.yaml
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: spark-master
+  namespace: "default"
+  labels:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/version: 4.0.0
+    helm.sh/chart: spark-10.0.2
+    app.kubernetes.io/component: master
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: spark
+      app.kubernetes.io/name: spark
+      app.kubernetes.io/component: master
+  policyTypes:
+    - Ingress
+    - Egress
+  egress:
+    - {}
+  ingress:
+    - ports:
+        - port: 7077
+        - port: 80
+        - port: 7077
+        - port: 8080
+---
+# Source: spark/templates/networkpolicy-worker.yaml
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: spark-worker
+  namespace: "default"
+  labels:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/version: 4.0.0
+    helm.sh/chart: spark-10.0.2
+    app.kubernetes.io/component: worker
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: spark
+      app.kubernetes.io/name: spark
+      app.kubernetes.io/component: worker
+  policyTypes:
+    - Ingress
+    - Egress
+  egress:
+    - {}
+  ingress:
+    - ports:
+        - port: 
+        - port: 8080
+---
+# Source: spark/templates/pdb-master.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: spark-master
+  namespace: "default"
+  labels:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/version: 4.0.0
+    helm.sh/chart: spark-10.0.2
+    app.kubernetes.io/component: master
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: spark
+      app.kubernetes.io/name: spark
+      app.kubernetes.io/component: master
+---
+# Source: spark/templates/pdb-worker.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: spark-worker
+  namespace: "default"
+  labels:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/version: 4.0.0
+    helm.sh/chart: spark-10.0.2
+    app.kubernetes.io/component: worker
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: spark
+      app.kubernetes.io/name: spark
+      app.kubernetes.io/component: worker
+---
+# Source: spark/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: spark
+  namespace: "default"
+  labels:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/version: 4.0.0
+    helm.sh/chart: spark-10.0.2
+automountServiceAccountToken: false
+---
+# Source: spark/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: spark-secret
+  namespace: "default"
+  labels:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/version: 4.0.0
+    helm.sh/chart: spark-10.0.2
+type: Opaque
+data:
+---
+# Source: spark/templates/headless-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-headless
+  namespace: "default"
+  labels:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/version: 4.0.0
+    helm.sh/chart: spark-10.0.2
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/name: spark
+---
+# Source: spark/templates/svc-master.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-master-svc
+  namespace: "default"
+  labels:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/version: 4.0.0
+    helm.sh/chart: spark-10.0.2
+    app.kubernetes.io/component: master
+spec:
+  type: ClusterIP
+  sessionAffinity: None
+  ports:
+    - port: 7077
+      targetPort: cluster
+      name: cluster
+      nodePort: null
+    - port: 80
+      targetPort: http
+      name: http
+      protocol: TCP
+      nodePort: null
+  selector:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/component: master
+---
+# Source: spark/templates/statefulset-master.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: spark-master
+  namespace: "default"
+  labels:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/version: 4.0.0
+    helm.sh/chart: spark-10.0.2
+    app.kubernetes.io/component: master
+spec:
+  serviceName: spark-headless
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: spark
+      app.kubernetes.io/name: spark
+      app.kubernetes.io/component: master
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: spark
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: spark
+        app.kubernetes.io/version: 4.0.0
+        helm.sh/chart: spark-10.0.2
+        app.kubernetes.io/component: master
+    spec:
+      
+      serviceAccountName: spark
+      affinity:
+        podAffinity:
+          
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/instance: spark
+                    app.kubernetes.io/name: spark
+                    app.kubernetes.io/component: master
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        nodeAffinity:
+          
+      automountServiceAccountToken: false
+      securityContext:
+        fsGroup: 1001
+        fsGroupChangePolicy: Always
+        supplementalGroups: []
+        sysctls: []
+      containers:
+        - name: spark-master
+          image: docker.io/bitnami/spark:4.0.0-debian-12-r2
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1001
+            seLinuxOptions: {}
+            seccompProfile:
+              type: RuntimeDefault
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: cluster
+              containerPort: 7077
+          volumeMounts:
+            - name: empty-dir
+              mountPath: /tmp
+              subPath: tmp-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/spark/conf
+              subPath: app-conf-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/spark/tmp
+              subPath: app-tmp-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/spark/logs
+              subPath: app-logs-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/spark/work
+              subPath: app-work-dir
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: SPARK_MODE
+              value: "master"
+            - name: SPARK_DAEMON_MEMORY
+              value: ""
+            - name: SPARK_MASTER_PORT
+              value: "7077"
+            - name: SPARK_MASTER_WEBUI_PORT
+              value: "8080"
+          envFrom:
+          livenessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 180
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 5
+            tcpSocket:
+              port: 8080
+          readinessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            httpGet:
+              path: /
+              port: 8080
+          resources:
+            limits:
+              cpu: 750m
+              ephemeral-storage: 2Gi
+              memory: 768Mi
+            requests:
+              cpu: 500m
+              ephemeral-storage: 50Mi
+              memory: 512Mi
+      volumes:
+        - name: empty-dir
+          emptyDir: {}
+---
+# Source: spark/templates/statefulset-worker.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: spark-worker
+  namespace: "default"
+  labels:
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/version: 4.0.0
+    helm.sh/chart: spark-10.0.2
+    app.kubernetes.io/component: worker
+spec:
+  serviceName: spark-headless
+  replicas: 2
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: spark
+      app.kubernetes.io/name: spark
+      app.kubernetes.io/component: worker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: spark
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: spark
+        app.kubernetes.io/version: 4.0.0
+        helm.sh/chart: spark-10.0.2
+        app.kubernetes.io/component: worker
+    spec:
+      
+      serviceAccountName: spark
+      affinity:
+        podAffinity:
+          
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/instance: spark
+                    app.kubernetes.io/name: spark
+                    app.kubernetes.io/component: worker
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        nodeAffinity:
+          
+      automountServiceAccountToken: false
+      securityContext:
+        fsGroup: 1001
+        fsGroupChangePolicy: Always
+        seLinuxOptions: {}
+        supplementalGroups: []
+        sysctls: []
+      containers:
+        - name: spark-worker
+          image: docker.io/bitnami/spark:4.0.0-debian-12-r2
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1001
+            seLinuxOptions: {}
+            seccompProfile:
+              type: RuntimeDefault
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: empty-dir
+              mountPath: /tmp
+              subPath: tmp-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/spark/conf
+              subPath: app-conf-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/spark/tmp
+              subPath: app-tmp-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/spark/logs
+              subPath: app-logs-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/spark/work
+              subPath: app-work-dir
+          env:
+            - name: SPARK_MODE
+              value: "worker"
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: SPARK_DAEMON_MEMORY
+              value: ""
+            ## There are some environment variables whose existence needs
+            ## to be checked because Spark checks if they are null instead of an
+            ## empty string
+            - name: SPARK_WORKER_WEBUI_PORT
+              value: "8080"
+            - name: SPARK_DAEMON_JAVA_OPTS
+              value: ""
+            - name: SPARK_MASTER_URL
+              value: spark://spark-master-svc:7077
+            # If you use a custom properties file, it must be loaded using a ConfigMap
+            - name: SPARK_WORKER_OPTS
+              value: 
+          envFrom:
+          livenessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 180
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 5
+            tcpSocket:
+              port: 8080
+          readinessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            httpGet:
+              path: /
+              port: 8080
+          startupProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            httpGet:
+              path: /
+              port: 8080
+          resources:
+            limits:
+              cpu: 750m
+              ephemeral-storage: 2Gi
+              memory: 768Mi
+            requests:
+              cpu: 500m
+              ephemeral-storage: 50Mi
+              memory: 512Mi
+      volumes:
+        - name: empty-dir
+          emptyDir: {}

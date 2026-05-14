@@ -1,0 +1,134 @@
+---
+# Source: uptime-kuma/templates/pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: uptime-kuma-pvc
+  namespace: default
+  labels:
+    helm.sh/chart: uptime-kuma-2.21.3
+    app.kubernetes.io/name: uptime-kuma
+    app.kubernetes.io/instance: uptime-kuma
+    app.kubernetes.io/version: "1.23.13"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "4Gi"
+---
+# Source: uptime-kuma/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: uptime-kuma
+  namespace: default
+  labels:
+    helm.sh/chart: uptime-kuma-2.21.3
+    app.kubernetes.io/name: uptime-kuma
+    app.kubernetes.io/instance: uptime-kuma
+    app.kubernetes.io/version: "1.23.13"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3001
+      targetPort: 3001
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: uptime-kuma
+    app.kubernetes.io/instance: uptime-kuma
+---
+# Source: uptime-kuma/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uptime-kuma
+  namespace: default
+  labels:
+    helm.sh/chart: uptime-kuma-2.21.3
+    app.kubernetes.io/name: uptime-kuma
+    app.kubernetes.io/instance: uptime-kuma
+    app.kubernetes.io/version: "1.23.13"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: uptime-kuma
+      app.kubernetes.io/instance: uptime-kuma
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: uptime-kuma
+        app.kubernetes.io/instance: uptime-kuma
+    spec:
+      automountServiceAccountToken: false
+      serviceAccountName: default
+      securityContext:
+        {}
+      containers:
+        - name: uptime-kuma
+          securityContext:
+            {}
+          image: "louislam/uptime-kuma:1.23.13-debian"
+          imagePullPolicy: IfNotPresent
+          env:
+          ports:
+            - name: http
+              containerPort: 3001
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /app/data
+              name: storage
+          livenessProbe:
+            initialDelaySeconds: 180
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+            successThreshold: 1
+            exec:
+              command:
+                - extra/healthcheck
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /
+              port: 3001
+              scheme: HTTP
+          resources:
+            {}
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: uptime-kuma-pvc
+---
+# Source: uptime-kuma/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "uptime-kuma-test-connection"
+  namespace: default
+  labels:
+    helm.sh/chart: uptime-kuma-2.21.3
+    app.kubernetes.io/name: uptime-kuma
+    app.kubernetes.io/instance: uptime-kuma
+    app.kubernetes.io/version: "1.23.13"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['uptime-kuma:3001']
+  restartPolicy: Never

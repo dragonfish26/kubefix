@@ -1,0 +1,160 @@
+---
+# Source: kubeview/templates/service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubeview
+  namespace: default
+---
+# Source: kubeview/templates/service-account.yaml
+kind: ClusterRole
+
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kubeview
+    
+rules:
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+      - replicasets
+      - daemonsets
+      - statefulsets
+    verbs: ["get", "list", "watch"]
+
+  - apiGroups: [""]
+    resources:
+      - pods
+      - pods/log
+      - services
+      - configmaps
+      - secrets
+      - endpoints
+      - namespaces
+      - persistentvolumeclaims
+      - events
+    verbs: ["get", "list", "watch"]
+
+  - apiGroups: ["networking.k8s.io"]
+    resources:
+      - ingresses
+    verbs: ["get", "list", "watch"]
+
+  - apiGroups: ["batch"]
+    resources:
+      - jobs
+      - cronjobs
+    verbs: ["get", "list", "watch"]
+
+  - apiGroups: ["discovery.k8s.io"]
+    resources:
+      - endpointslices
+    verbs: ["get", "list", "watch"]
+  
+  - apiGroups: ["autoscaling"]
+    resources:
+      - horizontalpodautoscalers
+    verbs: ["get", "list", "watch"]
+
+
+  - nonResourceURLs: ["*"]
+    verbs: ["get", "list", "watch"]
+---
+# Source: kubeview/templates/service-account.yaml
+kind: ClusterRoleBinding
+
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kubeview
+     
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  
+  kind: ClusterRole
+  
+  name: kubeview
+subjects:
+  - kind: ServiceAccount
+    name: kubeview
+    namespace: default
+---
+# Source: kubeview/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubeview
+  labels:
+    helm.sh/chart: kubeview-2.0.5
+    app.kubernetes.io/name: kubeview
+    app.kubernetes.io/instance: kubeview
+    app.kubernetes.io/version: "2.1.1"
+    app.kubernetes.io/managed-by: Helm
+  
+spec:
+  
+  type: LoadBalancer
+  
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: kubeview
+    app.kubernetes.io/instance: kubeview
+---
+# Source: kubeview/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubeview
+  labels:
+    helm.sh/chart: kubeview-2.0.5
+    app.kubernetes.io/name: kubeview
+    app.kubernetes.io/instance: kubeview
+    app.kubernetes.io/version: "2.1.1"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kubeview
+      app.kubernetes.io/instance: kubeview
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: kubeview-2.0.5
+        app.kubernetes.io/name: kubeview
+        app.kubernetes.io/instance: kubeview
+        app.kubernetes.io/version: "2.1.1"
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      serviceAccountName: kubeview
+      containers:
+        - name: kubeview
+          image: "ghcr.io/benc-uk/kubeview:latest"
+          imagePullPolicy: Always
+          env:
+          
+          
+               
+                
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+          resources:
+            limits:
+              cpu: 50m
+              memory: 64Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi

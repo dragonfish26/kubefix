@@ -1,0 +1,20 @@
+[project]
+name = "kubefix"
+version = "0.1.0"
+description = "Detect and correct architectural defects in Kubernetes manifests"
+authors = [{name = "Nomintuul Batbaatar"}]
+requires-python = ">=3.10"
+dependencies = [
+    "ruamel.yaml>=0.18",
+    "click>=8.1",
+]
+
+[project.scripts]
+kubefix = "kubefix.main:cli"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
