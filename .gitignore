@@ -5,3 +5,8 @@ __pycache__/
 output/
 original/
 run.sh
+
+src/kubefix/algo2.py 
+src/kubefix/edges.py
+src/kubefix/noorog.py
+src/kubefix/kubefix.yaml
