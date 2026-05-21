@@ -31,3 +31,7 @@ Also install Graphviz if not already installed.
 And then :
 
     kube-diagrams -o output/output.png output/output.yaml
+
+To generate a diagram with the isolated resources as a separate cluster use `-c src/kubefix/kubefix.kdc`:
+
+    kube-diagrams output/argo-argo-workflows.yaml -o output/argo-argo-workflows_modified -c src/kubefix/kubefix.kdc
