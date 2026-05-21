@@ -6,6 +6,7 @@ from ruamel.yaml import YAML
 
 from kubefix.algo1 import algo1_normalize_labels
 from kubefix.algo2 import algo2_label_intersection
+from kubefix.algo3 import algo3_mark_isolated
 
 yaml = YAML()
 yaml.preserve_quotes = True
@@ -48,21 +49,28 @@ def dump_manifests(resources, path):
 @click.option("-o", "--output", type=click.Path(path_type=Path), help="Output file (default: stdout)")
 def cli(input_path: Path, output: Path | None):
     """Run kubefix on a Kubernetes manifest."""
-    docs = load_manifests(input_path)
+    resources = load_manifests(input_path)
+    all_warnings = []  
+
     # ALGO 1 : Label normalization
-    docs, warnings = algo1_normalize_labels(docs)
+    resources, w = algo1_normalize_labels(resources)
+    all_warnings.extend(w)  
 
     # ALGO 2 : Edge intersection 
-    #docs, w = algo2_label_intersection(docs); all_warnings.extend(w)
+    #resources, w = algo2_label_intersection(resources); all_warnings.extend(w)
+    #all_warnings.extend(w) 
 
-    for w in warnings:
+    resources, w = algo3_mark_isolated(resources)
+    all_warnings.extend(w)
+
+    for w in all_warnings:
         click.echo(f"[warning] {w.resource_kind}/{w.resource_name}: {w.message}", err=True)
 
     if output:
-        dump_manifests(docs, output)
+        dump_manifests(resources, output)
         click.echo(f"Wrote {output}", err=True)
     else:
-        yaml.dump_all(docs, sys.stdout)
+        yaml.dump_all(resources, sys.stdout)
 
 
 if __name__ == "__main__":
