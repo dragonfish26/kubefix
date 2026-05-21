@@ -5,23 +5,42 @@ import click
 from ruamel.yaml import YAML
 
 from kubefix.algo1 import algo1_normalize_labels
+from kubefix.algo2 import algo2_label_intersection
 
 yaml = YAML()
 yaml.preserve_quotes = True
 yaml.indent(mapping=2, sequence=4, offset=2)
 
 
-def load_manifests(path: Path) -> list[dict]:
-    """Load all K8s resources from a YAML file (handles multi-doc)."""
+def load_manifests(path):
+    """Load all K8s resources from a YAML file.
+
+    Handles multi-document files (separated by ---) and skips empty
+    documents.
+
+    Args:
+        path: Path to the YAML file.
+
+    Returns:
+        A list of resources (dicts).
+    """
     with path.open() as f:
-        return [doc for doc in yaml.load_all(f) if doc is not None]
+        return [resource for resource in yaml.load_all(f) if resource is not None]
 
 
-def dump_manifests(docs: list[dict], path: Path) -> None:
-    """Write resources back to YAML."""
+def dump_manifests(resources, path):
+    """Write resources back to a YAML file.
+
+    Creates the parent directory if it doesn't exist. Multiple resources
+    are written as a multi-document YAML file.
+
+    Args:
+        resources: list of Kubernetes resources (dicts).
+        path: Path to the output YAML file.
+    """
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w") as f:
-        yaml.dump_all(docs, f)
+        yaml.dump_all(resources, f)
 
 
 @click.command()
@@ -32,6 +51,9 @@ def cli(input_path: Path, output: Path | None):
     docs = load_manifests(input_path)
     # ALGO 1 : Label normalization
     docs, warnings = algo1_normalize_labels(docs)
+
+    # ALGO 2 : Edge intersection 
+    #docs, w = algo2_label_intersection(docs); all_warnings.extend(w)
 
     for w in warnings:
         click.echo(f"[warning] {w.resource_kind}/{w.resource_name}: {w.message}", err=True)

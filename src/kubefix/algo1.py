@@ -14,11 +14,19 @@ RECOMMENDED_LABELS: set[str] = {
 }
 
 
-def algo1_normalize_labels(docs: list[dict]) -> tuple[list[dict], list[Warning]]:
-    """Replace non-recommended labels with their recommended equivalents."""
+def algo1_normalize_labels(resources):
+    """Replace non-recommended labels with their recommended equivalents.
+
+    Args:
+        resources: list of Kubernetes resources (dicts).
+
+    Returns:
+        A tuple (resources, warnings) where resources is the modified
+        list and warnings is a list of Warning objects for conflicts.
+    """
     warnings: list[Warning] = []
 
-    for resource in docs:
+    for resource in resources:
         labels = resource.get("metadata", {}).get("labels")
         if not labels:
             continue
@@ -50,4 +58,4 @@ def algo1_normalize_labels(docs: list[dict]) -> tuple[list[dict], list[Warning]]
                 labels[new_key] = value
                 del labels[old_key]
 
-    return docs, warnings
+    return resources, warnings
