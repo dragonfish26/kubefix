@@ -7,6 +7,7 @@ from ruamel.yaml import YAML
 from kubefix.algo1 import algo1_normalize_labels
 from kubefix.algo2 import algo2_label_intersection
 from kubefix.algo3 import algo3_mark_isolated
+from kubefix.algo4 import algo4_assign_unique_cluster_labels
 
 yaml = YAML()
 yaml.preserve_quotes = True
@@ -60,6 +61,11 @@ def cli(input_path: Path, output: Path | None):
     #resources, w = algo2_label_intersection(resources); all_warnings.extend(w)
     #all_warnings.extend(w) 
 
+    # ALGO 4 : Label unlabeled resources with unambiguous resources
+    resources, w = algo4_assign_unique_cluster_labels(resources)
+    all_warnings.extend(w)
+
+    # ALGO 3 : Isolated-resource label
     resources, w = algo3_mark_isolated(resources)
     all_warnings.extend(w)
 
