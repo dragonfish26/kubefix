@@ -3,7 +3,6 @@
 __pycache__/
 *.egg-info/
 output/
-original/
 run.sh
 
 src/kubefix/algo2.py 
