@@ -29,8 +29,7 @@ LABEL_HIERARCHY = [
 _LABEL_TO_INDEX = {label: i for i, label in enumerate(LABEL_HIERARCHY)}
 
 
-# Default location of the edges config. Override via the function arg
-# if your layout is different.
+# Default location of the edges config. 
 _DEFAULT_CONFIG_PATH = Path(__file__).parent / "edges" / "kubefix.yaml"
 
 
