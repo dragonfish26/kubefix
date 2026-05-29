@@ -6,6 +6,4 @@ modified/
 output/
 run.sh
 
-
-src/kubefix/algo2.py 
 src/kubefix/noorog.py
