@@ -12,8 +12,8 @@ from kubefix.edges.helpers import query_path
 Warning_ = namedtuple("Warning_", ["resource_kind", "resource_name", "message"])
 
 
-# Cluster labels in order of strength (strongest first). Same list as the
-# old algo. Lower index = stronger cluster.
+# Cluster labels in order of strength (strongest first).
+# Lower index = stronger cluster.
 LABEL_HIERARCHY = [
     "app.kubernetes.io/instance",
     "release",
@@ -40,10 +40,9 @@ def _load_config(config_path):
 
 
 def _cluster_label_keys(config):
-    """Labels that map to clusters in kubefix.yaml. Only these labels
-    are eligible for the intersection — others (selectors, etc.) are
-    ignored. Falls back to LABEL_HIERARCHY if the config has no
-    clusters section, since the two lists overlap heavily anyway."""
+    """Labels that map to clusters in kubefix.yaml. 
+    Only these labels are eligible for the intersection, others are ignored. 
+    Falls back to LABEL_HIERARCHY if the config has no clusters section."""
     keys = [c.get("label") for c in config.get("clusters", []) if "label" in c]
     return keys if keys else list(LABEL_HIERARCHY)
 
@@ -140,8 +139,8 @@ def _can_be_moved(resource, intersection, cluster_label_keys):
 
 
 def _assign(resource, intersection, cluster_label_keys):
-    """Write the intersection labels onto the resource. Returns True if a
-    change was made."""
+    """Write the intersection labels onto the resource. 
+    Returns True if a change was made."""
     if not intersection:
         return False
     if not _can_be_moved(resource, intersection, cluster_label_keys):
@@ -175,7 +174,7 @@ def algo2_label_intersection(resources, config_path=None):
     # objects as in `resources` (by reference), so mutations propagate.
     resources_by_rid = {compute_rid(r, config): r for r in resources}
 
-    # Synthesise PVCs etc., then compute edges.
+    # Synthesise PVCs etc, then compute edges.
     create_new_nodes(resources_by_rid, config)
     edges = process_edges(resources_by_rid, config)
 
