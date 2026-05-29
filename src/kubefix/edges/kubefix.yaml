@@ -1,3 +1,16 @@
+clusters:
+  - label: app.kubernetes.io/instance
+  - label: release
+  - label: helm.sh/chart
+  - label: chart
+  - label: app.kubernetes.io/name
+  - label: app
+  - label: tier
+  - label: app.kubernetes.io/component
+  - label: component
+  - label: service
+  - annotation: helm.sh/hook
+
 edges:
   REFERENCE:
   REFERENCE-UP:
