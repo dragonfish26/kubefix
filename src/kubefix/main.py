@@ -58,8 +58,8 @@ def cli(input_path: Path, output: Path | None):
     all_warnings.extend(w)  
 
     # ALGO 2 : Edge intersection 
-    #resources, w = algo2_label_intersection(resources); all_warnings.extend(w)
-    #all_warnings.extend(w) 
+    resources, w = algo2_label_intersection(resources)
+    all_warnings.extend(w) 
 
     # ALGO 4 : Label unlabeled resources with unambiguous resources
     resources, w = algo4_assign_unique_cluster_labels(resources)
