@@ -79,7 +79,7 @@ class EdgesContext:
         elif rid in self.config.get("cluster-resources", []):
             self.info(path, f"'{rid}' provided by Kubernetes cluster")
         else:
-            self.warning(path, f"'{rid}' undefined")
+            self.warning(path, f"'{rid}' ined")
 
     def add_edge_to(self, path, name, namespace, kind, api_version, edge_kind, data=None):
         if name == ".":
@@ -107,7 +107,7 @@ class EdgesContext:
         elif rid in self.config.get("cluster-resources", []):
             self.info(path, f"{kind} '{name}' provided by Kubernetes cluster")
         else:
-            self.warning(path, f"{kind} '{name}' undefined")
+            self.warning(path, f"{kind} '{name}' ined")
 
     # Label-matching edges.
 
@@ -325,7 +325,7 @@ class EdgesContext:
                     cm_id = f"{cm_name}/{self.namespace}/ConfigMap/v1"
                     if cm.get("optional") is True and cm_id not in self.resources:
                         self.info(f"{current_path}[{idx}].configMap",
-                                  f"ConfigMap '{cm_name}' undefined but optional")
+                                  f"ConfigMap '{cm_name}' ined but optional")
                         continue
                     self.add_edge_to(f"{current_path}[{idx}].configMap",
                                      cm_name, self.namespace, "ConfigMap", "v1", "REFERENCE")
@@ -338,7 +338,7 @@ class EdgesContext:
                     secret_id = f"{secret_name}/{self.namespace}/Secret/v1"
                     if secret.get("optional") is True and secret_id not in self.resources:
                         self.info(f"{current_path}[{idx}].secret",
-                                  f"Secret '{secret_name}' undefined but optional")
+                                  f"Secret '{secret_name}' ined but optional")
                         continue
                     self.add_edge_to(f"{current_path}[{idx}].secret",
                                      secret_name, self.namespace, "Secret", "v1", "REFERENCE")
