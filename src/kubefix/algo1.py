@@ -4,13 +4,9 @@ LABEL_MAPPING: dict[str, str] = {
     "release": "app.kubernetes.io/instance",
     "chart":   "helm.sh/chart",
     "app":     "app.kubernetes.io/name",
-}
-
-RECOMMENDED_LABELS: set[str] = {
-    "app.kubernetes.io/instance",
-    "helm.sh/chart",
-    "app.kubernetes.io/name",
-    "app.kubernetes.io/component",
+    "component": "app.kubernetes.io/component",
+    "heritage": "app.kubernetes.io/managed-by",
+    "version": "app.kubernetes.io/version",
 }
 
 
