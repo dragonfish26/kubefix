@@ -9,7 +9,6 @@ LABEL_MAPPING: dict[str, str] = {
     "version": "app.kubernetes.io/version",
 }
 
-
 def algo1_normalize_labels(resources):
     """Replace non-recommended labels with their recommended equivalents.
 
@@ -22,10 +21,10 @@ def algo1_normalize_labels(resources):
     """
     warnings: list[Warning] = []
 
-    for resource in resources:
+    def normalize_labels(resource):
         labels = resource.get("metadata", {}).get("labels")
         if not labels:
-            continue
+            return
 
         for old_key, value in list(labels.items()):
             if old_key not in LABEL_MAPPING:
@@ -53,5 +52,13 @@ def algo1_normalize_labels(resources):
                 # recommended label not present, simple rename
                 labels[new_key] = value
                 del labels[old_key]
+
+    for resource in resources:
+        normalize_labels(resource)
+
+        if resource.get("kind") == "StatefulSet":
+            # Normalize StatefulSet volumeClaimTemplates
+            for vct in resource.get("spec", {}).get("volumeClaimTemplates", []):
+                normalize_labels(vct)
 
     return resources, warnings
