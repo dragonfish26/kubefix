@@ -1,14 +1,6 @@
 """Algo 4: assign cluster labels to unlabeled resources when the context is unambiguous."""
 from kubefix.common import Warning
-
-# Labels that define clusters in KubeDiagrams, in order of significance.
-CLUSTER_LABELS = [
-    "app.kubernetes.io/instance",
-    "helm.sh/chart",
-    "app.kubernetes.io/name",
-    "app.kubernetes.io/component",
-]
-
+from kubefix.common import CLUSTER_LABELS
 
 def algo4_assign_unique_cluster_labels(resources):
     """Give unlabeled resources the cluster labels of the only candidate cluster.
