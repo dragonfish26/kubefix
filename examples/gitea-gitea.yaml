@@ -3340,7 +3340,7 @@ spec:
       # Auxiliary vars to populate environment variables
       containers:
         - name: pgpool
-          image: docker.io/bitnami/pgpool:4.6.2-debian-12-r4
+          image: docker.io/soldevelo/pgpool:4.6.3-debian-12-r0
           imagePullPolicy: "IfNotPresent"
           securityContext:
             allowPrivilegeEscalation: false
