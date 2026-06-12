@@ -22,7 +22,6 @@ def algo3_mark_isolated(resources):
         labels = metadata.get("labels")
 
         # check if there are no labels that are cluster labels for the resource
-        #if not labels:
         if not labels or not any(key in CLUSTER_LABELS for key in labels):
             metadata["labels"] = {ISOLATED_LABEL: ""}
             warnings.append(Warning(
