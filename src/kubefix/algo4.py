@@ -1,18 +1,20 @@
 """Algo 4: assign cluster labels to unlabeled resources when the context is unambiguous."""
 from kubefix.common import Warning
-from kubefix.common import CLUSTER_LABELS
+
+CLUSTER_LABELS_Algo4 = [
+    "app.kubernetes.io/instance",
+    "helm.sh/chart",
+    "app.kubernetes.io/name",
+]
 
 def algo4_assign_unique_cluster_labels(resources):
     """Assign unambiguous cluster labels to resources that are missing them.
 
-    Scans all resources to find cluster labels (instance, chart, name, component)
+    Scans all resources to find cluster labels (instance, chart, name)
     that have exactly one distinct value across the whole manifest. Those are
     considered unambiguous.
 
-    For each resource, only labels that are more significant than its current
-    highest-significance label are assigned. For example, a resource that already
-    has 'app.kubernetes.io/name' will only receive 'helm.sh/chart' and
-    'app.kubernetes.io/instance', not 'app.kubernetes.io/component'.
+    For each resource, we add these labels if they don't have them.
 
     Resources with no cluster labels at all receive all unambiguous labels.
 
@@ -26,7 +28,7 @@ def algo4_assign_unique_cluster_labels(resources):
 
     # 1. For each cluster label, find the set of distinct values.
     unique_values = {}
-    for label in CLUSTER_LABELS:
+    for label in CLUSTER_LABELS_Algo4:
         values = set()
         for resource in resources:
             labels = resource.get("metadata", {}).get("labels") or {}
@@ -39,7 +41,7 @@ def algo4_assign_unique_cluster_labels(resources):
     if not unique_values:
         return resources, warnings  # no unique clusters
 
-    
+    """ 
     # 2. For each resource, assign unambiguous labels that are more significant than its current highest-significance label.
     for resource in resources:
         metadata = resource.setdefault("metadata", {})
@@ -73,8 +75,8 @@ def algo4_assign_unique_cluster_labels(resources):
             resource_name=metadata.get("name", "?"),
             message=f"Assigned cluster labels {to_assign}.",
         ))
+    """
 
-    """ Version where we don't consider order of significance 
     # 2. For each resource, add any unique label it doesn't already have
     for resource in resources:
         metadata = resource.setdefault("metadata", {})
@@ -99,6 +101,5 @@ def algo4_assign_unique_cluster_labels(resources):
             message=f"Assigned unique cluster labels {to_assign}.",
         ))
 
-    """
 
     return resources, warnings

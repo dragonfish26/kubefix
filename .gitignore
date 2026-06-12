@@ -9,3 +9,5 @@ fixed-manifest.yaml
 
 src/kubefix/noorog.py
 test.sh
+test2.sh
+micro/
