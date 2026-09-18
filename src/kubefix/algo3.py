@@ -1,5 +1,5 @@
 """Algo 3: mark unlabeled resources with an isolated-resource label."""
-from kubefix.common import Warning
+from kubefix.common import Warning, Stat
 from kubefix.common import CLUSTER_LABELS
 
 ISOLATED_LABEL = "isolated-resource"
@@ -16,8 +16,12 @@ def algo3_mark_isolated(resources):
     Returns:
         A tuple (resources, warnings).
     """
-    warnings = []
+    warnings: list[Warning] = []
+    stats: list[Stat] = []
+
     for resource in resources:
+        label_change_count = 0 #counter for stat
+
         metadata = resource.setdefault("metadata", {})
         labels = metadata.get("labels")
 
@@ -29,5 +33,12 @@ def algo3_mark_isolated(resources):
                 resource_name=metadata.get("name", "?"),
                 message="Resource has no cluster labels; marked as isolated.",
             ))
+            label_change_count += 1
 
-    return resources, warnings
+            stats.append(Stat(
+                        resource_kind=resource.get("kind", "?"),
+                        resource_name=resource.get("metadata", {}).get("name", "?"),
+                        changed_labels=label_change_count
+                    ))
+
+    return resources, warnings, stats

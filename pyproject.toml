@@ -7,6 +7,7 @@ requires-python = ">=3.10"
 dependencies = [
     "ruamel.yaml>=0.18",
     "click>=8.1",
+    "pyyaml>=6.0",
 ]
 
 [project.scripts]

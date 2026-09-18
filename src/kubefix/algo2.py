@@ -1,6 +1,6 @@
 """Algo 2: label intersection."""
 
-from collections import defaultdict, namedtuple
+from collections import defaultdict
 from pathlib import Path
 
 import yaml
@@ -8,8 +8,7 @@ import yaml
 from kubefix.edges import compute_rid, create_new_nodes, process_edges
 from kubefix.edges.helpers import query_path
 
-
-Warning_ = namedtuple("Warning_", ["resource_kind", "resource_name", "message"])
+from kubefix.common import Warning, Stat
 
 
 # Cluster labels in order of strength (strongest first).
@@ -141,9 +140,9 @@ def _assign(resource, intersection, cluster_label_keys):
     """Write the intersection labels onto the resource. 
     Returns True if a change was made."""
     if not intersection:
-        return False
+        return False, 0
     if not _can_be_moved(resource, intersection, cluster_label_keys):
-        return False
+        return False, 0
 
     labels = query_path(resource, "metadata.labels")
     if not isinstance(labels, dict):
@@ -152,8 +151,11 @@ def _assign(resource, intersection, cluster_label_keys):
             resource["metadata"] = {}
         resource["metadata"]["labels"] = labels
 
+    # count only keys that are actually new or changing, before overwriting them
+    label_change_count = sum(1 for k, v in intersection.items() if labels.get(k) != v)
+
     labels.update(intersection)
-    return True
+    return True, label_change_count
 
 
 def algo2_label_intersection(resources, config_path=None):
@@ -179,7 +181,11 @@ def algo2_label_intersection(resources, config_path=None):
 
     parent_map, child_map = _build_parent_and_child_maps(edges)
 
-    warnings = []
+    warnings: list[Warning] = []
+
+    # rid -> total labels changed across both passes, so a resource touched
+    # by both parent_map and child_map still gets a single Stat entry.
+    changed_labels_by_rid: dict[str, int] = {}
 
     # Two passes : parents pull children, then
     # children pull parents.
@@ -191,6 +197,17 @@ def algo2_label_intersection(resources, config_path=None):
             )
             if not inter:
                 continue
-            _assign(resource, inter, cluster_label_keys)
+            changed, count = _assign(resource, inter, cluster_label_keys)
+            if changed and count > 0:
+                changed_labels_by_rid[rid] = changed_labels_by_rid.get(rid, 0) + count
 
-    return resources, warnings
+    stats = [
+        Stat(
+            resource_kind=resources_by_rid[rid].get("kind", "?"),
+            resource_name=query_path(resources_by_rid[rid], "metadata.name", "?"),
+            changed_labels=count,
+        )
+        for rid, count in changed_labels_by_rid.items()
+    ]
+
+    return resources, warnings, stats
