@@ -6,6 +6,8 @@ modified/
 output/
 run.sh
 fixed-manifest.yaml
+fixed-manifest-stats.md
+uv.lock
 
 src/kubefix/noorog.py
 test.sh

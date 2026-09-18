@@ -1,5 +1,5 @@
 """Algo 4: assign cluster labels to unlabeled resources when the context is unambiguous."""
-from kubefix.common import Warning
+from kubefix.common import Warning, Stat
 
 CLUSTER_LABELS_Algo4 = [
     "app.kubernetes.io/instance",
@@ -24,7 +24,9 @@ def algo4_assign_unique_cluster_labels(resources):
     Returns:
         A tuple (resources, warnings).
     """
-    warnings = []
+    warnings: list[Warning] = []
+    stats: list[Stat] = []
+    
 
     # 1. For each cluster label, find the set of distinct values.
     unique_values = {}
@@ -39,10 +41,12 @@ def algo4_assign_unique_cluster_labels(resources):
             unique_values[label] = next(iter(values))
 
     if not unique_values:
-        return resources, warnings  # no unique clusters
+        return resources, warnings, stats  # no unique clusters
 
     # 2. For each resource, add any unique label it doesn't already have
     for resource in resources:
+        label_change_count = 0 #counter for stat
+
         metadata = resource.setdefault("metadata", {})
         labels = metadata.get("labels") or {}
 
@@ -55,6 +59,8 @@ def algo4_assign_unique_cluster_labels(resources):
         if not to_assign:
             continue
 
+        label_change_count += len(to_assign)
+
         if not metadata.get("labels"):
             metadata["labels"] = {}
         metadata["labels"].update(to_assign)
@@ -65,5 +71,11 @@ def algo4_assign_unique_cluster_labels(resources):
             message=f"Assigned unique cluster labels {to_assign}.",
         ))
 
+        stats.append(Stat(
+                    resource_kind=resource.get("kind", "?"),
+                    resource_name=resource.get("metadata", {}).get("name", "?"),
+                    changed_labels=label_change_count
+                ))
 
-    return resources, warnings
+
+    return resources, warnings, stats

@@ -1,4 +1,4 @@
-from kubefix.common import Warning
+from kubefix.common import Warning, Stat
 
 LABEL_MAPPING: dict[str, str] = {
     "release": "app.kubernetes.io/instance",
@@ -20,8 +20,11 @@ def algo1_normalize_labels(resources):
         list and warnings is a list of Warning objects for conflicts.
     """
     warnings: list[Warning] = []
+    stats: list[Stat] = []
 
     def normalize_labels(resource):
+        label_change_count = 0 #counter for stat
+        
         labels = resource.get("metadata", {}).get("labels")
         if not labels:
             return
@@ -37,6 +40,7 @@ def algo1_normalize_labels(resources):
                 if labels[new_key] == value:
                     # same value, just drop the duplicate
                     del labels[old_key]
+                    label_change_count +=1
                 else:
                     # different values : keep recommended, drop non-recommended, warn
                     warnings.append(Warning(
@@ -48,10 +52,19 @@ def algo1_normalize_labels(resources):
                         ),
                     ))
                     del labels[old_key]
+                    label_change_count +=1
             else:
                 # recommended label not present, simple rename
                 labels[new_key] = value
                 del labels[old_key]
+                label_change_count +=1
+
+        if label_change_count > 0:
+            stats.append(Stat(
+                resource_kind=resource.get("kind", "?"),
+                resource_name=resource.get("metadata", {}).get("name", "?"),
+                changed_labels=label_change_count
+            ))
 
     for resource in resources:
         normalize_labels(resource)
@@ -61,4 +74,4 @@ def algo1_normalize_labels(resources):
             for vct in resource.get("spec", {}).get("volumeClaimTemplates", []):
                 normalize_labels(vct)
 
-    return resources, warnings
+    return resources, warnings, stats

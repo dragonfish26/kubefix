@@ -4,6 +4,7 @@ import sys
 import click
 from ruamel.yaml import YAML
 
+from kubefix.common import Warning, Stat
 from kubefix.algo1 import algo1_normalize_labels
 from kubefix.algo2 import algo2_label_intersection
 from kubefix.algo3 import algo3_mark_isolated
@@ -44,39 +45,83 @@ def dump_manifests(resources, path):
     with path.open("w") as f:
         yaml.dump_all(resources, f)
 
+def produce_stat_report(stats_by_algo, path):
+    """Write a Markdown summary of per-algo stats to a file.
+
+    Args:
+        stats_by_algo: dict mapping algo name to its list of Stat objects.
+        path: Path to the output Markdown file.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w") as f:
+        f.write("# Kubefix stat report\n\n")
+        f.write("| Algo | Resources touched | Labels changed |\n")
+        f.write("|------|--------------------|------------------|\n")
+        for algo, stats in stats_by_algo.items():
+            resources_touched = len(stats)
+            labels_changed = sum(s.changed_labels for s in stats)
+            f.write(f"| {algo} | {resources_touched} | {labels_changed} |\n")
+
 
 @click.command()
 @click.argument("input_path", type=click.Path(exists=True, path_type=Path))
 @click.option("-o", "--output", type=click.Path(path_type=Path), help="Output file (default: stdout)")
-def cli(input_path: Path, output: Path | None):
+@click.option("-s", "--stats", type=click.Path(path_type=Path), help="Write a Markdown stat report to this file")
+def cli(input_path: Path, output: Path | None, stats: Path | None):
     """Run kubefix on a Kubernetes manifest."""
     resources = load_manifests(input_path)
-    all_warnings = []  
+    all_warnings: list[Warning] = []
+    stats_by_algo: dict[str, list[Stat]] = {}
 
     # ALGO 1 : Label normalization
-    resources, w = algo1_normalize_labels(resources)
-    all_warnings.extend(w)  
+    resources, w, s = algo1_normalize_labels(resources)
+    all_warnings.extend(w)
+    stats_by_algo["algo1"] = s
 
-    # ALGO 2 : Edge intersection 
-    resources, w = algo2_label_intersection(resources)
-    all_warnings.extend(w) 
+    # ALGO 2 : Edge intersection
+    resources, w, s = algo2_label_intersection(resources)
+    all_warnings.extend(w)
+    stats_by_algo["algo2"] = s
 
     # ALGO 4 : Label unlabeled resources with unambiguous resources
-    resources, w = algo4_assign_unique_cluster_labels(resources)
+    resources, w, s = algo4_assign_unique_cluster_labels(resources)
     all_warnings.extend(w)
+    stats_by_algo["algo4"] = s
+
 
     # ALGO 3 : Isolated-resource label
-    resources, w = algo3_mark_isolated(resources)
+    resources, w, s = algo3_mark_isolated(resources)
     all_warnings.extend(w)
+    stats_by_algo["algo3"] = s
+
+
+    click.echo("")
 
     for w in all_warnings:
         click.echo(f"[warning] {w.resource_kind}/{w.resource_name}: {w.message}", err=True)
 
+    # Print stats
+    click.echo("Number of resources touched by algo :")
+
+    for algo, algo_stats in stats_by_algo.items():
+        click.echo(f"   {algo} : {len(algo_stats)}")
+
+    click.echo("Number of labels changed by algo :")
+
+    for algo, algo_stats in stats_by_algo.items():
+        click.echo(f"   {algo} : {sum(s.changed_labels for s in algo_stats)}")
+
+    # If there's output option
     if output:
         dump_manifests(resources, output)
         click.echo(f"Wrote {output}", err=True)
     else:
         yaml.dump_all(resources, sys.stdout)
+
+    # If there's stats option
+    if stats:
+        produce_stat_report(stats_by_algo, stats)
+        click.echo(f"Wrote {stats}", err=True)
 
 
 if __name__ == "__main__":
