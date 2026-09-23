@@ -1,4 +1,5 @@
 #!/bin/bash
+cd "$(dirname "$0")/.."
 
 echo Generate original diagrams...
 for manifest in `ls examples/*`
@@ -8,7 +9,7 @@ do
   kube-diagrams --without-namespace $manifest -o $output_diagram
 done
 
-echo Generate modified diagrams and diagrams_stats.md...
+echo Generate modified diagrams and stats/diagrams_with_stats.md...
 content=""
 for manifest in `ls examples/*`
 do
@@ -23,5 +24,5 @@ do
   content+="| ![${name}](original/${name}.png) | ![${name}](modified_diagrams/${name}.png) |\n\n"
   content+="$(cat fixed-manifest-stats.md)\n\n"
 done
-echo -e "$content" > diagrams_stats.md
-echo diagrams_stats.md generated.
+echo -e "$content" > stats/diagrams_with_stats.md
+echo stats/diagrams_with_stats.md generated.

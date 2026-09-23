@@ -2,11 +2,11 @@
 | :---: | :---: | :---: |
 | airflow-helm-airflow | ![airflow-helm-airflow](original/airflow-helm-airflow.png) | ![airflow-helm-airflow](modified_diagrams/airflow-helm-airflow.png) |
 | apache-airflow-airflow | ![apache-airflow-airflow](original/apache-airflow-airflow.png) | ![apache-airflow-airflow](modified_diagrams/apache-airflow-airflow.png) |
+| argo-argocd-apps | ![argo-argocd-apps](original/argo-argocd-apps.png) | ![argo-argocd-apps](modified_diagrams/argo-argocd-apps.png) |
+| argo-argocd-image-updater | ![argo-argocd-image-updater](original/argo-argocd-image-updater.png) | ![argo-argocd-image-updater](modified_diagrams/argo-argocd-image-updater.png) |
 | argo-argo-cd | ![argo-argo-cd](original/argo-argo-cd.png) | ![argo-argo-cd](modified_diagrams/argo-argo-cd.png) |
 | argo-argo-rollouts | ![argo-argo-rollouts](original/argo-argo-rollouts.png) | ![argo-argo-rollouts](modified_diagrams/argo-argo-rollouts.png) |
 | argo-argo-workflows | ![argo-argo-workflows](original/argo-argo-workflows.png) | ![argo-argo-workflows](modified_diagrams/argo-argo-workflows.png) |
-| argo-argocd-apps | ![argo-argocd-apps](original/argo-argocd-apps.png) | ![argo-argocd-apps](modified_diagrams/argo-argocd-apps.png) |
-| argo-argocd-image-updater | ![argo-argocd-image-updater](original/argo-argocd-image-updater.png) | ![argo-argocd-image-updater](modified_diagrams/argo-argocd-image-updater.png) |
 | argo-cd-oci-argo-cd | ![argo-cd-oci-argo-cd](original/argo-cd-oci-argo-cd.png) | ![argo-cd-oci-argo-cd](modified_diagrams/argo-cd-oci-argo-cd.png) |
 | artifact-hub-artifact-hub | ![artifact-hub-artifact-hub](original/artifact-hub-artifact-hub.png) | ![artifact-hub-artifact-hub](modified_diagrams/artifact-hub-artifact-hub.png) |
 | aws-aws-load-balancer-controller | ![aws-aws-load-balancer-controller](original/aws-aws-load-balancer-controller.png) | ![aws-aws-load-balancer-controller](modified_diagrams/aws-aws-load-balancer-controller.png) |
