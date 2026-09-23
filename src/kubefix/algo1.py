@@ -71,7 +71,7 @@ def algo1_normalize_labels(resources):
 
         if resource.get("kind") == "StatefulSet":
             # Normalize StatefulSet volumeClaimTemplates
-            for vct in resource.get("spec", {}).get("volumeClaimTemplates", []):
+            for vct in resource.get("spec", {}).get("volumeClaimTemplates") or []:
                 normalize_labels(vct)
 
     return resources, warnings, stats

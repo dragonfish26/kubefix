@@ -9,6 +9,8 @@ fixed-manifest.yaml
 fixed-manifest-stats.md
 uv.lock
 
+data.csv
+
 src/kubefix/noorog.py
 test.sh
 test2.sh
