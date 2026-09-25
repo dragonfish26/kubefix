@@ -21,7 +21,7 @@ do
 
   content+="## ${name}\n\n"
   content+="| Original diagram | Modified diagram |\n| :---: | :---: |\n"
-  content+="| ![${name}](original/${name}.png) | ![${name}](modified_diagrams/${name}.png) |\n\n"
+  content+="| ![${name}](/original/${name}.png) | ![${name}](/modified_diagrams/${name}.png) |\n\n"
   content+="$(cat fixed-manifest-stats.md)\n\n"
 done
 echo -e "$content" > stats/diagrams_with_stats.md
