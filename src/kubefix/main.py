@@ -10,6 +10,8 @@ from kubefix.algo1 import algo1_normalize_labels
 from kubefix.algo2 import algo2_label_intersection
 from kubefix.algo3 import algo3_mark_isolated
 from kubefix.algo4 import algo4_assign_unique_cluster_labels
+from kubefix.algo5 import algo5_component_label_union
+from kubefix.algo6 import algo6_name_component
 
 yaml = YAML()
 yaml.preserve_quotes = True
@@ -114,10 +116,20 @@ def cli(input_path: Path, output: Path | None, stats: Path | None, csv_path: Pat
     all_warnings.extend(w)
     stats_by_algo["algo2"] = s
 
+    # ALGO 5 : Connected-component label union
+    resources, w, s = algo5_component_label_union(resources)
+    all_warnings.extend(w)
+    stats_by_algo["algo5"] = s
+
     # ALGO 4 : Label unlabeled resources with unambiguous resources
     resources, w, s = algo4_assign_unique_cluster_labels(resources)
     all_warnings.extend(w)
     stats_by_algo["algo4"] = s
+
+    # ALGO 6 : Name a component for connected resources of the same cluster
+    resources, w, s = algo6_name_component(resources)
+    all_warnings.extend(w)
+    stats_by_algo["algo6"] = s
 
 
     # ALGO 3 : Isolated-resource label

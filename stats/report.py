@@ -7,7 +7,7 @@ import csv
 import sys
 from collections import defaultdict
 
-ALGOS = ["algo1", "algo2", "algo3", "algo4"]
+ALGOS = ["algo1", "algo2", "algo3", "algo4", "algo5", "algo6"]
 
 
 def load_rows(csv_path):
