@@ -7,7 +7,14 @@ import csv
 import sys
 from collections import defaultdict
 
-ALGOS = ["algo1", "algo2", "algo3", "algo4", "algo5", "algo6"]
+ALGOS = [
+    "algo_normalize_labels",
+    "algo_label_intersection",
+    "algo_comp_label_union",
+    "algo_unique_cluster",
+    "algo_name_component",
+    "algo_mark_isolated",
+]
 
 
 def load_rows(csv_path):

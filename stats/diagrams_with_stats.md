@@ -10,10 +10,12 @@ Total resources: 30
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 30 | 100.0% | 135 |
-| algo2 | 1 | 3.3% | 1 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 30 | 100.0% | 135 |
+| algo_label_intersection | 1 | 3.3% | 1 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## apache-airflow-airflow
 
@@ -27,10 +29,12 @@ Total resources: 39
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 35 | 89.7% | 134 |
-| algo2 | 1 | 2.6% | 1 |
-| algo4 | 35 | 89.7% | 35 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 35 | 89.7% | 134 |
+| algo_label_intersection | 1 | 2.6% | 1 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 35 | 89.7% | 35 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## argo-argocd-apps
 
@@ -44,10 +48,12 @@ Total resources: 0
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## argo-argocd-image-updater
 
@@ -61,10 +67,12 @@ Total resources: 8
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 8 | 100.0% | 8 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## argo-argo-cd
 
@@ -78,10 +86,12 @@ Total resources: 53
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 3 | 5.7% | 6 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 3 | 5.7% | 6 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## argo-argo-rollouts
 
@@ -95,10 +105,12 @@ Total resources: 14
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 5 | 35.7% | 10 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 5 | 35.7% | 10 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## argo-argo-workflows
 
@@ -112,10 +124,12 @@ Total resources: 27
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 19 | 70.4% | 19 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 8 | 29.6% | 16 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 19 | 70.4% | 19 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 8 | 29.6% | 16 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## argo-cd-oci-argo-cd
 
@@ -129,10 +143,12 @@ Total resources: 53
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 3 | 5.7% | 6 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 3 | 5.7% | 6 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## artifact-hub-artifact-hub
 
@@ -146,10 +162,12 @@ Total resources: 19
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 4 | 21.1% | 16 |
-| algo2 | 1 | 5.3% | 1 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 4 | 21.1% | 16 |
+| algo_label_intersection | 1 | 5.3% | 1 |
+| algo_comp_label_union | 3 | 15.8% | 3 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 10 | 52.6% | 10 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## aws-aws-load-balancer-controller
 
@@ -163,10 +181,12 @@ Total resources: 0
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-elasticsearch
 
@@ -180,10 +200,12 @@ Total resources: 21
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 4 | 19.0% | 4 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 4 | 19.0% | 4 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-external-dns
 
@@ -197,10 +219,12 @@ Total resources: 7
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 6 | 85.7% | 6 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-kafka
 
@@ -214,10 +238,12 @@ Total resources: 12
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 2 | 16.7% | 2 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 2 | 16.7% | 2 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-keycloak
 
@@ -231,10 +257,12 @@ Total resources: 15
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 1 | 6.7% | 1 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 1 | 6.7% | 1 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-labs-sealed-secrets
 
@@ -248,10 +276,12 @@ Total resources: 10
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 9 | 90.0% | 9 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-mariadb
 
@@ -265,10 +295,12 @@ Total resources: 8
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 4 | 50.0% | 4 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 4 | 50.0% | 4 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-metallb
 
@@ -282,10 +314,12 @@ Total resources: 30
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 3 | 10.0% | 3 |
-| algo4 | 8 | 26.7% | 24 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 3 | 10.0% | 3 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 8 | 26.7% | 24 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-metrics-server
 
@@ -299,10 +333,12 @@ Total resources: 10
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 9 | 90.0% | 9 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-minio
 
@@ -316,10 +352,12 @@ Total resources: 11
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-mongodb
 
@@ -333,10 +371,12 @@ Total resources: 8
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 1 | 12.5% | 1 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 1 | 12.5% | 1 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-mysql
 
@@ -350,10 +390,12 @@ Total resources: 8
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 3 | 37.5% | 3 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 3 | 37.5% | 3 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-nginx
 
@@ -367,10 +409,12 @@ Total resources: 6
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 6 | 100.0% | 6 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-postgresql-ha
 
@@ -384,10 +428,12 @@ Total resources: 14
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 1 | 7.1% | 1 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 1 | 7.1% | 1 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-postgresql
 
@@ -401,10 +447,12 @@ Total resources: 7
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 2 | 28.6% | 2 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 2 | 28.6% | 2 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-rabbitmq
 
@@ -418,10 +466,12 @@ Total resources: 10
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 10 | 100.0% | 10 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-redis-cluster
 
@@ -435,10 +485,12 @@ Total resources: 9
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 9 | 100.0% | 9 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-redis
 
@@ -452,10 +504,12 @@ Total resources: 14
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 2 | 14.3% | 2 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 2 | 14.3% | 2 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-spark
 
@@ -469,10 +523,12 @@ Total resources: 10
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-thanos
 
@@ -486,10 +542,12 @@ Total resources: 11
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-wordpress
 
@@ -503,10 +561,12 @@ Total resources: 15
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 3 | 20.0% | 3 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 3 | 20.0% | 3 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## cert-manager-cert-manager
 
@@ -520,10 +580,12 @@ Total resources: 46
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 46 | 100.0% | 46 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 46 | 100.0% | 46 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## chartmuseum-chartmuseum
 
@@ -537,10 +599,12 @@ Total resources: 3
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 2 | 66.7% | 2 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## cilium-cilium
 
@@ -554,10 +618,12 @@ Total resources: 23
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 3 | 13.0% | 3 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 15 | 65.2% | 15 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 3 | 13.0% | 3 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 4 | 17.4% | 4 |
+| algo_mark_isolated | 15 | 65.2% | 15 |
 
 ## cloudnative-pg-cloudnative-pg
 
@@ -571,10 +637,12 @@ Total resources: 20
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 9 | 45.0% | 27 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 9 | 45.0% | 27 |
+| algo_name_component | 7 | 35.0% | 7 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## cluster-autoscaler-cluster-autoscaler
 
@@ -588,10 +656,12 @@ Total resources: 7
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 5 | 71.4% | 5 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## codecentric-keycloak
 
@@ -605,10 +675,12 @@ Total resources: 9
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 2 | 22.2% | 2 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 2 | 22.2% | 2 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## crossplane-crossplane
 
@@ -622,10 +694,12 @@ Total resources: 22
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 21 | 95.5% | 84 |
-| algo2 | 1 | 4.5% | 3 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 21 | 95.5% | 84 |
+| algo_label_intersection | 1 | 4.5% | 3 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 14 | 63.6% | 14 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## datadog-datadog
 
@@ -639,10 +713,12 @@ Total resources: 21
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 3 | 14.3% | 12 |
-| algo2 | 7 | 33.3% | 7 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 3 | 14.3% | 12 |
+| algo_label_intersection | 7 | 33.3% | 7 |
+| algo_comp_label_union | 9 | 42.9% | 9 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 3 | 14.3% | 3 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## descheduler-descheduler
 
@@ -656,10 +732,12 @@ Total resources: 5
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 5 | 100.0% | 5 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## dex-dex
 
@@ -673,10 +751,12 @@ Total resources: 8
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 8 | 100.0% | 8 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## elastic-eck-operator
 
@@ -690,10 +770,12 @@ Total resources: 20
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 8 | 40.0% | 8 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## elastic-elasticsearch
 
@@ -707,10 +789,12 @@ Total resources: 7
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 5 | 71.4% | 20 |
-| algo2 | 2 | 28.6% | 6 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 5 | 71.4% | 20 |
+| algo_label_intersection | 2 | 28.6% | 6 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 7 | 100.0% | 7 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## elastic-kibana
 
@@ -724,10 +808,12 @@ Total resources: 11
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 11 | 100.0% | 33 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 11 | 100.0% | 33 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 11 | 100.0% | 11 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## external-dns-external-dns
 
@@ -741,10 +827,12 @@ Total resources: 5
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 5 | 100.0% | 5 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## external-secrets-operator-external-secrets
 
@@ -758,10 +846,12 @@ Total resources: 40
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 21 | 52.5% | 42 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 21 | 52.5% | 42 |
+| algo_name_component | 6 | 15.0% | 6 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## falcosecurity-falco
 
@@ -775,10 +865,12 @@ Total resources: 6
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 6 | 100.0% | 6 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## fluent-fluent-bit
 
@@ -792,10 +884,12 @@ Total resources: 7
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 1 | 14.3% | 2 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 1 | 14.3% | 2 |
+| algo_name_component | 6 | 85.7% | 6 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## gitea-gitea
 
@@ -809,10 +903,12 @@ Total resources: 30
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 7 | 23.3% | 14 |
-| algo2 | 2 | 6.7% | 4 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 7 | 23.3% | 14 |
+| algo_label_intersection | 2 | 6.7% | 4 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 15 | 50.0% | 15 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## gitlab-gitlab-runner
 
@@ -826,10 +922,12 @@ Total resources: 2
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 2 | 100.0% | 8 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 2 | 100.0% | 8 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 2 | 100.0% | 2 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## gitlab-gitlab
 
@@ -843,10 +941,12 @@ Total resources: 0
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## goauthentik-authentik
 
@@ -860,10 +960,12 @@ Total resources: 9
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-alloy
 
@@ -877,10 +979,12 @@ Total resources: 6
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 1 | 16.7% | 1 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 1 | 16.7% | 1 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-grafana
 
@@ -894,10 +998,12 @@ Total resources: 12
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 12 | 100.0% | 12 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-loki-stack
 
@@ -911,10 +1017,12 @@ Total resources: 16
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 11 | 68.8% | 44 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 11 | 68.8% | 44 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 15 | 93.8% | 15 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-loki
 
@@ -928,10 +1036,12 @@ Total resources: 0
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-mimir-distributed
 
@@ -945,10 +1055,12 @@ Total resources: 66
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 8 | 12.1% | 32 |
-| algo2 | 1 | 1.5% | 2 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 8 | 12.1% | 32 |
+| algo_label_intersection | 1 | 1.5% | 2 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 4 | 6.1% | 4 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-promtail
 
@@ -962,10 +1074,12 @@ Total resources: 5
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 5 | 100.0% | 5 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## harbor-harbor
 
@@ -979,10 +1093,12 @@ Total resources: 31
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 34 | 109.7% | 145 |
-| algo2 | 18 | 58.1% | 18 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 34 | 109.7% | 145 |
+| algo_label_intersection | 18 | 58.1% | 18 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## hashicorp-consul
 
@@ -996,10 +1112,12 @@ Total resources: 67
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 67 | 100.0% | 334 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 67 | 100.0% | 334 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## hashicorp-vault
 
@@ -1013,10 +1131,12 @@ Total resources: 13
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 1 | 7.7% | 1 |
-| algo2 | 2 | 15.4% | 2 |
-| algo4 | 8 | 61.5% | 9 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 1 | 7.7% | 1 |
+| algo_label_intersection | 2 | 15.4% | 2 |
+| algo_comp_label_union | 4 | 30.8% | 4 |
+| algo_unique_cluster | 7 | 53.8% | 8 |
+| algo_name_component | 6 | 46.2% | 6 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## ingress-nginx-ingress-nginx
 
@@ -1030,10 +1150,12 @@ Total resources: 18
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## istio-official-base
 
@@ -1047,10 +1169,12 @@ Total resources: 16
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 2 | 12.5% | 4 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 2 | 12.5% | 4 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## istio-official-gateway
 
@@ -1064,10 +1188,12 @@ Total resources: 6
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 6 | 100.0% | 6 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 6 | 100.0% | 6 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 6 | 100.0% | 6 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## istio-official-istiod
 
@@ -1081,10 +1207,12 @@ Total resources: 18
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 18 | 100.0% | 33 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 18 | 100.0% | 33 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 14 | 77.8% | 14 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## jaegertracing-jaeger
 
@@ -1098,10 +1226,12 @@ Total resources: 14
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 2 | 14.3% | 8 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 2 | 14.3% | 8 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 2 | 14.3% | 2 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## jenkinsci-jenkins
 
@@ -1115,10 +1245,12 @@ Total resources: 14
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 3 | 21.4% | 7 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 1 | 7.1% | 1 |
+| algo_unique_cluster | 2 | 14.3% | 6 |
+| algo_name_component | 2 | 14.3% | 2 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## jupyterhub-jupyterhub
 
@@ -1132,10 +1264,12 @@ Total resources: 30
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 30 | 100.0% | 150 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 30 | 100.0% | 150 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## k8s-dashboard-kubernetes-dashboard
 
@@ -1149,10 +1283,12 @@ Total resources: 23
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 2 | 8.7% | 2 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 2 | 8.7% | 2 |
+| algo_comp_label_union | 7 | 30.4% | 14 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## kedacore-keda
 
@@ -1166,10 +1302,12 @@ Total resources: 29
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 4 | 13.8% | 4 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 6 | 20.7% | 6 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 4 | 13.8% | 4 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 6 | 20.7% | 6 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## kong-kong
 
@@ -1183,10 +1321,12 @@ Total resources: 13
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 6 | 46.2% | 6 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 6 | 46.2% | 6 |
+| algo_comp_label_union | 5 | 38.5% | 5 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## kubeview-kubeview
 
@@ -1200,10 +1340,12 @@ Total resources: 5
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 3 | 60.0% | 9 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 3 | 60.0% | 9 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 5 | 100.0% | 5 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## kvaps-nfs-server-provisioner
 
@@ -1217,10 +1359,12 @@ Total resources: 6
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 6 | 100.0% | 24 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 6 | 100.0% | 24 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 5 | 83.3% | 5 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## kyverno-kyverno
 
@@ -1234,10 +1378,12 @@ Total resources: 76
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## longhorn-longhorn
 
@@ -1251,10 +1397,12 @@ Total resources: 43
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 7 | 16.3% | 7 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 7 | 16.3% | 7 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 15 | 34.9% | 15 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## metallb-metallb
 
@@ -1268,10 +1416,12 @@ Total resources: 25
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 10 | 40.0% | 22 |
-| algo4 | 2 | 8.0% | 6 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 10 | 40.0% | 22 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 2 | 8.0% | 6 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## metrics-server-metrics-server
 
@@ -1285,10 +1435,12 @@ Total resources: 9
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 8 | 88.9% | 8 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## minio-minio
 
@@ -1302,10 +1454,12 @@ Total resources: 0
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## mojo2600-pihole
 
@@ -1319,10 +1473,12 @@ Total resources: 8
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 7 | 87.5% | 28 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 1 | 12.5% | 3 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 7 | 87.5% | 28 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 1 | 12.5% | 3 |
+| algo_name_component | 7 | 87.5% | 7 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## nats-nats
 
@@ -1336,10 +1492,12 @@ Total resources: 8
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## nextcloud-nextcloud
 
@@ -1353,10 +1511,12 @@ Total resources: 3
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 1 | 33.3% | 1 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 1 | 33.3% | 1 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## nfs-subdir-external-provisioner-nfs-subdir-external-provisioner
 
@@ -1370,10 +1530,12 @@ Total resources: 7
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 7 | 100.0% | 28 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 7 | 100.0% | 28 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 6 | 85.7% | 6 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## nginx-nginx-ingress
 
@@ -1387,10 +1549,12 @@ Total resources: 11
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 8 | 72.7% | 8 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## oauth2-proxy-oauth2-proxy
 
@@ -1404,10 +1568,12 @@ Total resources: 5
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 5 | 100.0% | 5 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 5 | 100.0% | 5 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## open-8gears-n8n
 
@@ -1421,10 +1587,12 @@ Total resources: 4
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 3 | 75.0% | 3 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## pmint93-metabase
 
@@ -1438,10 +1606,12 @@ Total resources: 3
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 3 | 100.0% | 12 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 3 | 100.0% | 12 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 2 | 66.7% | 2 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## prometheus-community-kube-prometheus-stack
 
@@ -1455,10 +1625,12 @@ Total resources: 126
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 112 | 88.9% | 418 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 112 | 88.9% | 418 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 2 | 1.6% | 2 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 13 | 10.3% | 13 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## prometheus-community-kube-state-metrics
 
@@ -1472,10 +1644,12 @@ Total resources: 5
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## prometheus-community-prometheus-blackbox-exporter
 
@@ -1489,10 +1663,12 @@ Total resources: 4
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 4 | 100.0% | 4 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## prometheus-community-prometheus-node-exporter
 
@@ -1506,10 +1682,12 @@ Total resources: 3
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## prometheus-community-prometheus
 
@@ -1523,10 +1701,12 @@ Total resources: 23
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 8 | 34.8% | 8 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## rancher-stable-rancher
 
@@ -1540,10 +1720,12 @@ Total resources: 13
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 13 | 100.0% | 52 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 13 | 100.0% | 52 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 11 | 84.6% | 11 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## renovate-renovate
 
@@ -1557,10 +1739,12 @@ Total resources: 0
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## runix-pgadmin4
 
@@ -1574,10 +1758,12 @@ Total resources: 6
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 6 | 100.0% | 6 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## sonarqube-sonarqube
 
@@ -1591,10 +1777,12 @@ Total resources: 0
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## stakater-reloader
 
@@ -1608,10 +1796,12 @@ Total resources: 4
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 4 | 100.0% | 17 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 4 | 100.0% | 17 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 4 | 100.0% | 4 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## superset-superset
 
@@ -1625,10 +1815,12 @@ Total resources: 18
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 6 | 33.3% | 24 |
-| algo2 | 7 | 38.9% | 7 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 6 | 33.3% | 24 |
+| algo_label_intersection | 7 | 38.9% | 7 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## traefik-traefik
 
@@ -1642,10 +1834,12 @@ Total resources: 6
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 5 | 83.3% | 5 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## twuni-docker-registry
 
@@ -1659,10 +1853,12 @@ Total resources: 4
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 4 | 100.0% | 16 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 4 | 100.0% | 16 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 4 | 100.0% | 4 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## uptime-kuma-uptime-kuma
 
@@ -1676,10 +1872,12 @@ Total resources: 4
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 0 | 0.0% | 0 |
-| algo2 | 0 | 0.0% | 0 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 3 | 75.0% | 3 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## vmware-tanzu-velero
 
@@ -1693,9 +1891,11 @@ Total resources: 13
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo1 | 1 | 7.7% | 1 |
-| algo2 | 2 | 15.4% | 2 |
-| algo4 | 0 | 0.0% | 0 |
-| algo3 | 0 | 0.0% | 0 |
+| algo_normalize_labels | 1 | 7.7% | 1 |
+| algo_label_intersection | 2 | 15.4% | 2 |
+| algo_comp_label_union | 2 | 15.4% | 2 |
+| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_name_component | 0 | 0.0% | 0 |
+| algo_mark_isolated | 0 | 0.0% | 0 |
 
 

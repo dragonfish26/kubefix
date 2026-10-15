@@ -6,12 +6,12 @@ import click
 from ruamel.yaml import YAML
 
 from kubefix.common import Warning, Stat
-from kubefix.algo1 import algo1_normalize_labels
-from kubefix.algo2 import algo2_label_intersection
-from kubefix.algo3 import algo3_mark_isolated
-from kubefix.algo4 import algo4_assign_unique_cluster_labels
-from kubefix.algo5 import algo5_component_label_union
-from kubefix.algo6 import algo6_name_component
+from kubefix.algo_normalize_labels import algo_normalize_labels
+from kubefix.algo_label_intersection import algo_label_intersection
+from kubefix.algo_mark_isolated import algo_mark_isolated
+from kubefix.algo_unique_cluster import algo_assign_unique_cluster_labels
+from kubefix.algo_comp_label_union import algo_connected_component_label_union
+from kubefix.algo_name_component import algo_name_component
 
 yaml = YAML()
 yaml.preserve_quotes = True
@@ -106,36 +106,36 @@ def cli(input_path: Path, output: Path | None, stats: Path | None, csv_path: Pat
     all_warnings: list[Warning] = []
     stats_by_algo: dict[str, list[Stat]] = {}
 
-    # ALGO 1 : Label normalization
-    resources, w, s = algo1_normalize_labels(resources)
+    # Label normalization
+    resources, w, s = algo_normalize_labels(resources)
     all_warnings.extend(w)
-    stats_by_algo["algo1"] = s
+    stats_by_algo["algo_normalize_labels"] = s
 
-    # ALGO 2 : Edge intersection
-    resources, w, s = algo2_label_intersection(resources)
+    # Edge intersection
+    resources, w, s = algo_label_intersection(resources)
     all_warnings.extend(w)
-    stats_by_algo["algo2"] = s
+    stats_by_algo["algo_label_intersection"] = s
 
-    # ALGO 5 : Connected-component label union
-    resources, w, s = algo5_component_label_union(resources)
+    # Connected-component label union
+    resources, w, s = algo_connected_component_label_union(resources)
     all_warnings.extend(w)
-    stats_by_algo["algo5"] = s
+    stats_by_algo["algo_comp_label_union"] = s
 
-    # ALGO 4 : Label unlabeled resources with unambiguous resources
-    resources, w, s = algo4_assign_unique_cluster_labels(resources)
+    # Label unlabeled resources with unambiguous resources
+    resources, w, s = algo_assign_unique_cluster_labels(resources)
     all_warnings.extend(w)
-    stats_by_algo["algo4"] = s
+    stats_by_algo["algo_unique_cluster"] = s
 
-    # ALGO 6 : Name a component for connected resources of the same cluster
-    resources, w, s = algo6_name_component(resources)
+    # Name a component for connected resources of the same cluster
+    resources, w, s = algo_name_component(resources)
     all_warnings.extend(w)
-    stats_by_algo["algo6"] = s
+    stats_by_algo["algo_name_component"] = s
 
 
-    # ALGO 3 : Isolated-resource label
-    resources, w, s = algo3_mark_isolated(resources)
+    # Isolated-resource label
+    resources, w, s = algo_mark_isolated(resources)
     all_warnings.extend(w)
-    stats_by_algo["algo3"] = s
+    stats_by_algo["algo_mark_isolated"] = s
 
 
     click.echo("")

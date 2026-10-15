@@ -1,11 +1,11 @@
-"""Algo 5: connected-component label union."""
+"""Connected-component label union."""
 
 from collections import defaultdict
 
 from kubefix.edges import compute_rid, create_new_nodes, process_edges
 from kubefix.edges.helpers import query_path
 
-from kubefix.algo2 import _DEFAULT_CONFIG_PATH, _load_config, _cluster_label_keys
+from kubefix.algo_label_intersection import _DEFAULT_CONFIG_PATH, _load_config, _cluster_label_keys
 from kubefix.common import Warning, Stat
 
 
@@ -76,7 +76,7 @@ def _assign(resource, union):
     return len(to_add)
 
 
-def algo5_component_label_union(resources, config_path=None):
+def algo_connected_component_label_union(resources, config_path=None):
     """Give every resource of a connected component the union of the
     component's cluster-labels, if no cluster-label appears with two
     different values in that component.

@@ -1,4 +1,4 @@
-"""Algo 2: label intersection."""
+"""Label intersection."""
 
 from collections import defaultdict
 from pathlib import Path
@@ -158,7 +158,7 @@ def _assign(resource, intersection, cluster_label_keys):
     return True, label_change_count
 
 
-def algo2_label_intersection(resources, config_path=None):
+def algo_label_intersection(resources, config_path=None):
     """Pull resources into stronger clusters by copying labels that all
     their parents (or all their children) have in common.
 

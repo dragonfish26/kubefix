@@ -1,13 +1,13 @@
-"""Algo 4: assign cluster labels to unlabeled resources when the context is unambiguous."""
+"""Assign cluster labels to unlabeled resources when the context is unambiguous."""
 from kubefix.common import Warning, Stat
 
-CLUSTER_LABELS_Algo4 = [
+CLUSTER_LABELS_UNIQUE = [
     "app.kubernetes.io/instance",
     "helm.sh/chart",
     "app.kubernetes.io/name",
 ]
 
-def algo4_assign_unique_cluster_labels(resources):
+def algo_assign_unique_cluster_labels(resources):
     """Assign unambiguous cluster labels to resources that are missing them.
 
     Scans all resources to find cluster labels (instance, chart, name)
@@ -30,7 +30,7 @@ def algo4_assign_unique_cluster_labels(resources):
 
     # 1. For each cluster label, find the set of distinct values.
     unique_values = {}
-    for label in CLUSTER_LABELS_Algo4:
+    for label in CLUSTER_LABELS_UNIQUE:
         values = set()
         for resource in resources:
             labels = resource.get("metadata", {}).get("labels") or {}

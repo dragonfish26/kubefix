@@ -1,12 +1,12 @@
-"""Algo 6: name a component for connected resources of the same cluster."""
+"""Name a component for connected resources of the same cluster."""
 
 import re
 
 from kubefix.edges import compute_rid, create_new_nodes, process_edges
 from kubefix.edges.helpers import query_path
 
-from kubefix.algo2 import _DEFAULT_CONFIG_PATH, _load_config, _cluster_label_keys
-from kubefix.algo5 import _build_adjacency, _connected_components
+from kubefix.algo_label_intersection import _DEFAULT_CONFIG_PATH, _load_config, _cluster_label_keys
+from kubefix.algo_comp_label_union import _build_adjacency, _connected_components
 from kubefix.common import Warning, Stat
 
 COMPONENT_LABEL = "app.kubernetes.io/component"
@@ -46,7 +46,7 @@ def _to_label_value(s):
     return s.strip("-_.")
 
 
-def algo6_name_component(resources, config_path=None):
+def algo_name_component(resources, config_path=None):
     """For each connected component whose resources all share the same
     cluster-labels and none has a component label, give them all a
     component label named after the longest common substring of their names.

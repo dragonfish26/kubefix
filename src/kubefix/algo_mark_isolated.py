@@ -1,11 +1,11 @@
-"""Algo 3: mark unlabeled resources with an isolated-resource label."""
+"""Mark unlabeled resources with an isolated-resource label."""
 from kubefix.common import Warning, Stat
 from kubefix.common import CLUSTER_LABELS
 
 ISOLATED_LABEL = "isolated-resource"
 
 
-def algo3_mark_isolated(resources):
+def algo_mark_isolated(resources):
     """Add an 'isolated-resource' label to any resource without cluster labels.
 
     To be run as a last resort for truly resources where truly no label was found. 

@@ -1,3 +1,4 @@
+""" Normalize non-recommended labels by their recommended equivalents"""
 from kubefix.common import Warning, Stat
 
 LABEL_MAPPING: dict[str, str] = {
@@ -9,7 +10,7 @@ LABEL_MAPPING: dict[str, str] = {
     "version": "app.kubernetes.io/version",
 }
 
-def algo1_normalize_labels(resources):
+def algo_normalize_labels(resources):
     """Replace non-recommended labels with their recommended equivalents.
 
     Args:
