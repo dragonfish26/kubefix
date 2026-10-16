@@ -11,7 +11,4 @@ uv.lock
 
 data.csv
 
-src/kubefix/noorog.py
-test.sh
-test2.sh
-micro/
+noorog.md

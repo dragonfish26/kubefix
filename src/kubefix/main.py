@@ -30,7 +30,7 @@ def load_manifests(path):
     Returns:
         A list of resources (dicts).
     """
-    with path.open() as f:
+    with path.open(encoding="utf-8") as f:
         return [resource for resource in yaml.load_all(f) if resource is not None]
 
 
@@ -45,7 +45,7 @@ def dump_manifests(resources, path):
         path: Path to the output YAML file.
     """
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w") as f:
+    with path.open("w", encoding="utf-8") as f:
         yaml.dump_all(resources, f)
 
 def produce_stat_report(stats_by_algo, total_resources, path):
@@ -57,7 +57,7 @@ def produce_stat_report(stats_by_algo, total_resources, path):
         path: Path to the output Markdown file.
     """
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w") as f:
+    with path.open("w", encoding="utf-8") as f:
         f.write("# Kubefix stat report\n\n")
         f.write(f"Total resources: {total_resources}\n\n")
         f.write("| Algo | Resources touched | % Resources touched | Labels changed |\n")
@@ -84,7 +84,7 @@ def produce_csv_report(diagram_name, stats_by_algo, total_resources, path):
     """
     path.parent.mkdir(parents=True, exist_ok=True)
     write_header = not path.exists()
-    with path.open("a", newline="") as f:
+    with path.open("a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         if write_header:
             writer.writerow(["diagram", "algo", "resources_touched", "labels_changed", "total_resources"])
