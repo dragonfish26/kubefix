@@ -1,6 +1,6 @@
 clusters:
   - label: isolated-resource
-    title: "Isolated Resources"
+    title: "Isolated: {}"
     recommended: false
     graph_attr:
       bgcolor: "orange"
