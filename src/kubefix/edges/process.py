@@ -183,6 +183,7 @@ def process_edges(resources, config):
                 "get_type": get_type,
                 "edges": ctx,
                 "resource": resource,
+                "resources": resources
             })
         except Exception as exc:
             print(f"[Error] edges-script failed for {rid}: {exc}")
