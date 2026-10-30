@@ -14,7 +14,6 @@ RESOURCE_KINDS_WITH_RELATIONS = [
     "PodDisruptionBudget",
     "ServiceAccount",
     "NetworkPolicy",
-    #"ClusterRole",
     "Service",
     "ValidatingWebhookConfiguration",
     "Issuer",
@@ -29,6 +28,13 @@ ROLES = [
     "ClusterRole",
     "Role",
 ]
+
+K8S_AGGREGATE_LABELS = [
+    "rbac.authorization.k8s.io/aggregate-to-admin",
+    "rbac.authorization.k8s.io/aggregate-to-edit",
+    "rbac.authorization.k8s.io/aggregate-to-view",
+]
+
 
 def _isolated_no_relation(resources, parent_map, child_map, config, warnings, stats):
     """Add an 'isolated-resource' label to resources who doesn't have any relations 
@@ -92,14 +98,30 @@ def _isolated_missing_relation(resources, parent_map, child_map, config, resourc
 
         rid = compute_rid(resource, config)
         metadata = resource.setdefault("metadata", {})
+        labels = metadata.get("labels") or {}
         reason = None
 
         if kind in BINDINGS:
+            # skip if resource referenced by this binding is a K8s specific thing
+            role_ref = resource.get("roleRef") or {}
+            if role_ref.get("kind") == "Role":
+                namespace = metadata.get("namespace") or "default"
+                role_rid = f"{role_ref.get('name')}/{namespace}/Role/rbac.authorization.k8s.io/v1"
+            else:
+                role_rid = f"{role_ref.get('name')}/ClusterRole/rbac.authorization.k8s.io/v1"
+
+            if role_rid in config.get("cluster-resources", []):
+                continue
+
             children = [resources_by_rid[c]["kind"] for c in child_map.get(rid, [])]
             if not any(k in ROLES for k in children):
                 reason = "Resource is a binding but has no edge to a role"
 
         else:  # roles
+            # skip roles aggregated by K8s = has specific labels
+            if any(key in K8S_AGGREGATE_LABELS for key in labels):
+                continue
+
             parents = [resources_by_rid[p]["kind"] for p in parent_map.get(rid, [])]
             if not any(k in BINDINGS for k in parents):
                 reason = "Resource is a role but has no edge from a binding"
@@ -107,7 +129,6 @@ def _isolated_missing_relation(resources, parent_map, child_map, config, resourc
         if reason is None:
             continue
 
-        labels = metadata.get("labels") or {}
         if labels.get(ISOLATED_LABEL) != "no-relations":  # keep the stronger signal
             labels[ISOLATED_LABEL] = "missing-relations"
         metadata["labels"] = labels
