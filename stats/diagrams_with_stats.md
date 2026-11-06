@@ -12,9 +12,9 @@ Total resources: 30
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 30 | 100.0% | 135 |
 | algo_label_intersection | 1 | 3.3% | 1 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 10 | 33.3% | 10 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## apache-airflow-airflow
@@ -31,7 +31,7 @@ Total resources: 39
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 35 | 89.7% | 134 |
 | algo_label_intersection | 1 | 2.6% | 1 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 35 | 89.7% | 35 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -50,7 +50,7 @@ Total resources: 0
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -69,7 +69,7 @@ Total resources: 8
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 100.0% | 8 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -88,10 +88,10 @@ Total resources: 53
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 3 | 5.7% | 6 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 3.8% | 2 |
 
 ## argo-argo-rollouts
 
@@ -107,10 +107,10 @@ Total resources: 14
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 5 | 35.7% | 10 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 14.3% | 2 |
 
 ## argo-argo-workflows
 
@@ -126,10 +126,10 @@ Total resources: 27
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 19 | 70.4% | 19 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 8 | 29.6% | 16 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 7.4% | 2 |
 
 ## argo-cd-oci-argo-cd
 
@@ -145,10 +145,10 @@ Total resources: 53
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 3 | 5.7% | 6 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 3.8% | 2 |
 
 ## artifact-hub-artifact-hub
 
@@ -164,7 +164,7 @@ Total resources: 19
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 4 | 21.1% | 16 |
 | algo_label_intersection | 1 | 5.3% | 1 |
-| algo_comp_label_union | 3 | 15.8% | 3 |
+| algo_proximity_labels | 3 | 15.8% | 3 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 10 | 52.6% | 10 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -183,7 +183,7 @@ Total resources: 0
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -202,7 +202,7 @@ Total resources: 21
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 4 | 19.0% | 4 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -221,7 +221,7 @@ Total resources: 7
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 6 | 85.7% | 6 |
+| algo_proximity_labels | 6 | 85.7% | 6 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -240,10 +240,10 @@ Total resources: 12
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 2 | 16.7% | 2 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 4 | 33.3% | 4 |
 
 ## bitnami-keycloak
 
@@ -259,9 +259,9 @@ Total resources: 15
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 1 | 6.7% | 1 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 1 | 6.7% | 1 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-labs-sealed-secrets
@@ -278,7 +278,7 @@ Total resources: 10
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 9 | 90.0% | 9 |
+| algo_proximity_labels | 9 | 90.0% | 9 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -297,7 +297,7 @@ Total resources: 8
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 4 | 50.0% | 4 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -315,11 +315,11 @@ Total resources: 30
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
-| algo_label_intersection | 3 | 10.0% | 3 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
-| algo_unique_cluster | 8 | 26.7% | 24 |
+| algo_label_intersection | 4 | 13.3% | 6 |
+| algo_proximity_labels | 1 | 3.3% | 1 |
+| algo_unique_cluster | 7 | 23.3% | 21 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 3.3% | 1 |
 
 ## bitnami-metrics-server
 
@@ -335,7 +335,7 @@ Total resources: 10
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 9 | 90.0% | 9 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -354,7 +354,7 @@ Total resources: 11
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -373,7 +373,7 @@ Total resources: 8
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 1 | 12.5% | 1 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -392,7 +392,7 @@ Total resources: 8
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 3 | 37.5% | 3 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -411,7 +411,7 @@ Total resources: 6
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 6 | 100.0% | 6 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -430,10 +430,10 @@ Total resources: 14
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 1 | 7.1% | 1 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 7.1% | 1 |
 
 ## bitnami-postgresql
 
@@ -449,7 +449,7 @@ Total resources: 7
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 2 | 28.6% | 2 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -468,7 +468,7 @@ Total resources: 10
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 10 | 100.0% | 10 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -487,7 +487,7 @@ Total resources: 9
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 9 | 100.0% | 9 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -506,7 +506,7 @@ Total resources: 14
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 2 | 14.3% | 2 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -525,10 +525,10 @@ Total resources: 10
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 10.0% | 1 |
 
 ## bitnami-thanos
 
@@ -544,7 +544,7 @@ Total resources: 11
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -563,9 +563,9 @@ Total resources: 15
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 3 | 20.0% | 3 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 8 | 53.3% | 8 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## cert-manager-cert-manager
@@ -582,10 +582,10 @@ Total resources: 46
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 46 | 100.0% | 46 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 2.2% | 1 |
 
 ## chartmuseum-chartmuseum
 
@@ -601,10 +601,10 @@ Total resources: 3
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 2 | 66.7% | 2 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 33.3% | 1 |
 
 ## cilium-cilium
 
@@ -620,10 +620,10 @@ Total resources: 23
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 3 | 13.0% | 3 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 12 | 52.2% | 12 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 4 | 17.4% | 4 |
-| algo_mark_isolated | 15 | 65.2% | 15 |
+| algo_name_component | 19 | 82.6% | 19 |
+| algo_mark_isolated | 4 | 17.4% | 4 |
 
 ## cloudnative-pg-cloudnative-pg
 
@@ -639,10 +639,10 @@ Total resources: 20
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 9 | 45.0% | 27 |
 | algo_name_component | 7 | 35.0% | 7 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 4 | 20.0% | 4 |
 
 ## cluster-autoscaler-cluster-autoscaler
 
@@ -658,10 +658,10 @@ Total resources: 7
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 71.4% | 5 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 3 | 42.9% | 3 |
 
 ## codecentric-keycloak
 
@@ -677,9 +677,9 @@ Total resources: 9
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 2 | 22.2% | 2 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 1 | 11.1% | 1 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## crossplane-crossplane
@@ -696,10 +696,10 @@ Total resources: 22
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 21 | 95.5% | 84 |
 | algo_label_intersection | 1 | 4.5% | 3 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 14 | 63.6% | 14 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 12 | 54.5% | 12 |
 
 ## datadog-datadog
 
@@ -715,10 +715,10 @@ Total resources: 21
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 3 | 14.3% | 12 |
 | algo_label_intersection | 7 | 33.3% | 7 |
-| algo_comp_label_union | 9 | 42.9% | 9 |
+| algo_proximity_labels | 9 | 42.9% | 9 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 3 | 14.3% | 3 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 9.5% | 2 |
 
 ## descheduler-descheduler
 
@@ -734,7 +734,7 @@ Total resources: 5
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 100.0% | 5 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -753,7 +753,7 @@ Total resources: 8
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 100.0% | 8 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -772,7 +772,7 @@ Total resources: 20
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 40.0% | 8 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -791,7 +791,7 @@ Total resources: 7
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 5 | 71.4% | 20 |
 | algo_label_intersection | 2 | 28.6% | 6 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 7 | 100.0% | 7 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -810,7 +810,7 @@ Total resources: 11
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 11 | 100.0% | 33 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 11 | 100.0% | 11 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -829,7 +829,7 @@ Total resources: 5
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 100.0% | 5 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -848,10 +848,10 @@ Total resources: 40
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 21 | 52.5% | 42 |
-| algo_name_component | 6 | 15.0% | 6 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_name_component | 16 | 40.0% | 16 |
+| algo_mark_isolated | 1 | 2.5% | 1 |
 
 ## falcosecurity-falco
 
@@ -867,7 +867,7 @@ Total resources: 6
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 6 | 100.0% | 6 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -886,7 +886,7 @@ Total resources: 7
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 1 | 14.3% | 2 |
 | algo_name_component | 6 | 85.7% | 6 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -905,10 +905,10 @@ Total resources: 30
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 7 | 23.3% | 14 |
 | algo_label_intersection | 2 | 6.7% | 4 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 15 | 50.0% | 15 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 3.3% | 1 |
 
 ## gitlab-gitlab-runner
 
@@ -924,7 +924,7 @@ Total resources: 2
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 2 | 100.0% | 8 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 2 | 100.0% | 2 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -943,7 +943,7 @@ Total resources: 0
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -962,9 +962,9 @@ Total resources: 9
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 5 | 55.6% | 5 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-alloy
@@ -981,7 +981,7 @@ Total resources: 6
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 1 | 16.7% | 1 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1000,7 +1000,7 @@ Total resources: 12
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 12 | 100.0% | 12 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1019,10 +1019,10 @@ Total resources: 16
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 11 | 68.8% | 44 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 15 | 93.8% | 15 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 6.2% | 1 |
 
 ## grafana-loki
 
@@ -1038,7 +1038,7 @@ Total resources: 0
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1057,7 +1057,7 @@ Total resources: 66
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 8 | 12.1% | 32 |
 | algo_label_intersection | 1 | 1.5% | 2 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 4 | 6.1% | 4 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1076,7 +1076,7 @@ Total resources: 5
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 100.0% | 5 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1095,7 +1095,7 @@ Total resources: 31
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 34 | 109.7% | 145 |
 | algo_label_intersection | 18 | 58.1% | 18 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 1 | 3.2% | 1 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1114,7 +1114,7 @@ Total resources: 67
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 67 | 100.0% | 334 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1133,8 +1133,8 @@ Total resources: 13
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 1 | 7.7% | 1 |
 | algo_label_intersection | 2 | 15.4% | 2 |
-| algo_comp_label_union | 4 | 30.8% | 4 |
-| algo_unique_cluster | 7 | 53.8% | 8 |
+| algo_proximity_labels | 3 | 23.1% | 3 |
+| algo_unique_cluster | 8 | 61.5% | 9 |
 | algo_name_component | 6 | 46.2% | 6 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
@@ -1152,10 +1152,10 @@ Total resources: 18
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 2 | 11.1% | 2 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 5.6% | 1 |
 
 ## istio-official-base
 
@@ -1171,10 +1171,10 @@ Total resources: 16
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 2 | 12.5% | 4 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 12.5% | 2 |
 
 ## istio-official-gateway
 
@@ -1190,7 +1190,7 @@ Total resources: 6
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 6 | 100.0% | 6 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 6 | 100.0% | 6 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1209,10 +1209,10 @@ Total resources: 18
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 18 | 100.0% | 33 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 14 | 77.8% | 14 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 6 | 33.3% | 6 |
 
 ## jaegertracing-jaeger
 
@@ -1228,7 +1228,7 @@ Total resources: 14
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 2 | 14.3% | 8 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 2 | 14.3% | 2 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1247,10 +1247,10 @@ Total resources: 14
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 1 | 7.1% | 1 |
-| algo_unique_cluster | 2 | 14.3% | 6 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
+| algo_unique_cluster | 3 | 21.4% | 7 |
 | algo_name_component | 2 | 14.3% | 2 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 7.1% | 1 |
 
 ## jupyterhub-jupyterhub
 
@@ -1266,10 +1266,10 @@ Total resources: 30
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 30 | 100.0% | 150 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 3.3% | 1 |
 
 ## k8s-dashboard-kubernetes-dashboard
 
@@ -1285,7 +1285,7 @@ Total resources: 23
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 2 | 8.7% | 2 |
-| algo_comp_label_union | 7 | 30.4% | 14 |
+| algo_proximity_labels | 10 | 43.5% | 20 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1304,7 +1304,7 @@ Total resources: 29
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 4 | 13.8% | 4 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 6 | 20.7% | 6 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1323,10 +1323,10 @@ Total resources: 13
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 6 | 46.2% | 6 |
-| algo_comp_label_union | 5 | 38.5% | 5 |
+| algo_proximity_labels | 5 | 38.5% | 5 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 7.7% | 1 |
 
 ## kubeview-kubeview
 
@@ -1342,7 +1342,7 @@ Total resources: 5
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 3 | 60.0% | 9 |
+| algo_proximity_labels | 3 | 60.0% | 9 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 100.0% | 5 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1361,7 +1361,7 @@ Total resources: 6
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 6 | 100.0% | 24 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 83.3% | 5 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1380,10 +1380,10 @@ Total resources: 76
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 4 | 5.3% | 4 |
 
 ## longhorn-longhorn
 
@@ -1399,10 +1399,10 @@ Total resources: 43
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 7 | 16.3% | 7 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 15 | 34.9% | 15 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_name_component | 21 | 48.8% | 21 |
+| algo_mark_isolated | 6 | 14.0% | 6 |
 
 ## metallb-metallb
 
@@ -1418,7 +1418,7 @@ Total resources: 25
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 10 | 40.0% | 22 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 14 | 56.0% | 14 |
 | algo_unique_cluster | 2 | 8.0% | 6 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1437,7 +1437,7 @@ Total resources: 9
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 88.9% | 8 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1456,7 +1456,7 @@ Total resources: 0
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1475,7 +1475,7 @@ Total resources: 8
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 7 | 87.5% | 28 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 1 | 12.5% | 3 |
 | algo_name_component | 7 | 87.5% | 7 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1494,7 +1494,7 @@ Total resources: 8
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1513,7 +1513,7 @@ Total resources: 3
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 1 | 33.3% | 1 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1532,7 +1532,7 @@ Total resources: 7
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 7 | 100.0% | 28 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 6 | 85.7% | 6 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1551,10 +1551,10 @@ Total resources: 11
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 72.7% | 8 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 18.2% | 2 |
 
 ## oauth2-proxy-oauth2-proxy
 
@@ -1570,7 +1570,7 @@ Total resources: 5
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 5 | 100.0% | 5 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1589,7 +1589,7 @@ Total resources: 4
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 3 | 75.0% | 3 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1608,10 +1608,10 @@ Total resources: 3
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 3 | 100.0% | 12 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 2 | 66.7% | 2 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 33.3% | 1 |
 
 ## prometheus-community-kube-prometheus-stack
 
@@ -1627,10 +1627,10 @@ Total resources: 126
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 112 | 88.9% | 418 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 2 | 1.6% | 2 |
+| algo_proximity_labels | 2 | 1.6% | 2 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 13 | 10.3% | 13 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 39 | 31.0% | 39 |
 
 ## prometheus-community-kube-state-metrics
 
@@ -1646,7 +1646,7 @@ Total resources: 5
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1665,7 +1665,7 @@ Total resources: 4
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 4 | 100.0% | 4 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1684,7 +1684,7 @@ Total resources: 3
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1703,7 +1703,7 @@ Total resources: 23
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 34.8% | 8 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1722,10 +1722,10 @@ Total resources: 13
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 13 | 100.0% | 52 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 11 | 84.6% | 11 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 15.4% | 2 |
 
 ## renovate-renovate
 
@@ -1741,7 +1741,7 @@ Total resources: 0
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1760,7 +1760,7 @@ Total resources: 6
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 6 | 100.0% | 6 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1779,7 +1779,7 @@ Total resources: 0
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1798,7 +1798,7 @@ Total resources: 4
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 4 | 100.0% | 17 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 4 | 100.0% | 4 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1817,9 +1817,9 @@ Total resources: 18
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 6 | 33.3% | 24 |
 | algo_label_intersection | 7 | 38.9% | 7 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 5 | 27.8% | 5 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## traefik-traefik
@@ -1836,7 +1836,7 @@ Total resources: 6
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 83.3% | 5 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1855,7 +1855,7 @@ Total resources: 4
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 4 | 100.0% | 16 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 4 | 100.0% | 4 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1874,7 +1874,7 @@ Total resources: 4
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 0 | 0.0% | 0 |
 | algo_label_intersection | 0 | 0.0% | 0 |
-| algo_comp_label_union | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 3 | 75.0% | 3 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
@@ -1893,7 +1893,7 @@ Total resources: 13
 |------|--------------------|----------------------|------------------|
 | algo_normalize_labels | 1 | 7.7% | 1 |
 | algo_label_intersection | 2 | 15.4% | 2 |
-| algo_comp_label_union | 2 | 15.4% | 2 |
+| algo_proximity_labels | 2 | 15.4% | 2 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |

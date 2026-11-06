@@ -10,7 +10,7 @@ from collections import defaultdict
 ALGOS = [
     "algo_normalize_labels",
     "algo_label_intersection",
-    "algo_comp_label_union",
+    "algo_proximity_labels",
     "algo_unique_cluster",
     "algo_name_component",
     "algo_mark_isolated",
