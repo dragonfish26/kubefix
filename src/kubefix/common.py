@@ -20,3 +20,18 @@ CLUSTER_LABELS = [
     "app.kubernetes.io/name",
     "app.kubernetes.io/component",
 ]
+
+# Cluster labels in order of strength (strongest first).
+# Lower index = stronger cluster.
+LABEL_HIERARCHY = [
+    "app.kubernetes.io/instance",
+    "release",
+    "helm.sh/chart",
+    "chart",
+    "app.kubernetes.io/name",
+    "app",
+    "app.kubernetes.io/component",
+    "service",
+    "tier",
+    "helm.sh/hook",
+]

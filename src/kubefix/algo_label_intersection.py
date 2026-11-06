@@ -8,23 +8,9 @@ import yaml
 from kubefix.edges import compute_rid, create_new_nodes, process_edges
 from kubefix.edges.helpers import query_path
 
-from kubefix.common import Warning, Stat
+from kubefix.common import Warning, Stat, LABEL_HIERARCHY
 
 
-# Cluster labels in order of strength (strongest first).
-# Lower index = stronger cluster.
-LABEL_HIERARCHY = [
-    "app.kubernetes.io/instance",
-    "release",
-    "helm.sh/chart",
-    "chart",
-    "app.kubernetes.io/name",
-    "app",
-    "app.kubernetes.io/component",
-    "service",
-    "tier",
-    "helm.sh/hook",
-]
 _LABEL_TO_INDEX = {label: i for i, label in enumerate(LABEL_HIERARCHY)}
 
 

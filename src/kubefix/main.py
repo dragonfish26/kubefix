@@ -11,6 +11,7 @@ from kubefix.algo_label_intersection import algo_label_intersection
 from kubefix.algo_mark_isolated import algo_mark_isolated
 from kubefix.algo_unique_cluster import algo_assign_unique_cluster_labels
 from kubefix.algo_comp_label_union import algo_connected_component_label_union
+from kubefix.algo_add_proximity_labels import algo_proximity_labels
 from kubefix.algo_name_component import algo_name_component
 
 yaml = YAML()
@@ -117,9 +118,14 @@ def cli(input_path: Path, output: Path | None, stats: Path | None, csv_path: Pat
     stats_by_algo["algo_label_intersection"] = s
 
     # Connected-component label union
-    resources, w, s = algo_connected_component_label_union(resources)
+    #resources, w, s = algo_connected_component_label_union(resources)
+    #all_warnings.extend(w)
+    #stats_by_algo["algo_comp_label_union"] = s
+
+    # Connected-component label union
+    resources, w, s = algo_proximity_labels(resources)
     all_warnings.extend(w)
-    stats_by_algo["algo_comp_label_union"] = s
+    stats_by_algo["algo_proximity_labels"] = s
 
     # Label unlabeled resources with unambiguous resources
     resources, w, s = algo_assign_unique_cluster_labels(resources)
