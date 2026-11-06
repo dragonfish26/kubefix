@@ -79,7 +79,7 @@ def _isolated_no_relation(resources, parent_map, child_map, config, warnings, st
 
 def _isolated_missing_relation(resources, parent_map, child_map, config, resources_by_rid, warnings, stats):
     """Add an 'isolated-resource' label to bindings that have a missing role and/or
-    subject, and roles that have a missing binding.
+    subject, roles that have a missing binding, and service accounts not used by any workload.
 
     Args:
         resources: list of Kubernetes resources (dicts).
@@ -93,7 +93,7 @@ def _isolated_missing_relation(resources, parent_map, child_map, config, resourc
 
     for resource in resources:
         kind = resource.get("kind")
-        if kind not in BINDINGS and kind not in ROLES:
+        if kind not in BINDINGS and kind not in ROLES and kind != "ServiceAccount":
             continue
 
         rid = compute_rid(resource, config)
@@ -132,6 +132,18 @@ def _isolated_missing_relation(resources, parent_map, child_map, config, resourc
                         reasons.append(("no-subject", f"Resource is a binding but has no edge to its subject ServiceAccount '{subject.get('name')}'"))
                         break
 
+        elif kind == "ServiceAccount":
+            # skip 'default', used implicitly by pods without serviceAccountName,
+            name = metadata.get("name")
+            if name == "default":
+                continue
+
+            # no relations at all is already marked by _isolated_no_relation
+            parents = [resources_by_rid[p]["kind"] for p in parent_map.get(rid, [])]
+            # check if this SA has workloads. No parent other than bindings = no workloads
+            if parents and all(k in BINDINGS for k in parents):
+                reasons.append(("no-workload", "Resource is a service account but has no edge from a workload"))
+
         else:  # roles
             # skip roles aggregated by K8s = has specific labels
             if any(key in K8S_AGGREGATE_LABELS for key in labels):
@@ -166,6 +178,7 @@ def algo_mark_isolated(resources):
     - 'no-role' / 'no-subject': a binding missing its role and/or a subject,
       concatenated when both are missing, for example : 'no-role-no-subject'
     - 'no-binding': a role that isn't bound by any binding
+    - 'no-workload': a service account that isn't used by any workload
     - 'no-labels': no cluster labels
 
     A resource with no cluster labels that is already marked gets '-no-labels'
