@@ -78,8 +78,8 @@ def _isolated_no_relation(resources, parent_map, child_map, config, warnings, st
                         ))
 
 def _isolated_missing_relation(resources, parent_map, child_map, config, resources_by_rid, warnings, stats):
-    """Add an 'isolated-resource' label to bindings that has a missing subject and
-    roles that have a missing bindings.
+    """Add an 'isolated-resource' label to bindings that have a missing role and/or
+    subject, and roles that have a missing binding.
 
     Args:
         resources: list of Kubernetes resources (dicts).
@@ -99,23 +99,38 @@ def _isolated_missing_relation(resources, parent_map, child_map, config, resourc
         rid = compute_rid(resource, config)
         metadata = resource.setdefault("metadata", {})
         labels = metadata.get("labels") or {}
-        reason = None
+        namespace = metadata.get("namespace") or "default"
+        cluster_resources = config.get("cluster-resources", [])
+        # (label code, warning message) for each missing relation
+        reasons = []
 
         if kind in BINDINGS:
-            # skip if resource referenced by this binding is a K8s specific thing
+            children = child_map.get(rid, [])
+
+            # role check, skipped if the role referenced by this binding is a K8s specific thing
             role_ref = resource.get("roleRef") or {}
             if role_ref.get("kind") == "Role":
-                namespace = metadata.get("namespace") or "default"
                 role_rid = f"{role_ref.get('name')}/{namespace}/Role/rbac.authorization.k8s.io/v1"
             else:
                 role_rid = f"{role_ref.get('name')}/ClusterRole/rbac.authorization.k8s.io/v1"
 
-            if role_rid in config.get("cluster-resources", []):
-                continue
+            if role_rid not in cluster_resources:
+                if not any(resources_by_rid[c]["kind"] in ROLES for c in children):
+                    reasons.append(("no-role", "Resource is a binding but has no edge to a role"))
 
-            children = [resources_by_rid[c]["kind"] for c in child_map.get(rid, [])]
-            if not any(k in ROLES for k in children):
-                reason = "Resource is a binding but has no edge to a role"
+            # subject check, users and groups are external identities so only service accounts can have an edge
+            subjects = resource.get("subjects") or []
+            if not subjects:
+                reasons.append(("no-subject", "Resource is a binding but has no subjects"))
+            else:
+                for subject in subjects:
+                    if subject.get("kind") != "ServiceAccount":
+                        continue
+                    sa_namespace = subject.get("namespace") or namespace
+                    sa_rid = f"{subject.get('name')}/{sa_namespace}/ServiceAccount/v1"
+                    if sa_rid not in cluster_resources and sa_rid not in children:
+                        reasons.append(("no-subject", f"Resource is a binding but has no edge to its subject ServiceAccount '{subject.get('name')}'"))
+                        break
 
         else:  # roles
             # skip roles aggregated by K8s = has specific labels
@@ -124,19 +139,21 @@ def _isolated_missing_relation(resources, parent_map, child_map, config, resourc
 
             parents = [resources_by_rid[p]["kind"] for p in parent_map.get(rid, [])]
             if not any(k in BINDINGS for k in parents):
-                reason = "Resource is a role but has no edge from a binding"
+                reasons.append(("no-binding", "Resource is a role but has no edge from a binding"))
 
-        if reason is None:
+        if not reasons:
             continue
 
-        if labels.get(ISOLATED_LABEL) != "no-relations":  # keep the stronger signal
-            labels[ISOLATED_LABEL] = "missing-relations"
+        # concatenate the reasons, for example : 'no-role-no-subject'
+        code = "-".join(c for c, _ in reasons)
+        existing = labels.get(ISOLATED_LABEL)
+        labels[ISOLATED_LABEL] = f"{existing}-{code}" if existing else code
         metadata["labels"] = labels
 
         warnings.append(Warning(
             resource_kind=kind,
             resource_name=metadata.get("name", "?"),
-            message=f"{reason}; marked as isolated.",
+            message=f"{'; '.join(m for _, m in reasons)}; marked as isolated.",
         ))
         stats.append(Stat(resource_kind=kind, resource_name=metadata.get("name", "?"), changed_labels=1))
 
@@ -146,7 +163,9 @@ def algo_mark_isolated(resources):
     value gives the reason:
 
     - 'no-relations': no relations with other resources, but should have at least one
-    - 'missing-relations': a binding or role missing a relation its kind requires
+    - 'no-role' / 'no-subject': a binding missing its role and/or a subject,
+      concatenated when both are missing, for example : 'no-role-no-subject'
+    - 'no-binding': a role that isn't bound by any binding
     - 'no-labels': no cluster labels
 
     A resource with no cluster labels that is already marked gets '-no-labels'
