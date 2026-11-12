@@ -30,8 +30,8 @@ LABEL_HIERARCHY = [
     "chart",
     "app.kubernetes.io/name",
     "app",
+    "tier",
     "app.kubernetes.io/component",
     "service",
-    "tier",
     "helm.sh/hook",
 ]
