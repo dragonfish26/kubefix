@@ -12,6 +12,7 @@ clusters:
   - label: rbac.authorization.k8s.io/aggregate-to-admin
   - label: rbac.authorization.k8s.io/aggregate-to-edit
   - label: rbac.authorization.k8s.io/aggregate-to-view
+  - label: rbac.authorization.k8s.io/aggregate-to-cluster-reader
   - annotation: helm.sh/hook
 
 edges:

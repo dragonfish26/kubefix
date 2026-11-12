@@ -33,7 +33,17 @@ K8S_AGGREGATE_LABELS = [
     "rbac.authorization.k8s.io/aggregate-to-admin",
     "rbac.authorization.k8s.io/aggregate-to-edit",
     "rbac.authorization.k8s.io/aggregate-to-view",
+    "rbac.authorization.k8s.io/aggregate-to-cluster-reader",
 ]
+
+def _k8s_aggregate_labels(config):
+    """Cluster labels that indicate k8s specific aggregate labels.
+    Falls back to K8S_AGGREGATE_LABELS if the config defines no rbac labels."""
+
+    keys = [c.get("label") for c in config.get("clusters", []) 
+            if "label" in c and c.get("label" or "").startswith("rbac.authorization.k8s.io")]
+
+    return keys if keys else list(K8S_AGGREGATE_LABELS)
 
 
 def _isolated_no_relation(resources, parent_map, child_map, config, warnings, stats):
@@ -90,6 +100,8 @@ def _isolated_missing_relation(resources, parent_map, child_map, config, resourc
         warnings: list of Warning, appended to in place.
         stats: list of Stat, appended to in place.
     """
+    # compute rbac aggregate labels for role before the main loop
+    k8s_aggregate_labels = _k8s_aggregate_labels(config)
 
     for resource in resources:
         kind = resource.get("kind")
@@ -146,7 +158,7 @@ def _isolated_missing_relation(resources, parent_map, child_map, config, resourc
 
         else:  # roles
             # skip roles aggregated by K8s = has specific labels
-            if any(key in K8S_AGGREGATE_LABELS for key in labels):
+            if any(key in k8s_aggregate_labels for key in labels):
                 continue
 
             parents = [resources_by_rid[p]["kind"] for p in parent_map.get(rid, [])]
