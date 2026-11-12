@@ -1,205 +1,47 @@
 """Mark unlabeled resources with an isolated-resource label."""
 from kubefix.common import Warning, Stat
-from kubefix.common import CLUSTER_LABELS
 
 from kubefix.edges import compute_rid, create_new_nodes, process_edges
 
 from kubefix.algo_label_intersection import _DEFAULT_CONFIG_PATH, _load_config, _build_parent_and_child_maps
 
-ISOLATED_LABEL = "isolated-resource"
-
-RESOURCE_KINDS_WITH_RELATIONS = [
-    "Secret",
-    "ConfigMap",
-    "PodDisruptionBudget",
-    "ServiceAccount",
-    "NetworkPolicy",
-    "Service",
-    "ValidatingWebhookConfiguration",
-    "Issuer",
-]
-
-BINDINGS = [
-    "ClusterRoleBinding",
-    "RoleBinding",
-]
-
-ROLES = [
-    "ClusterRole",
-    "Role",
-]
-
-K8S_AGGREGATE_LABELS = [
-    "rbac.authorization.k8s.io/aggregate-to-admin",
-    "rbac.authorization.k8s.io/aggregate-to-edit",
-    "rbac.authorization.k8s.io/aggregate-to-view",
-    "rbac.authorization.k8s.io/aggregate-to-cluster-reader",
-]
-
-def _k8s_aggregate_labels(config):
-    """Cluster labels that indicate k8s specific aggregate labels.
-    Falls back to K8S_AGGREGATE_LABELS if the config defines no rbac labels."""
-
-    keys = [c.get("label") for c in config.get("clusters", []) 
-            if "label" in c and c.get("label" or "").startswith("rbac.authorization.k8s.io")]
-
-    return keys if keys else list(K8S_AGGREGATE_LABELS)
-
-def _aggregated_crole_rids(edges, resources_by_rid):
-    """Rids of ClusterRoles aggregated (whose rules are merged) into another ClusterRole
-    (through that role's aggregationRule label selector, drawn as a SELECTOR edge).
-    They don't need their own binding: they are used through the role that includes them."""
-
-    
-    aggregated_rids = {
-        to for frm, to, k in edges
-        if k == "SELECTOR" and resources_by_rid[frm]["kind"] == "ClusterRole"
-    }
-    return aggregated_rids
+from kubefix.isolation_rules import (
+    IsolationContext,
+    mark_isolated,
+    rbac,
+    RESOURCE_KINDS_WITH_RELATIONS,
+    no_relation_rule,
+    RBAC_KINDS,
+    rbac_rule,
+    pdb_rule,
+    no_labels_rule,
+)
 
 
+def _apply_isolation_rules(resources, ctx, rbac_data, warnings, stats):
+    """Run every rule that applies to each resource and mark it isolated
+    with the reasons found: one label, one warning and one stat per resource.
 
-def _isolated_no_relation(resources, parent_map, child_map, config, warnings, stats):
-    """Add an 'isolated-resource' label to resources who doesn't have any relations 
-    (edges calculated by Kubediagrams graph) with other resources, but should have at least one relation.
-    This could indicate deadcode and other issues.
-
-    Args:
-        resources: list of Kubernetes resources (dicts).
-        parent_map: dict mapping a rid to the rids that point at it.
-        child_map: dict mapping a rid to the rids it points to.
-        config: edges configuration, used to compute rids and find built-in roles.
-        warnings: list of Warning, appended to in place.
-        stats: list of Stat, appended to in place.
-
+    A kind can be checked by several rules, hence separate ifs and not elif.
+    The order of the rules sets the order of the codes in the label value,
+    for example : 'no-relations-no-labels'.
     """
-
-    for resource in resources:
-        label_change_count = 0 #counter for stat
-        metadata = resource.setdefault("metadata", {})
-
-        kind = resource.get("kind")
-        if kind in RESOURCE_KINDS_WITH_RELATIONS:
-            rid = compute_rid(resource, config)
-            # if no relations to another resource, mark isolated
-            if not parent_map.get(rid) and not child_map.get(rid):
-                labels = metadata.get("labels") or {}
-                labels[ISOLATED_LABEL] = "no-relations"
-                metadata["labels"] = labels
-
-                warnings.append(Warning(
-                    resource_kind=resource.get("kind", "?"),
-                    resource_name=metadata.get("name", "?"),
-                    message="Resource has no relations with other resources but should have at least one; marked as isolated.",
-                ))
-                label_change_count += 1
-    
-                stats.append(Stat(
-                            resource_kind=resource.get("kind", "?"),
-                            resource_name=resource.get("metadata", {}).get("name", "?"),
-                            changed_labels=label_change_count
-                        ))
-
-def _isolated_missing_relation(resources, parent_map, child_map, config, resources_by_rid, aggregated_crole_rids, warnings, stats):
-    """Add an 'isolated-resource' label to bindings that have a missing role and/or
-    subject, roles that have a missing binding, and service accounts not used by any workload.
-
-    Args:
-        resources: list of Kubernetes resources (dicts).
-        parent_map: dict mapping a rid to the rids that point at it.
-        child_map: dict mapping a rid to the rids it points to.
-        config: edges configuration, used to compute rids and find built-in roles.
-        resources_by_rid: dict mapping a rid to its resource.
-        aggregated_crole_rids: set of ClusterRole rids aggregated into another ClusterRole.
-        warnings: list of Warning, appended to in place.
-        stats: list of Stat, appended to in place.
-    """
-    # compute rbac aggregate labels for role before the main loop
-    k8s_aggregate_labels = _k8s_aggregate_labels(config)
-
     for resource in resources:
         kind = resource.get("kind")
-        if kind not in BINDINGS and kind not in ROLES and kind != "ServiceAccount":
-            continue
-
-        rid = compute_rid(resource, config)
-        metadata = resource.setdefault("metadata", {})
-        labels = metadata.get("labels") or {}
-        namespace = metadata.get("namespace") or "default"
-        cluster_resources = config.get("cluster-resources", [])
-        # (label code, warning message) for each missing relation
+        rid = compute_rid(resource, ctx.config)
         reasons = []
 
-        if kind in BINDINGS:
-            children = child_map.get(rid, [])
+        if kind in RESOURCE_KINDS_WITH_RELATIONS:
+            reasons += no_relation_rule(resource, rid, ctx)
+        if kind in RBAC_KINDS:
+            reasons += rbac_rule(resource, rid, ctx, rbac_data)
+        if kind == "PodDisruptionBudget":
+            reasons += pdb_rule(resource, rid, ctx)
+        # every kind, last so '-no-labels' comes after the relation reasons
+        reasons += no_labels_rule(resource, rid, ctx)
 
-            # role check, skipped if the role referenced by this binding is a K8s specific thing
-            role_ref = resource.get("roleRef") or {}
-            if role_ref.get("kind") == "Role":
-                role_rid = f"{role_ref.get('name')}/{namespace}/Role/rbac.authorization.k8s.io/v1"
-            else:
-                role_rid = f"{role_ref.get('name')}/ClusterRole/rbac.authorization.k8s.io/v1"
-
-            if role_rid not in cluster_resources:
-                if not any(resources_by_rid[c]["kind"] in ROLES for c in children):
-                    reasons.append(("no-role", "Resource is a binding but has no edge to a role"))
-
-            # subject check, users and groups are external identities so only service accounts can have an edge
-            subjects = resource.get("subjects") or []
-            if not subjects:
-                reasons.append(("no-subject", "Resource is a binding but has no subjects"))
-            else:
-                for subject in subjects:
-                    if subject.get("kind") != "ServiceAccount":
-                        continue
-                    sa_namespace = subject.get("namespace") or namespace
-                    sa_rid = f"{subject.get('name')}/{sa_namespace}/ServiceAccount/v1"
-                    if sa_rid not in cluster_resources and sa_rid not in children:
-                        reasons.append(("no-subject", f"Resource is a binding but has no edge to its subject ServiceAccount '{subject.get('name')}'"))
-                        break
-
-        elif kind == "ServiceAccount":
-            # skip 'default', used implicitly by pods without serviceAccountName,
-            name = metadata.get("name")
-            if name == "default":
-                continue
-
-            # no relations at all is already marked by _isolated_no_relation
-            parents = [resources_by_rid[p]["kind"] for p in parent_map.get(rid, [])]
-
-            # check if this SA has workloads. No parent other than bindings = no workloads
-            if parents and all(k in BINDINGS for k in parents):
-                reasons.append(("no-workload", "Resource is a service account but has no edge from a workload"))
-
-        else:  # roles
-            # skip roles aggregated by K8s = has specific labels
-            if any(key in k8s_aggregate_labels for key in labels):
-                continue
-
-            parents = [resources_by_rid[p]["kind"] for p in parent_map.get(rid, [])]
-
-            # aggregated into another ClusterRole: its rules are granted through that role
-            if rid in aggregated_crole_rids:
-                continue
-            
-            if not any(k in BINDINGS for k in parents):
-                reasons.append(("no-binding", "Resource is a role but has no edge from a binding"))
-
-        if not reasons:
-            continue
-
-        # concatenate the reasons, for example : 'no-role-no-subject'
-        code = "-".join(c for c, _ in reasons)
-        existing = labels.get(ISOLATED_LABEL)
-        labels[ISOLATED_LABEL] = f"{existing}-{code}" if existing else code
-        metadata["labels"] = labels
-
-        warnings.append(Warning(
-            resource_kind=kind,
-            resource_name=metadata.get("name", "?"),
-            message=f"{'; '.join(m for _, m in reasons)}; marked as isolated.",
-        ))
-        stats.append(Stat(resource_kind=kind, resource_name=metadata.get("name", "?"), changed_labels=1))
+        if reasons:
+            mark_isolated(resource, reasons, warnings, stats)
 
 
 def algo_mark_isolated(resources):
@@ -209,12 +51,16 @@ def algo_mark_isolated(resources):
     - 'no-relations': no relations with other resources, but should have at least one
     - 'no-role' / 'no-subject': a binding missing its role and/or a subject,
       concatenated when both are missing, for example : 'no-role-no-subject'
-    - 'no-binding': a role that isn't bound by any binding
+    - 'no-binding': a role that isn't bound by any binding, nor aggregated into another role
     - 'no-workload': a service account that isn't used by any workload
+    - 'no-matching-workload': a PodDisruptionBudget whose selector matches no workload
     - 'no-labels': no cluster labels
 
     A resource with no cluster labels that is already marked gets '-no-labels'
     added to its value, for example : 'no-relations-no-labels'.
+
+    The rules live in the isolation_rules package and are called in
+    _apply_isolation_rules.
 
     To be run as a last resort, after the other algos have assigned labels.
 
@@ -227,8 +73,7 @@ def algo_mark_isolated(resources):
     warnings: list[Warning] = []
     stats: list[Stat] = []
 
-    config_path = _DEFAULT_CONFIG_PATH
-    config = _load_config(config_path)
+    config = _load_config(_DEFAULT_CONFIG_PATH)
 
     # Build edges, parent map and child map to check relation isolation
     resources_by_rid = {compute_rid(r, config): r for r in resources}
@@ -239,39 +84,17 @@ def algo_mark_isolated(resources):
     visible_edges = [e for e in edges if e[2] != "INVISIBLE"]
     parent_map, child_map = _build_parent_and_child_maps(visible_edges)
 
-    # 1. check relation isolation
-    _isolated_no_relation(resources, parent_map, child_map, config, warnings, stats)
+    ctx = IsolationContext(
+        config=config,
+        resources_by_rid=resources_by_rid,
+        edges=visible_edges,
+        parent_map=parent_map,
+        child_map=child_map,
+        cluster_resources=config.get("cluster-resources", []),
+    )
+    # data specific to a rule, prepared once by its module
+    rbac_data = rbac.prepare(ctx)
 
-    # compute croles that aggregate other croles through dashed edges
-    aggregated_crole_rids = _aggregated_crole_rids(edges, resources_by_rid)
-
-    # 2. check missing relation isolation
-    _isolated_missing_relation(resources, parent_map, child_map, config, resources_by_rid, aggregated_crole_rids, warnings, stats)
-
-    # 3. check label isolation
-    for resource in resources:
-        label_change_count = 0 #counter for stat
-
-        metadata = resource.setdefault("metadata", {})
-        labels = metadata.get("labels") or {}
-
-        # check if there are no labels that are cluster labels for the resource
-        if not any(key in CLUSTER_LABELS for key in labels): 
-            existing = labels.get(ISOLATED_LABEL)
-            labels[ISOLATED_LABEL] = f"{existing}-no-labels" if existing else "no-labels"
-            metadata["labels"] = labels
-
-            warnings.append(Warning(
-                resource_kind=resource.get("kind", "?"),
-                resource_name=metadata.get("name", "?"),
-                message="Resource has no cluster labels; marked as isolated.",
-            ))
-            label_change_count += 1
-
-            stats.append(Stat(
-                        resource_kind=resource.get("kind", "?"),
-                        resource_name=resource.get("metadata", {}).get("name", "?"),
-                        changed_labels=label_change_count
-                    ))
+    _apply_isolation_rules(resources, ctx, rbac_data, warnings, stats)
 
     return resources, warnings, stats
