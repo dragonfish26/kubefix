@@ -45,6 +45,19 @@ def _k8s_aggregate_labels(config):
 
     return keys if keys else list(K8S_AGGREGATE_LABELS)
 
+def _aggregated_crole_rids(edges, resources_by_rid):
+    """Rids of ClusterRoles aggregated (whose rules are merged) into another ClusterRole
+    (through that role's aggregationRule label selector, drawn as a SELECTOR edge).
+    They don't need their own binding: they are used through the role that includes them."""
+
+    
+    aggregated_rids = {
+        to for frm, to, k in edges
+        if k == "SELECTOR" and resources_by_rid[frm]["kind"] == "ClusterRole"
+    }
+    return aggregated_rids
+
+
 
 def _isolated_no_relation(resources, parent_map, child_map, config, warnings, stats):
     """Add an 'isolated-resource' label to resources who doesn't have any relations 
@@ -87,7 +100,7 @@ def _isolated_no_relation(resources, parent_map, child_map, config, warnings, st
                             changed_labels=label_change_count
                         ))
 
-def _isolated_missing_relation(resources, parent_map, child_map, config, resources_by_rid, warnings, stats):
+def _isolated_missing_relation(resources, parent_map, child_map, config, resources_by_rid, aggregated_crole_rids, warnings, stats):
     """Add an 'isolated-resource' label to bindings that have a missing role and/or
     subject, roles that have a missing binding, and service accounts not used by any workload.
 
@@ -97,6 +110,7 @@ def _isolated_missing_relation(resources, parent_map, child_map, config, resourc
         child_map: dict mapping a rid to the rids it points to.
         config: edges configuration, used to compute rids and find built-in roles.
         resources_by_rid: dict mapping a rid to its resource.
+        aggregated_crole_rids: set of ClusterRole rids aggregated into another ClusterRole.
         warnings: list of Warning, appended to in place.
         stats: list of Stat, appended to in place.
     """
@@ -152,6 +166,7 @@ def _isolated_missing_relation(resources, parent_map, child_map, config, resourc
 
             # no relations at all is already marked by _isolated_no_relation
             parents = [resources_by_rid[p]["kind"] for p in parent_map.get(rid, [])]
+
             # check if this SA has workloads. No parent other than bindings = no workloads
             if parents and all(k in BINDINGS for k in parents):
                 reasons.append(("no-workload", "Resource is a service account but has no edge from a workload"))
@@ -162,6 +177,11 @@ def _isolated_missing_relation(resources, parent_map, child_map, config, resourc
                 continue
 
             parents = [resources_by_rid[p]["kind"] for p in parent_map.get(rid, [])]
+
+            # aggregated into another ClusterRole: its rules are granted through that role
+            if rid in aggregated_crole_rids:
+                continue
+            
             if not any(k in BINDINGS for k in parents):
                 reasons.append(("no-binding", "Resource is a role but has no edge from a binding"))
 
@@ -222,8 +242,11 @@ def algo_mark_isolated(resources):
     # 1. check relation isolation
     _isolated_no_relation(resources, parent_map, child_map, config, warnings, stats)
 
+    # compute croles that aggregate other croles through dashed edges
+    aggregated_crole_rids = _aggregated_crole_rids(edges, resources_by_rid)
+
     # 2. check missing relation isolation
-    _isolated_missing_relation(resources, parent_map, child_map, config, resources_by_rid, warnings, stats)
+    _isolated_missing_relation(resources, parent_map, child_map, config, resources_by_rid, aggregated_crole_rids, warnings, stats)
 
     # 3. check label isolation
     for resource in resources:
