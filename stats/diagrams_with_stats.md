@@ -6,15 +6,16 @@
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 30
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 30 | 100.0% | 135 |
+| algo_label_intersection | 1 | 3.3% | 1 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 10 | 33.3% | 10 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## apache-airflow-airflow
@@ -25,15 +26,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 39
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
-| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_normalize_labels | 35 | 89.7% | 134 |
+| algo_label_intersection | 1 | 2.6% | 1 |
+| algo_proximity_labels | 2 | 5.1% | 2 |
+| algo_unique_cluster | 35 | 89.7% | 35 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## argo-argocd-apps
@@ -44,15 +46,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 0
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## argo-argocd-image-updater
@@ -63,15 +66,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 8
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 8 | 100.0% | 8 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## argo-argo-cd
@@ -82,16 +86,17 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 53
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
-| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
+| algo_unique_cluster | 3 | 5.7% | 6 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 3.8% | 2 |
 
 ## argo-argo-rollouts
 
@@ -101,16 +106,17 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 14
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
-| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
+| algo_unique_cluster | 5 | 35.7% | 10 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 14.3% | 2 |
 
 ## argo-argo-workflows
 
@@ -120,16 +126,17 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 27
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
-| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_normalize_labels | 19 | 70.4% | 19 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
+| algo_unique_cluster | 8 | 29.6% | 16 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 7.4% | 2 |
 
 ## argo-cd-oci-argo-cd
 
@@ -139,16 +146,17 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 53
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
-| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
+| algo_unique_cluster | 3 | 5.7% | 6 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
+| algo_mark_isolated | 2 | 3.8% | 2 |
 
 ## artifact-hub-artifact-hub
 
@@ -158,15 +166,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 19
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 4 | 21.1% | 16 |
+| algo_label_intersection | 1 | 5.3% | 1 |
+| algo_proximity_labels | 3 | 15.8% | 3 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 10 | 52.6% | 10 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## aws-aws-load-balancer-controller
@@ -177,15 +186,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 0
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-elasticsearch
@@ -196,15 +206,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 21
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 4 | 19.0% | 4 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-external-dns
@@ -215,15 +226,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 7
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 6 | 85.7% | 6 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-kafka
@@ -234,16 +246,17 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 12
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 2 | 16.7% | 2 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
+| algo_mark_isolated | 4 | 33.3% | 4 |
 
 ## bitnami-keycloak
 
@@ -253,15 +266,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 15
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 1 | 6.7% | 1 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 1 | 6.7% | 1 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-labs-sealed-secrets
@@ -272,15 +286,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 10
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 9 | 90.0% | 9 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-mariadb
@@ -291,15 +306,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 8
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 4 | 50.0% | 4 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-metallb
@@ -310,16 +326,17 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 30
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
-| algo_unique_cluster | 0 | 0.0% | 0 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 4 | 13.3% | 6 |
+| algo_proximity_labels | 1 | 3.3% | 1 |
+| algo_unique_cluster | 7 | 23.3% | 21 |
 | algo_name_component | 0 | 0.0% | 0 |
-| algo_mark_isolated | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
+| algo_mark_isolated | 1 | 3.3% | 1 |
 
 ## bitnami-metrics-server
 
@@ -329,15 +346,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 10
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 9 | 90.0% | 9 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-minio
@@ -348,15 +366,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 11
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-mongodb
@@ -367,15 +386,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 8
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 1 | 12.5% | 1 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-mysql
@@ -386,15 +406,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 8
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 3 | 37.5% | 3 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-nginx
@@ -405,15 +426,16 @@ Total resources: 13
 
 # Kubefix stat report
 
-Total resources: 13
+Total resources: 6
 
 | Algo | Resources touched | % Resources touched | Labels changed |
 |------|--------------------|----------------------|------------------|
-| algo_normalize_labels | 1 | 7.7% | 1 |
-| algo_label_intersection | 2 | 15.4% | 2 |
-| algo_proximity_labels | 2 | 15.4% | 2 |
+| algo_normalize_labels | 0 | 0.0% | 0 |
+| algo_label_intersection | 0 | 0.0% | 0 |
+| algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
-| algo_name_component | 0 | 0.0% | 0 |
+| algo_name_component | 6 | 100.0% | 6 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-postgresql-ha
@@ -433,6 +455,7 @@ Total resources: 14
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 1 | 7.1% | 1 |
 
 ## bitnami-postgresql
@@ -452,6 +475,7 @@ Total resources: 7
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-rabbitmq
@@ -471,6 +495,7 @@ Total resources: 10
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 10 | 100.0% | 10 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-redis-cluster
@@ -490,6 +515,7 @@ Total resources: 9
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 9 | 100.0% | 9 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-redis
@@ -509,6 +535,7 @@ Total resources: 14
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-spark
@@ -528,6 +555,7 @@ Total resources: 10
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 1 | 10.0% | 1 |
 
 ## bitnami-thanos
@@ -547,6 +575,7 @@ Total resources: 11
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## bitnami-wordpress
@@ -566,6 +595,7 @@ Total resources: 15
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 53.3% | 8 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## cert-manager-cert-manager
@@ -585,6 +615,7 @@ Total resources: 46
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## chartmuseum-chartmuseum
@@ -604,6 +635,7 @@ Total resources: 3
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 2 | 66.7% | 2 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 1 | 33.3% | 1 |
 
 ## cilium-cilium
@@ -623,7 +655,8 @@ Total resources: 23
 | algo_proximity_labels | 12 | 52.2% | 12 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 19 | 82.6% | 19 |
-| algo_mark_isolated | 3 | 13.0% | 3 |
+| algo_name_k8s_instance | 23 | 100.0% | 23 |
+| algo_mark_isolated | 1 | 4.3% | 1 |
 
 ## cloudnative-pg-cloudnative-pg
 
@@ -642,6 +675,7 @@ Total resources: 20
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 9 | 45.0% | 27 |
 | algo_name_component | 7 | 35.0% | 7 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 4 | 20.0% | 4 |
 
 ## cluster-autoscaler-cluster-autoscaler
@@ -661,6 +695,7 @@ Total resources: 7
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 71.4% | 5 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 3 | 42.9% | 3 |
 
 ## codecentric-keycloak
@@ -680,6 +715,7 @@ Total resources: 9
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 1 | 11.1% | 1 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## crossplane-crossplane
@@ -699,6 +735,7 @@ Total resources: 22
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 14 | 63.6% | 14 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 7 | 31.8% | 7 |
 
 ## datadog-datadog
@@ -718,6 +755,7 @@ Total resources: 21
 | algo_proximity_labels | 9 | 42.9% | 9 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 3 | 14.3% | 3 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 2 | 9.5% | 2 |
 
 ## descheduler-descheduler
@@ -737,6 +775,7 @@ Total resources: 5
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 100.0% | 5 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## dex-dex
@@ -756,6 +795,7 @@ Total resources: 8
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 100.0% | 8 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## elastic-eck-operator
@@ -775,6 +815,7 @@ Total resources: 20
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 40.0% | 8 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## elastic-elasticsearch
@@ -794,6 +835,7 @@ Total resources: 7
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 7 | 100.0% | 7 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## elastic-kibana
@@ -813,6 +855,7 @@ Total resources: 11
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 11 | 100.0% | 11 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## external-dns-external-dns
@@ -832,6 +875,7 @@ Total resources: 5
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 100.0% | 5 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## external-secrets-operator-external-secrets
@@ -851,6 +895,7 @@ Total resources: 40
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 21 | 52.5% | 42 |
 | algo_name_component | 16 | 40.0% | 16 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 1 | 2.5% | 1 |
 
 ## falcosecurity-falco
@@ -870,6 +915,7 @@ Total resources: 6
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 6 | 100.0% | 6 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## fluent-fluent-bit
@@ -889,6 +935,7 @@ Total resources: 7
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 1 | 14.3% | 2 |
 | algo_name_component | 6 | 85.7% | 6 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## gitea-gitea
@@ -908,6 +955,7 @@ Total resources: 30
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 15 | 50.0% | 15 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 1 | 3.3% | 1 |
 
 ## gitlab-gitlab-runner
@@ -927,6 +975,7 @@ Total resources: 2
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 2 | 100.0% | 2 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## gitlab-gitlab
@@ -946,6 +995,7 @@ Total resources: 0
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## goauthentik-authentik
@@ -965,6 +1015,7 @@ Total resources: 9
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 55.6% | 5 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-alloy
@@ -984,6 +1035,7 @@ Total resources: 6
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-grafana
@@ -1003,6 +1055,7 @@ Total resources: 12
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 12 | 100.0% | 12 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-loki-stack
@@ -1022,6 +1075,7 @@ Total resources: 16
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 15 | 93.8% | 15 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 1 | 6.2% | 1 |
 
 ## grafana-loki
@@ -1041,6 +1095,7 @@ Total resources: 0
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-mimir-distributed
@@ -1060,6 +1115,7 @@ Total resources: 66
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 4 | 6.1% | 4 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## grafana-promtail
@@ -1079,6 +1135,7 @@ Total resources: 5
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 100.0% | 5 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## harbor-harbor
@@ -1098,6 +1155,7 @@ Total resources: 31
 | algo_proximity_labels | 1 | 3.2% | 1 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## hashicorp-consul
@@ -1117,6 +1175,7 @@ Total resources: 67
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## hashicorp-vault
@@ -1136,6 +1195,7 @@ Total resources: 13
 | algo_proximity_labels | 3 | 23.1% | 3 |
 | algo_unique_cluster | 8 | 61.5% | 9 |
 | algo_name_component | 6 | 46.2% | 6 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## ingress-nginx-ingress-nginx
@@ -1155,6 +1215,7 @@ Total resources: 18
 | algo_proximity_labels | 2 | 11.1% | 2 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 1 | 5.6% | 1 |
 
 ## istio-official-base
@@ -1174,6 +1235,7 @@ Total resources: 16
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 2 | 12.5% | 2 |
 
 ## istio-official-gateway
@@ -1193,6 +1255,7 @@ Total resources: 6
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 6 | 100.0% | 6 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## istio-official-istiod
@@ -1212,6 +1275,7 @@ Total resources: 18
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 14 | 77.8% | 14 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 6 | 33.3% | 6 |
 
 ## jaegertracing-jaeger
@@ -1231,6 +1295,7 @@ Total resources: 14
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 2 | 14.3% | 2 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## jenkinsci-jenkins
@@ -1250,6 +1315,7 @@ Total resources: 14
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 3 | 21.4% | 7 |
 | algo_name_component | 2 | 14.3% | 2 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 1 | 7.1% | 1 |
 
 ## jupyterhub-jupyterhub
@@ -1269,6 +1335,7 @@ Total resources: 30
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 1 | 3.3% | 1 |
 
 ## k8s-dashboard-kubernetes-dashboard
@@ -1288,6 +1355,7 @@ Total resources: 23
 | algo_proximity_labels | 10 | 43.5% | 20 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## kedacore-keda
@@ -1307,6 +1375,7 @@ Total resources: 29
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 6 | 20.7% | 6 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## kong-kong
@@ -1326,6 +1395,7 @@ Total resources: 13
 | algo_proximity_labels | 5 | 38.5% | 5 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 1 | 7.7% | 1 |
 
 ## kubeview-kubeview
@@ -1345,6 +1415,7 @@ Total resources: 5
 | algo_proximity_labels | 3 | 60.0% | 9 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 100.0% | 5 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## kvaps-nfs-server-provisioner
@@ -1364,6 +1435,7 @@ Total resources: 6
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 83.3% | 5 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## kyverno-kyverno
@@ -1383,6 +1455,7 @@ Total resources: 76
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## longhorn-longhorn
@@ -1402,6 +1475,7 @@ Total resources: 43
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 21 | 48.8% | 21 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 6 | 14.0% | 6 |
 
 ## metallb-metallb
@@ -1421,6 +1495,7 @@ Total resources: 25
 | algo_proximity_labels | 14 | 56.0% | 14 |
 | algo_unique_cluster | 2 | 8.0% | 6 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## metrics-server-metrics-server
@@ -1440,6 +1515,7 @@ Total resources: 9
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 88.9% | 8 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## minio-minio
@@ -1459,6 +1535,7 @@ Total resources: 0
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## mojo2600-pihole
@@ -1478,6 +1555,7 @@ Total resources: 8
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 1 | 12.5% | 3 |
 | algo_name_component | 7 | 87.5% | 7 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## nats-nats
@@ -1497,6 +1575,7 @@ Total resources: 8
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## nextcloud-nextcloud
@@ -1516,6 +1595,7 @@ Total resources: 3
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## nfs-subdir-external-provisioner-nfs-subdir-external-provisioner
@@ -1535,6 +1615,7 @@ Total resources: 7
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 6 | 85.7% | 6 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## nginx-nginx-ingress
@@ -1554,6 +1635,7 @@ Total resources: 11
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 72.7% | 8 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 2 | 18.2% | 2 |
 
 ## oauth2-proxy-oauth2-proxy
@@ -1573,6 +1655,7 @@ Total resources: 5
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## open-8gears-n8n
@@ -1592,6 +1675,7 @@ Total resources: 4
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 3 | 75.0% | 3 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## pmint93-metabase
@@ -1611,6 +1695,7 @@ Total resources: 3
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 2 | 66.7% | 2 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 1 | 33.3% | 1 |
 
 ## prometheus-community-kube-prometheus-stack
@@ -1630,6 +1715,7 @@ Total resources: 126
 | algo_proximity_labels | 2 | 1.6% | 2 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 13 | 10.3% | 13 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 39 | 31.0% | 39 |
 
 ## prometheus-community-kube-state-metrics
@@ -1649,6 +1735,7 @@ Total resources: 5
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## prometheus-community-prometheus-blackbox-exporter
@@ -1668,6 +1755,7 @@ Total resources: 4
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 4 | 100.0% | 4 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## prometheus-community-prometheus-node-exporter
@@ -1687,6 +1775,7 @@ Total resources: 3
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## prometheus-community-prometheus
@@ -1706,6 +1795,7 @@ Total resources: 23
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 8 | 34.8% | 8 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## rancher-stable-rancher
@@ -1725,6 +1815,7 @@ Total resources: 13
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 11 | 84.6% | 11 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 2 | 15.4% | 2 |
 
 ## renovate-renovate
@@ -1744,6 +1835,7 @@ Total resources: 0
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## runix-pgadmin4
@@ -1763,6 +1855,7 @@ Total resources: 6
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 6 | 100.0% | 6 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## sonarqube-sonarqube
@@ -1782,6 +1875,7 @@ Total resources: 0
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## stakater-reloader
@@ -1801,6 +1895,7 @@ Total resources: 4
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 4 | 100.0% | 4 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## superset-superset
@@ -1820,6 +1915,7 @@ Total resources: 18
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 27.8% | 5 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## traefik-traefik
@@ -1839,6 +1935,7 @@ Total resources: 6
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 5 | 83.3% | 5 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## twuni-docker-registry
@@ -1858,6 +1955,7 @@ Total resources: 4
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 4 | 100.0% | 4 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## uptime-kuma-uptime-kuma
@@ -1877,6 +1975,7 @@ Total resources: 4
 | algo_proximity_labels | 0 | 0.0% | 0 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 3 | 75.0% | 3 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 ## vmware-tanzu-velero
@@ -1896,6 +1995,7 @@ Total resources: 13
 | algo_proximity_labels | 2 | 15.4% | 2 |
 | algo_unique_cluster | 0 | 0.0% | 0 |
 | algo_name_component | 0 | 0.0% | 0 |
+| algo_name_k8s_instance | 0 | 0.0% | 0 |
 | algo_mark_isolated | 0 | 0.0% | 0 |
 
 
