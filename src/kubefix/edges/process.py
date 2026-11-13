@@ -35,16 +35,18 @@ def compute_rid(resource, config):
     """The rid format is the same one the yaml scripts use when looking
     up edge targets, so it must match exactly:
 
-        Namespaced resource    -> name/namespace/Kind/apiVersion
-        Anything else          -> name/Kind/apiVersion
+        Cluster / Outside scope -> name/Kind/apiVersion
+        Anything else           -> name/namespace/Kind/apiVersion
 
+    Like KubeDiagrams, a missing scope (unknown kind, or the `scoped:`
+    typo on StatefulSet/VPA) counts as Namespaced.
     """
     scope = get_node_config(resource, config).get("scope")
     name = get_name(resource)
     rtype = get_type(resource)
-    if scope == "Namespaced":
-        return f"{name}/{get_namespace(resource)}/{rtype}"
-    return f"{name}/{rtype}"
+    if scope in ("Cluster", "Outside"):
+        return f"{name}/{rtype}"
+    return f"{name}/{get_namespace(resource)}/{rtype}"
 
 
 # Map from plural resource names ('pods') to kinds ('Pod').

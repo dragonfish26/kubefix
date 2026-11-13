@@ -6,7 +6,8 @@ from collections import defaultdict
 from kubefix.edges import compute_rid, create_new_nodes, process_edges
 from kubefix.edges.helpers import query_path
 
-from kubefix.algo_label_intersection import _DEFAULT_CONFIG_PATH, _load_config, _cluster_label_keys, _can_be_moved
+from kubefix.algo_label_intersection import _can_be_moved
+from kubefix.label_utils import DEFAULT_CONFIG_PATH, load_config, cluster_label_keys as _cluster_label_keys
 from kubefix.common import Warning, Stat
 
 def _build_adjacency(edges):
@@ -102,8 +103,8 @@ def algo_proximity_labels(resources, config_path=None):
     Returns:
         A tuple (resources, warnings, stats).
     """
-    config_path = config_path or _DEFAULT_CONFIG_PATH
-    config = _load_config(config_path)
+    config_path = config_path or DEFAULT_CONFIG_PATH
+    config = load_config(config_path)
     cluster_label_keys = _cluster_label_keys(config)
 
     # Build {rid: resource} so the edges code can resolve targets. Same

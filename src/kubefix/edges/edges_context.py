@@ -394,7 +394,9 @@ class EdgesContext:
         for idx, vct in enumerate(query_path(self.resource, path, [])):
             self.add_edge_to(
                 f"{path}[{idx}]",
-                vct["metadata"]["name"],
+                # PVCs created from a volumeClaimTemplate are named
+                # <template>-<statefulset> (see the StatefulSet `nodes:` script)
+                f"{vct['metadata']['name']}-{self.resource['metadata']['name']}",
                 self.namespace,
                 "PersistentVolumeClaim",
                 "v1",

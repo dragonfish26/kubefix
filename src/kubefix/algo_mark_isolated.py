@@ -3,7 +3,8 @@ from kubefix.common import Warning, Stat
 
 from kubefix.edges import compute_rid, create_new_nodes, process_edges
 
-from kubefix.algo_label_intersection import _DEFAULT_CONFIG_PATH, _load_config, _build_parent_and_child_maps
+from kubefix.algo_label_intersection import _build_parent_and_child_maps
+from kubefix.label_utils import load_config
 
 from kubefix.isolation_rules import (
     IsolationContext,
@@ -73,7 +74,7 @@ def algo_mark_isolated(resources):
     warnings: list[Warning] = []
     stats: list[Stat] = []
 
-    config = _load_config(_DEFAULT_CONFIG_PATH)
+    config = load_config()
 
     # Build edges, parent map and child map to check relation isolation
     resources_by_rid = {compute_rid(r, config): r for r in resources}

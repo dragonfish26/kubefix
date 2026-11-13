@@ -10,9 +10,9 @@ from kubefix.algo_normalize_labels import algo_normalize_labels
 from kubefix.algo_label_intersection import algo_label_intersection
 from kubefix.algo_mark_isolated import algo_mark_isolated
 from kubefix.algo_unique_cluster import algo_assign_unique_cluster_labels
-from kubefix.algo_comp_label_union import algo_connected_component_label_union
 from kubefix.algo_add_proximity_labels import algo_proximity_labels
 from kubefix.algo_name_component import algo_name_component
+from kubefix.algo_name_k8s_instance import algo_name_k8s_instance
 
 yaml = YAML()
 yaml.preserve_quotes = True
@@ -117,12 +117,7 @@ def cli(input_path: Path, output: Path | None, stats: Path | None, csv_path: Pat
     all_warnings.extend(w)
     stats_by_algo["algo_label_intersection"] = s
 
-    # Connected-component label union
-    #resources, w, s = algo_connected_component_label_union(resources)
-    #all_warnings.extend(w)
-    #stats_by_algo["algo_comp_label_union"] = s
-
-    # Connected-component label union
+    # Proximity label propagation
     resources, w, s = algo_proximity_labels(resources)
     all_warnings.extend(w)
     stats_by_algo["algo_proximity_labels"] = s
@@ -137,6 +132,10 @@ def cli(input_path: Path, output: Path | None, stats: Path | None, csv_path: Pat
     all_warnings.extend(w)
     stats_by_algo["algo_name_component"] = s
 
+    # Name a K8s instance for the whole manifest if it has none
+    resources, w, s = algo_name_k8s_instance(resources)
+    all_warnings.extend(w)
+    stats_by_algo["algo_name_k8s_instance"] = s
 
     # Isolated-resource label
     resources, w, s = algo_mark_isolated(resources)

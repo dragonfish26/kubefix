@@ -13,6 +13,7 @@ ALGOS = [
     "algo_proximity_labels",
     "algo_unique_cluster",
     "algo_name_component",
+    "algo_name_k8s_instance",
     "algo_mark_isolated",
 ]
 

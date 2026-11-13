@@ -1,34 +1,14 @@
 """Label intersection."""
 
 from collections import defaultdict
-from pathlib import Path
-
-import yaml
-
 from kubefix.edges import compute_rid, create_new_nodes, process_edges
 from kubefix.edges.helpers import query_path
 
 from kubefix.common import Warning, Stat, LABEL_HIERARCHY
+from kubefix.label_utils import DEFAULT_CONFIG_PATH, load_config, cluster_label_keys as _cluster_label_keys
 
 
 _LABEL_TO_INDEX = {label: i for i, label in enumerate(LABEL_HIERARCHY)}
-
-
-# Default location of the edges config. 
-_DEFAULT_CONFIG_PATH = Path(__file__).parent / "edges" / "kubefix.yaml"
-
-
-def _load_config(config_path):
-    with open(config_path, encoding="utf-8") as f:
-        return yaml.safe_load(f)
-
-
-def _cluster_label_keys(config):
-    """Labels that map to clusters in kubefix.yaml. 
-    Only these labels are eligible for the intersection, others are ignored. 
-    Falls back to LABEL_HIERARCHY if the config has no clusters section."""
-    keys = [c.get("label") for c in config.get("clusters", []) if "label" in c]
-    return keys if keys else list(LABEL_HIERARCHY)
 
 
 def _build_parent_and_child_maps(edges):
@@ -153,8 +133,8 @@ def algo_label_intersection(resources, config_path=None):
 
     Returns (resources, warnings).
     """
-    config_path = config_path or _DEFAULT_CONFIG_PATH
-    config = _load_config(config_path)
+    config_path = config_path or DEFAULT_CONFIG_PATH
+    config = load_config(config_path)
     cluster_label_keys = _cluster_label_keys(config)
 
     # Build {rid: resource} so the edges code can resolve targets. Same
