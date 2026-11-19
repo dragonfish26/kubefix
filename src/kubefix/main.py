@@ -13,6 +13,7 @@ from kubefix.algo_unique_cluster import algo_assign_unique_cluster_labels
 from kubefix.algo_add_proximity_labels import algo_proximity_labels
 from kubefix.algo_name_component import algo_name_component
 from kubefix.algo_name_k8s_instance import algo_name_k8s_instance
+from kubefix.algo_check_comp_validity import algo_check_comp_validity
 
 yaml = YAML()
 yaml.preserve_quotes = True
@@ -111,6 +112,11 @@ def cli(input_path: Path, output: Path | None, stats: Path | None, csv_path: Pat
     resources, w, s = algo_normalize_labels(resources)
     all_warnings.extend(w)
     stats_by_algo["algo_normalize_labels"] = s
+
+    # Remove component labels that no workload carries
+    resources, w, s = algo_check_comp_validity(resources)
+    all_warnings.extend(w)
+    stats_by_algo["algo_check_comp_validity"] = s
 
     # Edge intersection
     resources, w, s = algo_label_intersection(resources)

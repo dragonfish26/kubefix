@@ -6,7 +6,7 @@ from kubefix.algo_add_proximity_labels import _build_adjacency
 from kubefix.common import Warning, Stat
 from kubefix.label_utils import (
     DEFAULT_CONFIG_PATH, load_config, cluster_label_keys as _cluster_label_keys,
-    labels as _labels, set_label, label_stat, suggest_name,
+    labels as _labels, set_label, label_stat, suggest_name, is_workload,
 )
 
 COMPONENT_LABEL = "app.kubernetes.io/component"
@@ -53,8 +53,8 @@ def _component_within_application(resources_by_rid, output_rids, adj, warnings):
     """For each K8s application with at least two resources that form a single
     connected component among themselves:
       - if exactly one component label value is used, give it to all of its resources that lack one;
-      - if no component label is used, give them all a new component label
-        named after the longest common substring of their names.
+      - if no component label is used and at least one of them is a workload, give them
+        all a new component label named after the longest common substring of their names.
 
     Applications with several component values or several connected
     components are skipped for now.
@@ -81,10 +81,13 @@ def _component_within_application(resources_by_rid, output_rids, adj, warnings):
         members = [resources_by_rid[rid] for rid in app_rids]
         values = {_labels(r)[COMPONENT_LABEL] for r in members if COMPONENT_LABEL in _labels(r)}
         if len(values) == 1:
+            # one existing component: extend it to the members that lack it
             value = next(iter(values))
-        elif not values:
+        elif not values and any(is_workload(r) for r in members):
+            # no component yet: name a new one, only if it contains a workload
             value = _name_component(members, warnings)
         else:
+            # several components (ambiguous), or no workload: do nothing
             continue
 
         for resource in members:
@@ -96,13 +99,13 @@ def _component_within_application(resources_by_rid, output_rids, adj, warnings):
 
 
 def algo_name_component(resources, config_path=None):
-    """For each connected component whose resources all share the same cluster-labels and none has a component label, 
-    give them all a component label named after the longest common substring of their names.
+    """For each connected component whose resources all share the same cluster-labels, none has a component label
+    and at least one is a workload, give them all a component label named after the longest common substring of their names.
 
     Single-resource components are skipped. Synthesised nodes take part in the connectivity but are not checked, named or labelled.
 
     Then, within each K8s application whose resources are connected among themselves, the single component label value used
-    is given to the remaining resources, or, if none is used, a new component is named for all of them.
+    is given to the remaining resources, or, if none is used and one of them is a workload, a new component is named for all of them.
 
     Args:
         resources: list of Kubernetes resources (dicts).
@@ -138,6 +141,10 @@ def algo_name_component(resources, config_path=None):
 
         # none of them has a component label yet.
         if COMPONENT_LABEL in cluster_labels:
+            continue
+
+        # a new component must contain at least one workload.
+        if not any(is_workload(r) for r in members):
             continue
 
         value = _name_component(members, warnings)

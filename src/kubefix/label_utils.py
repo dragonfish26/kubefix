@@ -6,7 +6,7 @@ from pathlib import Path
 import yaml
 
 from kubefix.edges.helpers import query_path
-from kubefix.common import Warning, Stat, LABEL_HIERARCHY
+from kubefix.common import Warning, Stat, LABEL_HIERARCHY, WORKLOADS
 
 
 # Default location of the edges config.
@@ -50,6 +50,11 @@ def set_label(resource, key, value):
             resource["metadata"] = {}
         resource["metadata"]["labels"] = current
     current[key] = value
+
+
+def is_workload(resource):
+    """True if the resource is a workload (Deployment, StatefulSet, ...)."""
+    return resource.get("kind") in WORKLOADS
 
 
 def label_stat(resource, changed_labels=1):

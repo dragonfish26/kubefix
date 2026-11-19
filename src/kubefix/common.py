@@ -35,3 +35,12 @@ LABEL_HIERARCHY = [
     "service",
     "helm.sh/hook",
 ]
+
+WORKLOADS = [
+    "Deployment",
+    "StatefulSet",
+    "DaemonSet",
+    "Job",
+    "CronJob",
+    "Pod",
+]
