@@ -5,7 +5,7 @@ Resources touched per algo, and total resources, for each diagram.
 | Diagram | algo_normalize_labels | algo_label_intersection | algo_proximity_labels | algo_unique_cluster | algo_name_component | algo_name_k8s_instance | algo_mark_isolated | Total resources |
 |---------|------------|------------|------------|------------|------------|------------|------------|------------------|
 | airflow-helm-airflow | 30 | 1 | 0 | 0 | 10 | 0 | 0 | 30 |
-| apache-airflow-airflow | 35 | 1 | 2 | 35 | 0 | 0 | 0 | 39 |
+| apache-airflow-airflow | 35 | 2 | 2 | 35 | 0 | 0 | 0 | 39 |
 | argo-argocd-apps | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | argo-argocd-image-updater | 0 | 0 | 0 | 0 | 8 | 0 | 0 | 8 |
 | argo-argo-cd | 0 | 0 | 0 | 3 | 0 | 0 | 2 | 53 |
@@ -15,10 +15,10 @@ Resources touched per algo, and total resources, for each diagram.
 | artifact-hub-artifact-hub | 4 | 1 | 3 | 0 | 10 | 0 | 0 | 19 |
 | aws-aws-load-balancer-controller | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | bitnami-elasticsearch | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 21 |
-| bitnami-external-dns | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 7 |
-| bitnami-kafka | 0 | 2 | 0 | 0 | 0 | 0 | 4 | 12 |
+| bitnami-external-dns | 0 | 0 | 0 | 0 | 7 | 0 | 0 | 7 |
+| bitnami-kafka | 0 | 4 | 0 | 0 | 0 | 0 | 4 | 12 |
 | bitnami-keycloak | 0 | 1 | 0 | 0 | 1 | 0 | 0 | 15 |
-| bitnami-labs-sealed-secrets | 0 | 0 | 9 | 0 | 0 | 0 | 0 | 10 |
+| bitnami-labs-sealed-secrets | 0 | 0 | 0 | 0 | 10 | 0 | 0 | 10 |
 | bitnami-mariadb | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 8 |
 | bitnami-metallb | 0 | 4 | 1 | 7 | 0 | 0 | 1 | 30 |
 | bitnami-metrics-server | 0 | 0 | 0 | 0 | 9 | 0 | 0 | 10 |
@@ -34,14 +34,14 @@ Resources touched per algo, and total resources, for each diagram.
 | bitnami-spark | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 10 |
 | bitnami-thanos | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 11 |
 | bitnami-wordpress | 0 | 3 | 0 | 0 | 8 | 0 | 0 | 15 |
-| cert-manager-cert-manager | 46 | 0 | 0 | 0 | 0 | 0 | 0 | 46 |
+| cert-manager-cert-manager | 46 | 0 | 4 | 0 | 0 | 0 | 0 | 46 |
 | chartmuseum-chartmuseum | 0 | 0 | 0 | 0 | 2 | 0 | 1 | 3 |
 | cilium-cilium | 0 | 3 | 12 | 0 | 19 | 23 | 1 | 23 |
 | cloudnative-pg-cloudnative-pg | 0 | 0 | 0 | 9 | 7 | 0 | 4 | 20 |
-| cluster-autoscaler-cluster-autoscaler | 0 | 0 | 0 | 0 | 5 | 0 | 3 | 7 |
-| codecentric-keycloak | 0 | 2 | 0 | 0 | 1 | 0 | 0 | 9 |
-| crossplane-crossplane | 21 | 1 | 0 | 0 | 14 | 0 | 7 | 22 |
-| datadog-datadog | 3 | 7 | 9 | 0 | 3 | 0 | 2 | 21 |
+| cluster-autoscaler-cluster-autoscaler | 0 | 0 | 0 | 0 | 0 | 0 | 3 | 7 |
+| codecentric-keycloak | 0 | 2 | 0 | 0 | 6 | 0 | 0 | 9 |
+| crossplane-crossplane | 21 | 1 | 0 | 0 | 5 | 0 | 7 | 22 |
+| datadog-datadog | 3 | 7 | 9 | 0 | 0 | 0 | 2 | 21 |
 | descheduler-descheduler | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 5 |
 | dex-dex | 0 | 0 | 0 | 0 | 8 | 0 | 0 | 8 |
 | elastic-eck-operator | 0 | 0 | 0 | 0 | 8 | 0 | 0 | 20 |
@@ -54,30 +54,30 @@ Resources touched per algo, and total resources, for each diagram.
 | gitea-gitea | 7 | 2 | 0 | 0 | 15 | 0 | 1 | 30 |
 | gitlab-gitlab-runner | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 2 |
 | gitlab-gitlab | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| goauthentik-authentik | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 9 |
-| grafana-alloy | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 6 |
+| goauthentik-authentik | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 9 |
+| grafana-alloy | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 6 |
 | grafana-grafana | 0 | 0 | 0 | 0 | 12 | 0 | 0 | 12 |
 | grafana-loki-stack | 11 | 0 | 0 | 0 | 15 | 0 | 1 | 16 |
 | grafana-loki | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | grafana-mimir-distributed | 8 | 1 | 0 | 0 | 4 | 0 | 0 | 66 |
 | grafana-promtail | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 5 |
 | harbor-harbor | 34 | 18 | 1 | 0 | 0 | 0 | 0 | 31 |
-| hashicorp-consul | 67 | 0 | 0 | 0 | 0 | 0 | 0 | 67 |
+| hashicorp-consul | 67 | 2 | 0 | 0 | 0 | 0 | 0 | 67 |
 | hashicorp-vault | 1 | 2 | 3 | 8 | 6 | 0 | 0 | 13 |
 | ingress-nginx-ingress-nginx | 0 | 0 | 2 | 0 | 0 | 0 | 1 | 18 |
 | istio-official-base | 2 | 0 | 0 | 0 | 0 | 0 | 2 | 16 |
 | istio-official-gateway | 6 | 0 | 0 | 0 | 6 | 0 | 0 | 6 |
-| istio-official-istiod | 18 | 0 | 0 | 0 | 14 | 0 | 6 | 18 |
+| istio-official-istiod | 18 | 0 | 0 | 0 | 5 | 0 | 6 | 18 |
 | jaegertracing-jaeger | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 14 |
 | jenkinsci-jenkins | 0 | 0 | 0 | 3 | 2 | 0 | 1 | 14 |
-| jupyterhub-jupyterhub | 30 | 0 | 0 | 0 | 0 | 0 | 1 | 30 |
+| jupyterhub-jupyterhub | 30 | 2 | 0 | 0 | 0 | 0 | 1 | 30 |
 | k8s-dashboard-kubernetes-dashboard | 0 | 2 | 10 | 0 | 0 | 0 | 0 | 23 |
 | kedacore-keda | 4 | 0 | 0 | 6 | 0 | 0 | 0 | 29 |
 | kong-kong | 0 | 6 | 5 | 0 | 0 | 0 | 1 | 13 |
 | kubeview-kubeview | 0 | 0 | 3 | 0 | 5 | 0 | 0 | 5 |
 | kvaps-nfs-server-provisioner | 6 | 0 | 0 | 0 | 5 | 0 | 0 | 6 |
 | kyverno-kyverno | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 76 |
-| longhorn-longhorn | 7 | 0 | 0 | 0 | 21 | 0 | 6 | 43 |
+| longhorn-longhorn | 7 | 0 | 0 | 0 | 13 | 0 | 6 | 43 |
 | metallb-metallb | 0 | 10 | 14 | 2 | 0 | 0 | 0 | 25 |
 | metrics-server-metrics-server | 0 | 0 | 0 | 0 | 8 | 0 | 0 | 9 |
 | minio-minio | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -89,7 +89,7 @@ Resources touched per algo, and total resources, for each diagram.
 | oauth2-proxy-oauth2-proxy | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 5 |
 | open-8gears-n8n | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 4 |
 | pmint93-metabase | 3 | 0 | 0 | 0 | 2 | 0 | 1 | 3 |
-| prometheus-community-kube-prometheus-stack | 112 | 0 | 2 | 0 | 13 | 0 | 39 | 126 |
+| prometheus-community-kube-prometheus-stack | 112 | 0 | 0 | 0 | 13 | 0 | 39 | 126 |
 | prometheus-community-kube-state-metrics | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 5 |
 | prometheus-community-prometheus-blackbox-exporter | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 4 |
 | prometheus-community-prometheus-node-exporter | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 3 |
@@ -103,27 +103,27 @@ Resources touched per algo, and total resources, for each diagram.
 | traefik-traefik | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 6 |
 | twuni-docker-registry | 4 | 0 | 0 | 0 | 4 | 0 | 0 | 4 |
 | uptime-kuma-uptime-kuma | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 4 |
-| vmware-tanzu-velero | 1 | 2 | 2 | 0 | 0 | 0 | 0 | 13 |
+| vmware-tanzu-velero | 1 | 2 | 4 | 0 | 4 | 0 | 0 | 13 |
 
 # Summary
 
 | Algo | Resources touched % mean |
 |------|---------------------------|
 | algo_normalize_labels | 23.8% |
-| algo_label_intersection | 6.0% |
-| algo_proximity_labels | 5.5% |
+| algo_label_intersection | 6.1% |
+| algo_proximity_labels | 3.9% |
 | algo_unique_cluster | 4.3% |
-| algo_name_component | 39.3% |
+| algo_name_component | 40.6% |
 | algo_name_k8s_instance | 1.0% |
 | algo_mark_isolated | 4.2% |
 
 | Algo | Used by % manifests |
 |------|---------------------------|
 | algo_normalize_labels | 35.0% |
-| algo_label_intersection | 29.0% |
-| algo_proximity_labels | 16.0% |
+| algo_label_intersection | 30.0% |
+| algo_proximity_labels | 14.0% |
 | algo_unique_cluster | 14.0% |
-| algo_name_component | 56.0% |
+| algo_name_component | 57.0% |
 | algo_name_k8s_instance | 1.0% |
 | algo_mark_isolated | 28.0% |
-| none | 13.0% |
+| none | 14.0% |
