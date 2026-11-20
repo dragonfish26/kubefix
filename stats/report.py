@@ -9,6 +9,7 @@ from collections import defaultdict
 
 ALGOS = [
     "algo_normalize_labels",
+    "algo_check_comp_validity",
     "algo_label_intersection",
     "algo_proximity_labels",
     "algo_unique_cluster",
